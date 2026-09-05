@@ -1,0 +1,12 @@
+{
+  "name": "driving-test-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "parse:questions": "node parse-questions.mjs"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.68",
+    "pdfjs-dist": "^5.4.149"
+  }
+}

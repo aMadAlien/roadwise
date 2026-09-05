@@ -3,7 +3,7 @@ const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
 
 async function loadQuestions() {
-  const response = await fetch("questions.json");
+  const response = await fetch("questions.parsed.json");
   state.questions = await response.json();
   renderHome();
 }
@@ -33,6 +33,9 @@ function startTest(mode = "random", topic = null) {
   state.mode = mode; state.topic = topic; state.currentIndex = 0; state.selectedAnswer = null;
   if (mode === "topic" && !topic) {
     $("#test-mode-label").textContent = "Обери тему";
+    $("#question-nav").classList.add("hidden");
+    $(".progress-track").classList.add("hidden");
+    $(".test-progress-label").classList.add("hidden");
     $("#topic-picker").classList.remove("hidden");
     $("#question-layout").classList.add("hidden");
     renderTopicPicker();
@@ -40,10 +43,14 @@ function startTest(mode = "random", topic = null) {
     return;
   }
   let pool = mode === "mistakes" ? state.questions.filter((question) => state.errors.includes(question.id)) : topic ? state.questions.filter((question) => question.topic === topic) : state.questions;
-  state.currentTest = shuffle(pool).slice(0, Math.min(20, pool.length));
+  const testSize = mode === "topic" ? pool.length : Math.min(20, pool.length);
+  state.currentTest = shuffle(pool).slice(0, testSize);
   state.currentTest.forEach((question) => { delete question.userAnswer; });
   if (!state.currentTest.length) { alert("Тут поки немає питань. Спочатку пройди звичайний тест."); return; }
   $("#test-mode-label").textContent = mode === "mistakes" ? "Мої помилки" : topic ? topic : "Випадковий тест";
+  $(".question-nav").classList.remove("hidden");
+  $(".progress-track").classList.remove("hidden");
+  $(".test-progress-label").classList.remove("hidden");
   $("#topic-picker").classList.add("hidden");
   $("#question-layout").classList.remove("hidden");
   showView("test"); renderQuestion();
@@ -126,7 +133,7 @@ function init() {
   document.addEventListener("click", (event) => { const modeButton = event.target.closest("[data-mode]"); if (modeButton) startTest(modeButton.dataset.mode); const viewLink = event.target.closest("[data-view]"); if (viewLink && !viewLink.dataset.mode) showView(viewLink.dataset.view); });
   $("#next-button").addEventListener("click", () => { if (state.currentIndex === state.currentTest.length - 1) finishTest(); else { state.currentIndex += 1; renderQuestion(); } });
   $("#retry-button").addEventListener("click", () => startTest(state.mode, state.topic));
-  loadQuestions().catch((error) => { console.error(error); $("#question-title").textContent = "Не вдалося завантажити questions.json"; });
+  loadQuestions().catch((error) => { console.error(error); $("#question-title").textContent = "Не вдалося завантажити questions.parsed.json"; });
 }
 
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
