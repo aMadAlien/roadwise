@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Локальний тренажер тестів з правил дорожнього руху" />
+    <title>ПДР тренажер</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#home" data-view="home" aria-label="На головну">
+          <span class="brand-mark">↗</span>
+          <span>roadwise</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Основна навігація">
+          <a href="#home" data-view="home" class="nav-link is-active"><span>⌂</span>Головна</a>
+          <a href="#test" data-view="test" class="nav-link"><span>◌</span>Мій тест</a>
+          <a href="#results" data-view="results" class="nav-link"><span>▤</span>Результати</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="local-note"><span class="status-dot"></span><span>Дані зберігаються локально</span></div>
+          <div class="sidebar-version">v0.1 · без бекенду</div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="mobile-brand"><span class="brand-mark">↗</span> roadwise</div>
+          <div class="topbar-spacer"></div>
+          <div class="streak"><span class="streak-icon">✦</span><span><strong id="streak-count">0</strong> днів поспіль</span></div>
+          <button class="avatar" type="button" aria-label="Профіль">Ти</button>
+        </header>
+
+        <section id="home-view" class="view is-visible">
+          <div class="hero-heading">
+            <div>
+              <p class="eyebrow">Твій простір для підготовки</p>
+              <h1>Впевненість<br /><em>за кермом.</em></h1>
+            </div>
+            <div class="hero-road" aria-hidden="true"><span></span><span></span><span></span></div>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card stat-card-accent"><span class="stat-label">Пройдено тестів</span><strong id="tests-count">0</strong><span class="stat-foot">Перший крок вже поруч</span></article>
+            <article class="stat-card"><span class="stat-label">Середній результат</span><strong id="average-score">—</strong><span class="stat-foot">Після першої спроби</span></article>
+            <article class="stat-card"><span class="stat-label">Питань у базі</span><strong id="question-count">0</strong><span class="stat-foot">Можна доповнювати у JSON</span></article>
+          </div>
+
+          <div class="section-heading"><div><p class="eyebrow">Почати тренування</p><h2>Обери формат</h2></div><span class="section-index">01 / 03</span></div>
+          <div class="mode-grid">
+            <button class="mode-card mode-card-primary" type="button" data-mode="random">
+              <span class="mode-number">01</span><span class="mode-icon">⌁</span><span class="mode-title">Випадковий тест</span><span class="mode-description">20 питань з усієї бази</span><span class="mode-arrow">↗</span>
+            </button>
+            <button class="mode-card" type="button" data-mode="topic">
+              <span class="mode-number">02</span><span class="mode-icon">◫</span><span class="mode-title">За темою</span><span class="mode-description">Зосередься на конкретному розділі</span><span class="mode-arrow">↗</span>
+            </button>
+            <button class="mode-card" type="button" data-mode="mistakes">
+              <span class="mode-number">03</span><span class="mode-icon">↻</span><span class="mode-title">Мої помилки</span><span class="mode-description" id="mistakes-description">Повтори питання, де помилився</span><span class="mode-arrow">↗</span>
+            </button>
+          </div>
+
+          <div class="topics-section"><div class="section-heading compact"><div><p class="eyebrow">Структура бази</p><h2>Теми</h2></div><span class="topic-count" id="topic-count">0 тем</span></div><div class="topic-list" id="topic-list"></div></div>
+        </section>
+
+        <section id="test-view" class="view">
+          <div class="test-header"><button class="back-button" type="button" data-view="home">← <span>До меню</span></button><div class="test-mode-label" id="test-mode-label">Випадковий тест</div><div class="test-progress-label"><span id="current-number">1</span> / 20</div></div>
+          <div class="progress-track"><span id="progress-bar"></span></div>
+          <div class="question-nav" id="question-nav" aria-label="Навігація по питаннях"></div>
+          <div id="topic-picker" class="topic-picker hidden"></div>
+          <div class="question-layout" id="question-layout">
+            <div class="question-meta"><span class="question-topic" id="question-topic">Тема</span><span class="question-id" id="question-id">Q-001</span></div>
+            <h2 class="question-title" id="question-title">Завантаження питання...</h2>
+            <div class="answers-list" id="answers-list"></div>
+            <button class="next-button" type="button" id="next-button" disabled>Наступне питання <span>→</span></button>
+          </div>
+        </section>
+
+        <section id="results-view" class="view">
+          <div class="results-hero"><p class="eyebrow">Тест завершено</p><h1 id="results-title">Гарний старт.</h1><p id="results-subtitle">Твій результат збережено локально.</p></div>
+          <div class="result-score"><div class="score-ring"><strong id="result-percent">0%</strong><span>результат</span></div><div class="result-breakdown"><div><span class="result-dot correct"></span><strong id="correct-count">0</strong><span>правильних</span></div><div><span class="result-dot wrong"></span><strong id="wrong-count">0</strong><span>помилок</span></div><div><span class="result-dot neutral"></span><strong id="result-total">20</strong><span>усього</span></div></div></div>
+          <div class="results-actions"><button class="primary-button" type="button" id="retry-button">↻ Пройти ще раз</button><button class="secondary-button" type="button" data-view="home">До меню</button></div>
+          <div class="mistakes-preview" id="mistakes-preview"></div>
+        </section>
+      </main>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
