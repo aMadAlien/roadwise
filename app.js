@@ -81,7 +81,8 @@ function renderQuestion() {
     questionId: $("#question-id"),
     questionTitle: $("#question-title"),
     answersList: $("#answers-list"),
-    nextButton: $("#next-button")
+    nextButton: $("#next-button"),
+    reportButton: $("#report-button")
   };
   const missingElement = Object.entries(elements).find(([, element]) => !element);
   if (missingElement) throw new Error(`renderQuestion: не знайдено елемент ${missingElement[0]} у index.html`);
@@ -95,6 +96,7 @@ function renderQuestion() {
   elements.questionTopic.textContent = question.topic;
   elements.questionId.textContent = question.id;
   elements.questionTitle.textContent = question.question;
+  elements.reportButton.dataset.questionId = question.id;
   elements.answersList.innerHTML = question.answers.map((answer, index) => {
     const answerState = question.userAnswer === index ? question.userAnswer === question.correctAnswer ? "selected answer-correct" : "selected answer-wrong" : "";
     return `<button class="answer-option ${answerState}" type="button" data-answer="${index}"><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${answer}</span></button>`;
@@ -111,6 +113,45 @@ function renderQuestion() {
     elements.nextButton.disabled = false;
     renderQuestionNav();
   }));
+}
+
+function openReportModal() {
+  const question = state.currentTest[state.currentIndex];
+  $("#report-question").textContent = `${question.id}: ${question.question}`;
+  $("#report-message").value = "";
+  $("#report-status").textContent = "";
+  $("#report-status").className = "report-status";
+  $("#report-modal").classList.remove("hidden");
+  $("#report-message").focus();
+}
+
+function closeReportModal() { $("#report-modal").classList.add("hidden"); }
+
+async function submitReport(event) {
+  event.preventDefault();
+  const question = state.currentTest[state.currentIndex];
+  const message = $("#report-message").value.trim();
+  const submitButton = $("#report-submit");
+  const status = $("#report-status");
+  if (!message) return;
+  submitButton.disabled = true;
+  status.textContent = "Надсилаємо...";
+  status.className = "report-status";
+  try {
+    const response = await fetch("/api/report-question", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message, question: { id: question.id, topic: question.topic, text: question.question, selectedAnswer: question.userAnswer === undefined ? null : question.answers[question.userAnswer] } })
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "Не вдалося надіслати повідомлення");
+    status.textContent = "Дякуємо! Повідомлення надіслано.";
+    status.className = "report-status is-success";
+    setTimeout(closeReportModal, 1200);
+  } catch (error) {
+    status.textContent = error.message;
+    status.className = "report-status is-error";
+  } finally { submitButton.disabled = false; }
 }
 
 function renderQuestionNav() {
@@ -142,6 +183,11 @@ function init() {
   document.addEventListener("click", (event) => { const modeButton = event.target.closest("[data-mode]"); if (modeButton) startTest(modeButton.dataset.mode); const viewLink = event.target.closest("[data-view]"); if (viewLink && !viewLink.dataset.mode) showView(viewLink.dataset.view); });
   $("#next-button").addEventListener("click", () => { if (state.currentIndex === state.currentTest.length - 1) finishTest(); else { state.currentIndex += 1; renderQuestion(); } });
   $("#retry-button").addEventListener("click", () => startTest(state.mode, state.topic));
+  $("#report-button").addEventListener("click", openReportModal);
+  $("#report-close").addEventListener("click", closeReportModal);
+  $("#report-form").addEventListener("submit", submitReport);
+  $("#report-modal").addEventListener("click", (event) => { if (event.target.id === "report-modal") closeReportModal(); });
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeReportModal(); });
   loadQuestions().catch((error) => { console.error(error); $("#question-title").textContent = "Не вдалося завантажити questions.parsed.json"; });
 }
 

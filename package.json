@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "node server.mjs",
     "parse:questions": "node parse-questions.mjs",
     "parse": "tsx src/parser.ts",
     "import:answers": "tsx src/import-answers.ts",

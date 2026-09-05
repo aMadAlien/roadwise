@@ -78,6 +78,7 @@
             <div class="question-meta"><span class="question-topic" id="question-topic">Тема</span><span class="question-id" id="question-id">Q-001</span></div>
             <h2 class="question-title" id="question-title">Завантаження питання...</h2>
             <div class="answers-list" id="answers-list"></div>
+            <button class="report-button" type="button" id="report-button">⚠️ Помилка в питанні?</button>
             <button class="next-button" type="button" id="next-button" disabled>Наступне питання <span>→</span></button>
           </div>
         </section>
@@ -89,6 +90,20 @@
           <div class="mistakes-preview" id="mistakes-preview"></div>
         </section>
       </main>
+    </div>
+    <div class="report-modal hidden" id="report-modal" role="dialog" aria-modal="true" aria-labelledby="report-title">
+      <div class="report-dialog">
+        <button class="report-close" type="button" id="report-close" aria-label="Закрити">×</button>
+        <p class="eyebrow">Зворотний зв'язок</p>
+        <h2 id="report-title">Що не так із питанням?</h2>
+        <p class="report-question" id="report-question"></p>
+        <form id="report-form">
+          <label for="report-message">Опишіть помилку</label>
+          <textarea id="report-message" name="message" rows="4" maxlength="1000" placeholder="Наприклад: правильна відповідь не збігається з ПДР" required></textarea>
+          <button class="next-button" type="submit" id="report-submit">Надіслати повідомлення <span>→</span></button>
+          <p class="report-status" id="report-status" role="status"></p>
+        </form>
+      </div>
     </div>
     <script src="app.js"></script>
   </body>
