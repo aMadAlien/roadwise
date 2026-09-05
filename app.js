@@ -139,7 +139,7 @@ function renderQuestion() {
   elements.questionTitle.textContent = question.question;
   elements.questionImageWrapper.classList.toggle("hidden", !question.image);
   if (question.image) {
-    elements.questionImage.src = question.image;
+    elements.questionImage.src = '/roadwise' + question.image;
     elements.questionImage.alt = `Ілюстрація до питання ${question.id}`;
   } else {
     elements.questionImage.removeAttribute("src");
@@ -186,7 +186,7 @@ async function submitReport(event) {
   status.textContent = "Надсилаємо...";
   status.className = "report-status";
   try {
-    const response = await fetch("/api/report-question", {
+    const response = await fetch("api/report-question", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message, question: { id: question.id, topic: question.topic, text: question.question, selectedAnswer: question.userAnswer === undefined ? null : question.answers[question.userAnswer] } })

@@ -68,13 +68,21 @@ async function reportQuestion(request, response) {
       body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: telegramText({ ...payload, message: payload.message.trim() }).slice(0, 4000) })
     });
     if (!telegramResponse.ok) {
-      console.error("Telegram API error:", await telegramResponse.text());
-      sendJson(response, 502, { error: "Telegram не прийняв повідомлення" });
+      const telegramBody = await telegramResponse.text();
+      let telegramDescription = "Telegram не прийняв повідомлення";
+      try {
+        telegramDescription = JSON.parse(telegramBody).description || telegramDescription;
+      } catch {
+        // Keep the generic message when Telegram returns a non-JSON response.
+      }
+      console.error("Telegram API error:", telegramDescription);
+      sendJson(response, 502, { error: telegramDescription });
       return;
     }
     sendJson(response, 200, { ok: true });
   } catch (error) {
-    sendJson(response, error.message === "Повідомлення завелике" ? 413 : 400, { error: error.message || "Некоректний запит" });
+    const status = error.message === "Повідомлення завелике" ? 413 : error instanceof SyntaxError ? 400 : 502;
+    sendJson(response, status, { error: error.message || "Помилка підключення до Telegram" });
   }
 }
 
@@ -91,12 +99,13 @@ function serveStatic(request, response) {
 
 const server = http.createServer((request, response) => {
   response.corsHeaders = corsHeaders(request);
-  if (request.method === "OPTIONS" && request.url === "/api/report-question") {
+  const requestPath = new URL(request.url, "http://localhost").pathname.replace(/^\/roadwise/, "");
+  if (request.method === "OPTIONS" && requestPath === "/api/report-question") {
     response.writeHead(204, response.corsHeaders);
     response.end();
     return;
   }
-  if (request.method === "POST" && request.url === "/api/report-question") {
+  if (request.method === "POST" && requestPath === "/api/report-question") {
     reportQuestion(request, response);
   } else if (request.method === "GET") {
     serveStatic(request, response);
