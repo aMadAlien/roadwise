@@ -3,13 +3,13 @@
     "id": "PDF-0175",
     "topic": "ВИМОГИ ДО ВЕЛОСИПЕДИСТІВ",
     "question": "Чи має перевагу в русі велосипедист, якщо велосипедна доріжка перетинає дорогу поза перехрестям?",
-    "image": null,
+    "image": "/images/6_1.jpg",
     "answers": [
       "Не має.",
       "Має.",
       "Має перевагу, якщо автомобіль наближається зліва."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 39,
@@ -26,7 +26,7 @@
       "Дозволено на рамі велосипеда.",
       "Заборонено перевезення пасажирів на велосипеді (за винятком дітей до 7 років, які перевозяться на додатковому сидінні, обладнаному надійно закріпленими підніжками)."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 39,
@@ -43,7 +43,7 @@
       "Їздити, не тримаючись за кермо, та знімати ноги з педалей (підніжок).",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 39,
@@ -60,7 +60,7 @@
       "Дозволено тільки дітям до 7 років на дитячих велосипедах під наглядом дорослих.",
       "Дозволено в будь-якому випадку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 39,
@@ -77,7 +77,7 @@
       "Якщо проїзна частина звужена.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 39,
@@ -94,7 +94,7 @@
       "Рухатися у темну пору доби та в умовах недостатньої видимості — з вимкненим ліхтарем (фарою) чи без світлоповертачів.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 40,
@@ -110,7 +110,7 @@
       "Такі, які можна закріпити на його рамі або багажнику.",
       "Такі, які не заважають керувати велосипедом і не створюють перешкод іншим учасникам дорожнього руху."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 40,
@@ -127,7 +127,7 @@
       "80 – 100 м.",
       "150 – 200 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 40,
@@ -143,7 +143,7 @@
       "Один за одним або один біля одного, щоб не заважати іншим учасникам дорожнього руху.",
       "Один за одним, щоб не заважати іншим учасникам дорожнього руху."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 40,
@@ -159,7 +159,7 @@
       "Звуковий сигнал.",
       "Ліхтарі (фари)."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 40,
@@ -177,7 +177,7 @@
       "Під час руху в темний час доби і в умовах недостатньої видимості має бути встановлений і увімкнений ліхтар (фара).",
       "Відповіді 1, 2, 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 40,
@@ -195,7 +195,7 @@
       "З 14 років.",
       "З 16 років."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 40,
@@ -211,7 +211,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 40,
@@ -227,7 +227,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 42,
@@ -245,7 +245,7 @@
       "Дорожніми знаками.",
       "Відповіді 1 або 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 42,
@@ -256,12 +256,12 @@
     "id": "PDF-0190",
     "topic": "ВИМОГИ ДО ВЕЛОСИПЕДИСТІВ",
     "question": "Що позначає вказаний дорожній знак?",
-    "image": null,
+    "image": "/images/6_16.jpg",
     "answers": [
       "Суміжні пішохідний перехід та велосипедний переїзд.",
       "Велосипедний переїзд."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 42,
@@ -272,13 +272,13 @@
     "id": "PDF-0191",
     "topic": "ВИМОГИ ДО ВЕЛОСИПЕДИСТІВ",
     "question": "Що в даному випадку позначає ця горизонтальна розмітка ?",
-    "image": null,
+    "image": "/images/6_17.jpg",
     "answers": [
       "Велосипедний переїзд.",
       "Пішохідний перехід.",
       "Велосипедну смугу."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 42,
@@ -295,7 +295,7 @@
       "Рухатися по дорозі на велосипедах дозволяється особам, які досягли 14-річного віку.",
       "Велосипедистам дозволено рухатися по тротуарах і пішохідних доріжках (крім дітей до 7 років на дитячих велосипедах під наглядом дорослих)."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 42,
@@ -311,7 +311,7 @@
       "Так.",
       "Ні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 43,
@@ -327,7 +327,7 @@
       "Так.",
       "Ні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 43,
@@ -344,7 +344,7 @@
       "Водії мопедів.",
       "Ніхто з вищеперерахованих."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 43,
@@ -360,7 +360,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 43,

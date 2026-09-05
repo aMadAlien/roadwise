@@ -4,11 +4,14 @@
   "type": "module",
   "scripts": {
     "parse:questions": "node parse-questions.mjs",
-    "parse": "tsx src/parser.ts"
+    "parse": "tsx src/parser.ts",
+    "import:answers": "tsx src/import-answers.ts",
+    "apply:manual-answers": "tsx src/apply-manual-answers.ts"
   },
   "dependencies": {
     "@napi-rs/canvas": "^0.1.68",
-    "pdfjs-dist": "^5.4.149"
+    "pdfjs-dist": "^5.4.149",
+    "tesseract.js": "^7.0.0"
   },
   "devDependencies": {
     "@types/node": "^26.4.1",

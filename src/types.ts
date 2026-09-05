@@ -4,7 +4,7 @@ export interface Question {
   question: string;
   image: null;
   answers: string[];
-  correctAnswer: null;
+  correctAnswer: number | null;
   source: {
     file: string;
     page: number;

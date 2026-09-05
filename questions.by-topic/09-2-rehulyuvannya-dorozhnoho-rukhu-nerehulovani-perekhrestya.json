@@ -3,7 +3,7 @@
     "id": "PDF-0289",
     "topic": "2. РЕГУЛЮВАННЯ ДОРОЖНЬОГО РУХУ (НЕРЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
     "question": "У якому напрямку Вам дозволено рух?",
-    "image": null,
+    "image": "/images/9_1.jpg",
     "answers": [
       "У напрямку А.",
       "У напрямках А і В.",
@@ -11,7 +11,7 @@
       "У напрямках А, Б і В.",
       "У напрямку В."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 69,
@@ -22,13 +22,13 @@
     "id": "PDF-0290",
     "topic": "2. РЕГУЛЮВАННЯ ДОРОЖНЬОГО РУХУ (НЕРЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
     "question": "На якому малюнку зображено тимчасовий дорожній знак?",
-    "image": null,
+    "image": "/images/9_2.jpg",
     "answers": [
       "На малюнку 1.",
       "На малюнку 2.",
       "На малюнку 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 69,
@@ -39,13 +39,13 @@
     "id": "PDF-0291",
     "topic": "2. РЕГУЛЮВАННЯ ДОРОЖНЬОГО РУХУ (НЕРЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
     "question": "Яке значення має жовтий миготливий сигнал світлофора в даній ситуації?",
-    "image": null,
+    "image": "/images/9_3.jpg",
     "answers": [
       "Забороняє рух транспортних засобів.",
       "Дозволяє рух й інформує про наявність небезпечного нерегульованого перехрестя.",
       "Вимагає від водіїв обов'язкової зупинки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 69,
@@ -62,7 +62,7 @@
       "Вимогами дорожніх знаків.",
       "На розсуд водія."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 70,
@@ -79,7 +79,7 @@
       "Постійними дорожніми знаками.",
       "Вимогами дорожньої розмітки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 70,
@@ -98,7 +98,7 @@
       "Відповіді 1, 2 і 3.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 70,
@@ -117,7 +117,7 @@
       "Наказові знаки.",
       "Інформаційно-вказівні знаки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 70,
