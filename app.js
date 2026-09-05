@@ -1,4 +1,18 @@
-const state = { questions: [], currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]") };
+// Leave empty to make every loaded topic available. Use topic file IDs such as "01", "08-1", or "10".
+const AVAILABLE_TOPICS = [
+  "01-zahalni-polozhennya",
+  "02-obov-yazky-i-prava-vodiyiv-mekhanichnykh-transportnykh-zasobiv",
+  "03-rukh-transportnykh-zasobiv-iz-spetsialnymy-syhnalamy",
+  "04-obov-yazky-i-prava-pishokhodiv",
+  "05-obov-yazky-i-prava-pasazhyriv",
+  "06-vymohy-do-velosypedystiv",
+  "07-vymohy-do-osib-yaki-keruyut-huzhovym-transportom-i-pohonychiv-tvaryn",
+  "08-1-rehulyuvannya-dorozhnoho-rukhu-rehulovani-perekhrestya",
+  "09-2-rehulyuvannya-dorozhnoho-rukhu-nerehulovani-perekhrestya",
+  "10-poperedzhuvalni-syhnaly",
+
+];
+const state = { questions: [], topicIds: {}, currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]") };
 const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
 
@@ -13,11 +27,14 @@ async function loadQuestions() {
   if (failedTopic) throw new Error(`Не вдалося завантажити файл теми: ${failedTopic.status}`);
 
   const topicQuestions = await Promise.all(topicResponses.map((response) => response.json()));
+  state.topicIds = Object.fromEntries(topics.map((topic) => [topic.topic, topic.file.replace(/\.json$/, "")]));
   state.questions = topicQuestions.flat();
   renderHome();
 }
 
 function topics() { return [...new Set(state.questions.map((question) => question.topic))]; }
+function topicId(topic) { return state.topicIds[topic]; }
+function isTopicAvailable(topic) { return AVAILABLE_TOPICS.length === 0 || AVAILABLE_TOPICS.includes(topicId(topic)); }
 function saveProgress() { localStorage.setItem("roadwise-errors", JSON.stringify(state.errors)); localStorage.setItem("roadwise-history", JSON.stringify(state.history)); }
 
 function renderHome() {
@@ -40,6 +57,7 @@ function showView(viewName) {
 
 function startTest(mode = "random", topic = null) {
   state.mode = mode; state.topic = topic; state.currentIndex = 0; state.selectedAnswer = null;
+  if (mode === "topic" && topic && !isTopicAvailable(topic)) return;
   if (mode === "topic" && !topic) {
     $("#test-mode-label").textContent = "Обери тему";
     $("#question-nav").classList.add("hidden");
@@ -66,8 +84,13 @@ function startTest(mode = "random", topic = null) {
 }
 
 function renderTopicPicker() {
-  $("#topic-picker").innerHTML = `<p class="topic-picker-title">Питання з якої теми тренуємо?</p>${topics().map((topic) => `<button type="button" class="${topic === state.topic ? "is-selected" : ""}" data-topic="${topic}">${topic}<span>${state.questions.filter((question) => question.topic === topic).length}</span></button>`).join("")}`;
-  $("#topic-picker").querySelectorAll("button").forEach((button) => button.addEventListener("click", () => startTest("topic", button.dataset.topic)));
+  $("#topic-picker").innerHTML = `<p class="topic-picker-title">Питання з якої теми тренуємо?</p>${topics().map((topic) => {
+    const available = isTopicAvailable(topic);
+    const topicMeta = available ? `${state.questions.filter((question) => question.topic === topic).length} питань` : "🔒 У розробці";
+    const developmentNote = available ? "" : "<small>Ми вже працюємо над цією темою.</small>";
+    return `<button type="button" class="${topic === state.topic ? "is-selected" : ""} ${available ? "" : "is-unavailable"}" data-topic="${topic}" ${available ? "" : "disabled"}><span class="topic-picker-name">${topic}${developmentNote}</span><span style="flex-shrink: 0;">${topicMeta}</span></button>`;
+  }).join("")}`;
+  $("#topic-picker").querySelectorAll("button:not(:disabled)").forEach((button) => button.addEventListener("click", () => startTest("topic", button.dataset.topic)));
 }
 
 function renderQuestion() {
