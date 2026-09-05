@@ -12,7 +12,7 @@ const AVAILABLE_TOPICS = [
   "10-poperedzhuvalni-syhnaly",
 
 ];
-const state = { questions: [], topicIds: {}, currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]") };
+const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]") };
 const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
 
@@ -20,27 +20,36 @@ async function loadQuestions() {
   const indexResponse = await fetch("questions.by-topic/index.json");
   if (!indexResponse.ok) throw new Error(`Не вдалося завантажити індекс тем: ${indexResponse.status}`);
 
-  const topics = await indexResponse.json();
-  const topicResponses = await Promise.all(topics.map((topic) => fetch(`questions.by-topic/${encodeURIComponent(topic.file)}`)));
-
-  const failedTopic = topicResponses.find((response) => !response.ok);
-  if (failedTopic) throw new Error(`Не вдалося завантажити файл теми: ${failedTopic.status}`);
-
-  const topicQuestions = await Promise.all(topicResponses.map((response) => response.json()));
-  state.topicIds = Object.fromEntries(topics.map((topic) => [topic.topic, topic.file.replace(/\.json$/, "")]));
-  state.questions = topicQuestions.flat();
+  state.topicCatalog = await indexResponse.json();
+  state.topicIds = Object.fromEntries(state.topicCatalog.map((topic) => [topic.topic, topic.file.replace(/\.json$/, "")]));
   renderHome();
 }
 
-function topics() { return [...new Set(state.questions.map((question) => question.topic))]; }
+function topics() { return state.topicCatalog.map((topic) => topic.topic); }
 function topicId(topic) { return state.topicIds[topic]; }
 function isTopicAvailable(topic) { return AVAILABLE_TOPICS.length === 0 || AVAILABLE_TOPICS.includes(topicId(topic)); }
+function availableTopicCatalog() { return state.topicCatalog.filter((topic) => isTopicAvailable(topic.topic)); }
+function topicEntry(topic) { return state.topicCatalog.find((item) => item.topic === topic); }
+
+async function loadTopicQuestions(topicEntry) {
+  if (state.topicCache.has(topicEntry.file)) return state.topicCache.get(topicEntry.file);
+  const response = await fetch(`questions.by-topic/${encodeURIComponent(topicEntry.file)}`);
+  if (!response.ok) throw new Error(`Не вдалося завантажити файл теми: ${response.status}`);
+  const questions = await response.json();
+  state.topicCache.set(topicEntry.file, questions);
+  return questions;
+}
+
+async function loadQuestionsForTopics(topicEntries) {
+  const questionGroups = await Promise.all(topicEntries.map((entry) => loadTopicQuestions(entry)));
+  return questionGroups.flat();
+}
 function saveProgress() { localStorage.setItem("roadwise-errors", JSON.stringify(state.errors)); localStorage.setItem("roadwise-history", JSON.stringify(state.history)); }
 
 function renderHome() {
   const topicList = $("#topic-list");
-  const counts = Object.fromEntries(topics().map((topic) => [topic, state.questions.filter((question) => question.topic === topic).length]));
-  $("#question-count").textContent = state.questions.length;
+  const counts = Object.fromEntries(state.topicCatalog.map((topic) => [topic.topic, topic.count]));
+  $("#question-count").textContent = state.topicCatalog.reduce((total, topic) => total + topic.count, 0);
   $("#topic-count").textContent = `${topics().length} тем`;
   $("#tests-count").textContent = state.history.length;
   const average = state.history.length ? Math.round(state.history.reduce((sum, item) => sum + item.percent, 0) / state.history.length) : null;
@@ -55,7 +64,7 @@ function showView(viewName) {
   document.querySelectorAll("[data-view]").forEach((link) => link.classList.toggle("is-active", link.dataset.view === viewName));
 }
 
-function startTest(mode = "random", topic = null) {
+async function startTest(mode = "random", topic = null) {
   state.mode = mode; state.topic = topic; state.currentIndex = 0; state.selectedAnswer = null;
   if (mode === "topic" && topic && !isTopicAvailable(topic)) return;
   if (mode === "topic" && !topic) {
@@ -67,6 +76,13 @@ function startTest(mode = "random", topic = null) {
     $("#question-layout").classList.add("hidden");
     renderTopicPicker();
     showView("test");
+    return;
+  }
+  const topicEntries = topic ? [topicEntry(topic)] : availableTopicCatalog();
+  try {
+    state.questions = await loadQuestionsForTopics(topicEntries.filter(Boolean));
+  } catch (error) {
+    alert(error.message);
     return;
   }
   let pool = mode === "mistakes" ? state.questions.filter((question) => state.errors.includes(question.id)) : topic ? state.questions.filter((question) => question.topic === topic) : state.questions;
@@ -86,7 +102,7 @@ function startTest(mode = "random", topic = null) {
 function renderTopicPicker() {
   $("#topic-picker").innerHTML = `<p class="topic-picker-title">Питання з якої теми тренуємо?</p>${topics().map((topic) => {
     const available = isTopicAvailable(topic);
-    const topicMeta = available ? `${state.questions.filter((question) => question.topic === topic).length} питань` : "🔒 У розробці";
+    const topicMeta = available ? `${topicEntry(topic).count} питань` : "🔒 У розробці";
     const developmentNote = available ? "" : "<small>Ми вже працюємо над цією темою.</small>";
     return `<button type="button" class="${topic === state.topic ? "is-selected" : ""} ${available ? "" : "is-unavailable"}" data-topic="${topic}" ${available ? "" : "disabled"}><span class="topic-picker-name">${topic}${developmentNote}</span><span style="flex-shrink: 0;">${topicMeta}</span></button>`;
   }).join("")}`;
@@ -103,6 +119,8 @@ function renderQuestion() {
     questionTopic: $("#question-topic"),
     questionId: $("#question-id"),
     questionTitle: $("#question-title"),
+    questionImageWrapper: $("#question-image-wrapper"),
+    questionImage: $("#question-image"),
     answersList: $("#answers-list"),
     nextButton: $("#next-button"),
     reportButton: $("#report-button")
@@ -119,6 +137,13 @@ function renderQuestion() {
   elements.questionTopic.textContent = question.topic;
   elements.questionId.textContent = question.id;
   elements.questionTitle.textContent = question.question;
+  elements.questionImageWrapper.classList.toggle("hidden", !question.image);
+  if (question.image) {
+    elements.questionImage.src = question.image;
+    elements.questionImage.alt = `Ілюстрація до питання ${question.id}`;
+  } else {
+    elements.questionImage.removeAttribute("src");
+  }
   elements.reportButton.dataset.questionId = question.id;
   elements.answersList.innerHTML = question.answers.map((answer, index) => {
     const answerState = question.userAnswer === index ? question.userAnswer === question.correctAnswer ? "selected answer-correct" : "selected answer-wrong" : "";

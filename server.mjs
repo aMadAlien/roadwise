@@ -47,8 +47,8 @@ function telegramText(payload) {
   ].join("\n\n");
 }
 
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '7867801663:AAElpy-upi5EUfLeX9-_GsusTegs6OE1iWo';
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '741847718';
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 async function reportQuestion(request, response) {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
