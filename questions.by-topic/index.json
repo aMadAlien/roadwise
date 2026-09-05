@@ -80,12 +80,12 @@
     "count": 97
   },
   {
-    "topic": "1. ПРОЇЗД ПЕРЕХРЕСТЬ (РЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
+    "topic": "16.1. ПРОЇЗД ПЕРЕХРЕСТЬ (РЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
     "file": "17-1-proyizd-perekhrest-rehulovani-perekhrestya.json",
     "count": 36
   },
   {
-    "topic": "2. ПРОЇЗД ПЕРЕХРЕСТЬ (НЕРЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
+    "topic": "16.2. ПРОЇЗД ПЕРЕХРЕСТЬ (НЕРЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
     "file": "18-2-proyizd-perekhrest-nerehulovani-perekhrestya.json",
     "count": 109
   },
@@ -182,22 +182,7 @@
   {
     "topic": "ОСНОВИ БЕЗПЕЧНОГО ВОДІННЯ",
     "file": "37-osnovy-bezpechnoho-vodinnya.json",
-    "count": 115
-  },
-  {
-    "topic": "Водій, який має намір Вас обігнати, раніше перешкоджав Вам виконати обгін. У цьому випадку Ви:",
-    "file": "38-vodiy-yakyy-maye-namir-vas-obihnaty-ranishe-pereshkodzhav-vam-vykonaty-obhin-u-tsomu-vypadku-vy.json",
-    "count": 1
-  },
-  {
-    "topic": "Рухаючись у населеному пункті, Ви бачите як водій, що рухається попереду, створив аварійну ситуацію. Для того, щоб запобігти ДТП Ви можете подати звуковий сигнал:",
-    "file": "39-rukhayuchys-u-naselenomu-punkti-vy-bachyte-yak-vodiy-shcho-rukhayetsya-poperedu-stvoryv-avariynu-sytuatsiyu-dlya-toho-shchob-zapobihty-dtp-vy-mozhete-podaty-zvukovyy-syhnal.json",
-    "count": 11
-  },
-  {
-    "topic": "Рухаючись у заторі Ви сповільнюєте рух, наближаючись до велосипедиста. Водії позаду сигналять, вимагаючи від Вас рухатись швидше та обігнати велосипедиста. Ваші дії:",
-    "file": "40-rukhayuchys-u-zatori-vy-spovilnyuyete-rukh-nablyzhayuchys-do-velosypedysta-vodiyi-pozadu-syhnalyat-vymahayuchy-vid-vas-rukhatys-shvydshe-ta-obihnaty-velosypedysta-vashi-diyi.json",
-    "count": 41
+    "count": 171
   },
   {
     "topic": "ОСНОВИ ПРАВА В ОБЛАСТІ ДОРОЖНЬОГО РУХУ",

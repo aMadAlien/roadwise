@@ -25,7 +25,7 @@ async function loadQuestions() {
   renderHome();
 }
 
-function topics() { return state.topicCatalog.map((topic) => topic.topic); }
+function topics() { return availableTopicCatalog().map((topic) => topic.topic); }
 function topicId(topic) { return state.topicIds[topic]; }
 function isTopicAvailable(topic) { return AVAILABLE_TOPICS.length === 0 || AVAILABLE_TOPICS.includes(topicId(topic)); }
 function availableTopicCatalog() { return state.topicCatalog.filter((topic) => isTopicAvailable(topic.topic)); }
@@ -49,7 +49,7 @@ function saveProgress() { localStorage.setItem("roadwise-errors", JSON.stringify
 function renderHome() {
   const topicList = $("#topic-list");
   const counts = Object.fromEntries(state.topicCatalog.map((topic) => [topic.topic, topic.count]));
-  $("#question-count").textContent = state.topicCatalog.reduce((total, topic) => total + topic.count, 0);
+  $("#question-count").textContent = availableTopicCatalog().reduce((total, topic) => total + topic.count, 0);
   $("#topic-count").textContent = `${topics().length} тем`;
   $("#tests-count").textContent = state.history.length;
   const average = state.history.length ? Math.round(state.history.reduce((sum, item) => sum + item.percent, 0) / state.history.length) : null;
@@ -90,7 +90,7 @@ async function startTest(mode = "random", topic = null) {
   state.currentTest = shuffle(pool).slice(0, testSize);
   state.currentTest.forEach((question) => { delete question.userAnswer; });
   if (!state.currentTest.length) { alert("Тут поки немає питань. Спочатку пройди звичайний тест."); return; }
-  $("#test-mode-label").textContent = mode === "mistakes" ? "Мої помилки" : topic ? topic : "Випадковий тест";
+  $("#test-mode-label").textContent = mode === "mistakes" ? "Мої помилки" : topic ? '' : "Випадковий тест";
   $(".question-nav").classList.remove("hidden");
   $(".progress-track").classList.remove("hidden");
   $(".test-progress-label").classList.remove("hidden");
