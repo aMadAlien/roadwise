@@ -5,7 +5,8 @@ import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 import type { Question } from "./types";
 
 const PDF_PATH = path.resolve("questions.pdf");
-const OUTPUT_PATH = path.resolve("questions.json");
+const OUTPUT_PATH = path.resolve("questions.parsed.json");
+const TOPICS_OUTPUT_DIR = path.resolve("questions.by-topic");
 
 const MAX_PAGES = 700;
 
@@ -365,6 +366,99 @@ function finalizeQuestion(draft: QuestionDraft): Question {
   };
 }
 
+function slugifyTopic(topic: string): string {
+  const transliteration: Record<string, string> = {
+    а: "a",
+    б: "b",
+    в: "v",
+    г: "h",
+    ґ: "g",
+    д: "d",
+    е: "e",
+    є: "ye",
+    ж: "zh",
+    з: "z",
+    и: "y",
+    і: "i",
+    ї: "yi",
+    й: "y",
+    к: "k",
+    л: "l",
+    м: "m",
+    н: "n",
+    о: "o",
+    п: "p",
+    р: "r",
+    с: "s",
+    т: "t",
+    у: "u",
+    ф: "f",
+    х: "kh",
+    ц: "ts",
+    ч: "ch",
+    ш: "sh",
+    щ: "shch",
+    ь: "",
+    ю: "yu",
+    я: "ya",
+  };
+
+  return topic
+    .toLowerCase()
+    .split("")
+    .map((character) => transliteration[character] ?? character)
+    .join("")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "") || "bez-temy";
+}
+
+async function writeTopicFiles(questions: Question[]): Promise<void> {
+  const questionsByTopic = new Map<string, Question[]>();
+
+  for (const question of questions) {
+    const topicQuestions = questionsByTopic.get(question.topic) ?? [];
+    topicQuestions.push(question);
+    questionsByTopic.set(question.topic, topicQuestions);
+  }
+
+  await fs.rm(TOPICS_OUTPUT_DIR, { recursive: true, force: true });
+  await fs.mkdir(TOPICS_OUTPUT_DIR, { recursive: true });
+
+  const topics = [...questionsByTopic.entries()].map(([topic, topicQuestions], index) => {
+    const fileName = `${String(index + 1).padStart(2, "0")}-${slugifyTopic(topic)}.json`;
+
+    return {
+      topic,
+      file: fileName,
+      count: topicQuestions.length,
+      questions: topicQuestions,
+    };
+  });
+
+  await Promise.all(
+    topics.map(({ file, questions: topicQuestions }) =>
+      fs.writeFile(
+        path.join(TOPICS_OUTPUT_DIR, file),
+        JSON.stringify(topicQuestions, null, 2),
+        "utf-8",
+      ),
+    ),
+  );
+
+  await fs.writeFile(
+    path.join(TOPICS_OUTPUT_DIR, "index.json"),
+    JSON.stringify(
+      topics.map(({ topic, file, count }) => ({ topic, file, count })),
+      null,
+      2,
+    ),
+    "utf-8",
+  );
+
+  console.log(`Topic files written: ${topics.length}`);
+  console.log(`Topics output: ${TOPICS_OUTPUT_DIR}`);
+}
+
 /**
  * Тимчасово використовуємо глобальний номер.
  *
@@ -393,6 +487,8 @@ async function main() {
     JSON.stringify(questions, null, 2),
     "utf-8",
   );
+
+  await writeTopicFiles(questions);
 
   console.log(`Questions parsed: ${questions.length}`);
   console.log(`Output: ${OUTPUT_PATH}`);

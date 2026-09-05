@@ -3,8 +3,17 @@ const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
 
 async function loadQuestions() {
-  const response = await fetch("questions.parsed.json");
-  state.questions = await response.json();
+  const indexResponse = await fetch("questions.by-topic/index.json");
+  if (!indexResponse.ok) throw new Error(`Не вдалося завантажити індекс тем: ${indexResponse.status}`);
+
+  const topics = await indexResponse.json();
+  const topicResponses = await Promise.all(topics.map((topic) => fetch(`questions.by-topic/${encodeURIComponent(topic.file)}`)));
+
+  const failedTopic = topicResponses.find((response) => !response.ok);
+  if (failedTopic) throw new Error(`Не вдалося завантажити файл теми: ${failedTopic.status}`);
+
+  const topicQuestions = await Promise.all(topicResponses.map((response) => response.json()));
+  state.questions = topicQuestions.flat();
   renderHome();
 }
 

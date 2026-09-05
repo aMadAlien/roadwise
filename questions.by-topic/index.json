@@ -1,0 +1,342 @@
+[
+  {
+    "topic": "ЗАГАЛЬНІ ПОЛОЖЕННЯ",
+    "file": "01-zahalni-polozhennya.json",
+    "count": 79
+  },
+  {
+    "topic": "ОБОВ'ЯЗКИ І ПРАВА ВОДІЇВ МЕХАНІЧНИХ ТРАНСПОРТНИХ ЗАСОБІВ",
+    "file": "02-obov-yazky-i-prava-vodiyiv-mekhanichnykh-transportnykh-zasobiv.json",
+    "count": 37
+  },
+  {
+    "topic": "РУХ ТРАНСПОРТНИХ ЗАСОБІВ ІЗ СПЕЦІАЛЬНИМИ СИГНАЛАМИ",
+    "file": "03-rukh-transportnykh-zasobiv-iz-spetsialnymy-syhnalamy.json",
+    "count": 16
+  },
+  {
+    "topic": "ОБОВ'ЯЗКИ І ПРАВА ПІШОХОДІВ",
+    "file": "04-obov-yazky-i-prava-pishokhodiv.json",
+    "count": 26
+  },
+  {
+    "topic": "ОБОВ'ЯЗКИ І ПРАВА ПАСАЖИРІВ",
+    "file": "05-obov-yazky-i-prava-pasazhyriv.json",
+    "count": 16
+  },
+  {
+    "topic": "ВИМОГИ ДО ВЕЛОСИПЕДИСТІВ",
+    "file": "06-vymohy-do-velosypedystiv.json",
+    "count": 22
+  },
+  {
+    "topic": "ВИМОГИ ДО ОСІБ, ЯКІ КЕРУЮТЬ ГУЖОВИМ ТРАНСПОРТОМ, І ПОГОНИЧІВ ТВАРИН",
+    "file": "07-vymohy-do-osib-yaki-keruyut-huzhovym-transportom-i-pohonychiv-tvaryn.json",
+    "count": 8
+  },
+  {
+    "topic": "1. РЕГУЛЮВАННЯ ДОРОЖНЬОГО РУХУ (РЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
+    "file": "08-1-rehulyuvannya-dorozhnoho-rukhu-rehulovani-perekhrestya.json",
+    "count": 84
+  },
+  {
+    "topic": "2. РЕГУЛЮВАННЯ ДОРОЖНЬОГО РУХУ (НЕРЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
+    "file": "09-2-rehulyuvannya-dorozhnoho-rukhu-nerehulovani-perekhrestya.json",
+    "count": 7
+  },
+  {
+    "topic": "ПОПЕРЕДЖУВАЛЬНІ СИГНАЛИ",
+    "file": "10-poperedzhuvalni-syhnaly.json",
+    "count": 60
+  },
+  {
+    "topic": "ПОЧАТОК РУХУ ТА ЗМІНА ЙОГО НАПРЯМКУ",
+    "file": "11-pochatok-rukhu-ta-zmina-yoho-napryamku.json",
+    "count": 76
+  },
+  {
+    "topic": "РОЗТАШУВАННЯ ТРАНСПОРТНИХ ЗАСОБІВ НА ДОРОЗІ",
+    "file": "12-roztashuvannya-transportnykh-zasobiv-na-dorozi.json",
+    "count": 39
+  },
+  {
+    "topic": "ШВИДКІСТЬ РУХУ",
+    "file": "13-shvydkist-rukhu.json",
+    "count": 41
+  },
+  {
+    "topic": "ДИСТАНЦІЯ, ІНТЕРВАЛ, ЗУСТРІЧНИЙ РОЗ'ЇЗД",
+    "file": "14-dystantsiya-interval-zustrichnyy-roz-yizd.json",
+    "count": 13
+  },
+  {
+    "topic": "ОБГІН",
+    "file": "15-obhin.json",
+    "count": 56
+  },
+  {
+    "topic": "ЗУПИНКА І СТОЯНКА",
+    "file": "16-zupynka-i-stoyanka.json",
+    "count": 97
+  },
+  {
+    "topic": "1. ПРОЇЗД ПЕРЕХРЕСТЬ (РЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
+    "file": "17-1-proyizd-perekhrest-rehulovani-perekhrestya.json",
+    "count": 36
+  },
+  {
+    "topic": "2. ПРОЇЗД ПЕРЕХРЕСТЬ (НЕРЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
+    "file": "18-2-proyizd-perekhrest-nerehulovani-perekhrestya.json",
+    "count": 109
+  },
+  {
+    "topic": "ПЕРЕВАГИ МАРШРУТНИХ ТРАНСПОРТНИХ ЗАСОБІВ",
+    "file": "19-perevahy-marshrutnykh-transportnykh-zasobiv.json",
+    "count": 11
+  },
+  {
+    "topic": "ПРОЇЗД ПІШОХІДНИХ ПЕРЕХОДІВ І ЗУПИНОК ТРАНСПОРТНИХ ЗАСОБІВ",
+    "file": "20-proyizd-pishokhidnykh-perekhodiv-i-zupynok-transportnykh-zasobiv.json",
+    "count": 19
+  },
+  {
+    "topic": "КОРИСТУВАННЯ ЗОВНІШНІМИ СВІТЛОВИМИ ПРИЛАДАМИ",
+    "file": "21-korystuvannya-zovnishnimy-svitlovymy-pryladamy.json",
+    "count": 33
+  },
+  {
+    "topic": "РУХ ЧЕРЕЗ ЗАЛІЗНИЧНІ ПЕРЕЇЗДИ",
+    "file": "22-rukh-cherez-zaliznychni-pereyizdy.json",
+    "count": 31
+  },
+  {
+    "topic": "ПЕРЕВЕЗЕННЯ ПАСАЖИРІВ",
+    "file": "23-perevezennya-pasazhyriv.json",
+    "count": 12
+  },
+  {
+    "topic": "ПЕРЕВЕЗЕННЯ ВАНТАЖУ",
+    "file": "24-perevezennya-vantazhu.json",
+    "count": 6
+  },
+  {
+    "topic": "БУКСИРУВАННЯ ТА ЕКСПЛУАТАЦІЯ ТРАНСПОРТНИХ СОСТАВІВ",
+    "file": "25-buksyruvannya-ta-ekspluatatsiya-transportnykh-sostaviv.json",
+    "count": 20
+  },
+  {
+    "topic": "НАВЧАЛЬНА ЇЗДА",
+    "file": "26-navchalna-yizda.json",
+    "count": 14
+  },
+  {
+    "topic": "РУХ ТРАНСПОРТНИХ ЗАСОБІВ У КОЛОНАХ",
+    "file": "27-rukh-transportnykh-zasobiv-u-kolonakh.json",
+    "count": 8
+  },
+  {
+    "topic": "РУХ У ЖИТЛОВІЙ ТА ПІШОХІДНІЙ ЗОНІ",
+    "file": "28-rukh-u-zhytloviy-ta-pishokhidniy-zoni.json",
+    "count": 15
+  },
+  {
+    "topic": "РУХ ПО АВТОМАГІСТРАЛЯХ",
+    "file": "29-rukh-po-avtomahistralyakh.json",
+    "count": 13
+  },
+  {
+    "topic": "РУХ ПО ГІРСЬКИХ ДОРОГАХ І НА КРУТИХ СПУСКАХ",
+    "file": "30-rukh-po-hirskykh-dorohakh-i-na-krutykh-spuskakh.json",
+    "count": 8
+  },
+  {
+    "topic": "МІЖНАРОДНИЙ РУХ",
+    "file": "31-mizhnarodnyy-rukh.json",
+    "count": 1
+  },
+  {
+    "topic": "НОМЕРНІ, РОЗПІЗНАВАЛЬНІ ЗНАКИ, НАПИСИ І ПОЗНАЧЕННЯ",
+    "file": "32-nomerni-rozpiznavalni-znaky-napysy-i-poznachennya.json",
+    "count": 14
+  },
+  {
+    "topic": "ТЕХНІЧНИЙ СТАН ТРАНСПОРТНИХ ЗАСОБІВ ТА ЇХ ОБЛАДНАННЯ",
+    "file": "33-tekhnichnyy-stan-transportnykh-zasobiv-ta-yikh-obladnannya.json",
+    "count": 18
+  },
+  {
+    "topic": "ОКРЕМІ ПИТАННЯ ДОРОЖНЬОГО РУХУ, ЩО ПОТРЕБУЮТЬ УЗГОДЖЕННЯ",
+    "file": "34-okremi-pytannya-dorozhnoho-rukhu-shcho-potrebuyut-uzhodzhennya.json",
+    "count": 5
+  },
+  {
+    "topic": "ДОРОЖНІ ЗНАКИ",
+    "file": "35-dorozhni-znaky.json",
+    "count": 358
+  },
+  {
+    "topic": "ДОРОЖНЯ РОЗМІТКА",
+    "file": "36-dorozhnya-rozmitka.json",
+    "count": 37
+  },
+  {
+    "topic": "ОСНОВИ БЕЗПЕЧНОГО ВОДІННЯ",
+    "file": "37-osnovy-bezpechnoho-vodinnya.json",
+    "count": 115
+  },
+  {
+    "topic": "Водій, який має намір Вас обігнати, раніше перешкоджав Вам виконати обгін. У цьому випадку Ви:",
+    "file": "38-vodiy-yakyy-maye-namir-vas-obihnaty-ranishe-pereshkodzhav-vam-vykonaty-obhin-u-tsomu-vypadku-vy.json",
+    "count": 1
+  },
+  {
+    "topic": "Рухаючись у населеному пункті, Ви бачите як водій, що рухається попереду, створив аварійну ситуацію. Для того, щоб запобігти ДТП Ви можете подати звуковий сигнал:",
+    "file": "39-rukhayuchys-u-naselenomu-punkti-vy-bachyte-yak-vodiy-shcho-rukhayetsya-poperedu-stvoryv-avariynu-sytuatsiyu-dlya-toho-shchob-zapobihty-dtp-vy-mozhete-podaty-zvukovyy-syhnal.json",
+    "count": 11
+  },
+  {
+    "topic": "Рухаючись у заторі Ви сповільнюєте рух, наближаючись до велосипедиста. Водії позаду сигналять, вимагаючи від Вас рухатись швидше та обігнати велосипедиста. Ваші дії:",
+    "file": "40-rukhayuchys-u-zatori-vy-spovilnyuyete-rukh-nablyzhayuchys-do-velosypedysta-vodiyi-pozadu-syhnalyat-vymahayuchy-vid-vas-rukhatys-shvydshe-ta-obihnaty-velosypedysta-vashi-diyi.json",
+    "count": 41
+  },
+  {
+    "topic": "ОСНОВИ ПРАВА В ОБЛАСТІ ДОРОЖНЬОГО РУХУ",
+    "file": "41-osnovy-prava-v-oblasti-dorozhnoho-rukhu.json",
+    "count": 8
+  },
+  {
+    "topic": "НАДАННЯ ДОМЕДИЧНОЇ ДОПОМОГИ",
+    "file": "42-nadannya-domedychnoyi-dopomohy.json",
+    "count": 60
+  },
+  {
+    "topic": "ЕТИКА ВОДІННЯ, КУЛЬТУРА ТА ВІДПОЧИНОК ВОДІЯ",
+    "file": "43-etyka-vodinnya-kultura-ta-vidpochynok-vodiya.json",
+    "count": 14
+  },
+  {
+    "topic": "ЄВРОПРОТОКОЛ",
+    "file": "44-yevroprotokol.json",
+    "count": 6
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ А1, А (ЗАГАЛЬНІ)",
+    "file": "45-dodatkovi-pytannya-shchodo-katehoriy-a1-a-zahalni.json",
+    "count": 31
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ А1, А (БУДОВА І ТЕРМІНИ)",
+    "file": "46-dodatkovi-pytannya-shchodo-katehoriy-a1-a-budova-i-terminy.json",
+    "count": 13
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ А1, А (ЮРИДИЧНА ВІДПОВІДАЛЬНІСТЬ)",
+    "file": "47-dodatkovi-pytannya-shchodo-katehoriy-a1-a-yurydychna-vidpovidalnist.json",
+    "count": 20
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ А1, А (БЕЗПЕКА)",
+    "file": "48-dodatkovi-pytannya-shchodo-katehoriy-a1-a-bezpeka.json",
+    "count": 35
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ В1, В (ЗАГАЛЬНІ)",
+    "file": "49-dodatkovi-pytannya-shchodo-katehoriy-v1-v-zahalni.json",
+    "count": 16
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ В1, В (БУДОВА І ТЕРМІНИ)",
+    "file": "50-dodatkovi-pytannya-shchodo-katehoriy-v1-v-budova-i-terminy.json",
+    "count": 33
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ В1, В (ЮРИДИЧНА ВІДПОВІДАЛЬНІСТЬ)",
+    "file": "51-dodatkovi-pytannya-shchodo-katehoriy-v1-v-yurydychna-vidpovidalnist.json",
+    "count": 9
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ В1, В (БЕЗПЕКА)",
+    "file": "52-dodatkovi-pytannya-shchodo-katehoriy-v1-v-bezpeka.json",
+    "count": 7
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ C1,C (ЗАГАЛЬНІ)",
+    "file": "53-dodatkovi-pytannya-shchodo-katehoriy-c1-c-zahalni.json",
+    "count": 93
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ C1,C (БУДОВА І ТЕРМІНИ)",
+    "file": "54-dodatkovi-pytannya-shchodo-katehoriy-c1-c-budova-i-terminy.json",
+    "count": 55
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ C1,C (ЮРИДИЧНА ВІДПОВІДАЛЬНІСТЬ)",
+    "file": "55-dodatkovi-pytannya-shchodo-katehoriy-c1-c-yurydychna-vidpovidalnist.json",
+    "count": 12
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ C1,C (БЕЗПЕКА)",
+    "file": "56-dodatkovi-pytannya-shchodo-katehoriy-c1-c-bezpeka.json",
+    "count": 43
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ D1, D (ЗАГАЛЬНІ)",
+    "file": "57-dodatkovi-pytannya-shchodo-katehoriy-d1-d-zahalni.json",
+    "count": 68
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДОКАТЕГОРІЙD1, D (БУДОВА І ТЕРМІНИ)",
+    "file": "58-dodatkovi-pytannya-shchodokatehoriyd1-d-budova-i-terminy.json",
+    "count": 45
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ D1, D (ЮРИДИЧНА ВІДПОВІДАЛЬНІСТЬ)",
+    "file": "59-dodatkovi-pytannya-shchodo-katehoriy-d1-d-yurydychna-vidpovidalnist.json",
+    "count": 36
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ D1, D (БЕЗПЕКА)",
+    "file": "60-dodatkovi-pytannya-shchodo-katehoriy-d1-d-bezpeka.json",
+    "count": 31
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ BE, C1E, CE, D1E, DE (ЗАГАЛЬНІ)",
+    "file": "61-dodatkovi-pytannya-shchodo-katehoriy-be-c1e-ce-d1e-de-zahalni.json",
+    "count": 21
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ BE, C1E, CE, D1E, DE (БУДОВА И ТЕРМІНИ)",
+    "file": "62-dodatkovi-pytannya-shchodo-katehoriy-be-c1e-ce-d1e-de-budova-y-terminy.json",
+    "count": 5
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ BE, C1E, CE, D1E, DE (ЮРИДИЧНА ВІДПОВІЛЬНІСТЬ)",
+    "file": "63-dodatkovi-pytannya-shchodo-katehoriy-be-c1e-ce-d1e-de-yurydychna-vidpovilnist.json",
+    "count": 3
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ BE, C1E, CE, D1E, DE (БЕЗПЕКА)",
+    "file": "64-dodatkovi-pytannya-shchodo-katehoriy-be-c1e-ce-d1e-de-bezpeka.json",
+    "count": 15
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЇ T (ЗАГАЛЬНІ)",
+    "file": "65-dodatkovi-pytannya-shchodo-katehoriyi-t-zahalni.json",
+    "count": 18
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЇ Т (БУДОВА І ТЕРМІНИ)",
+    "file": "66-dodatkovi-pytannya-shchodo-katehoriyi-t-budova-i-terminy.json",
+    "count": 7
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЇ Т (ЮРИДИЧНА ВІДПОВІЛЬНІСТЬ)",
+    "file": "67-dodatkovi-pytannya-shchodo-katehoriyi-t-yurydychna-vidpovilnist.json",
+    "count": 16
+  },
+  {
+    "topic": "ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЇ Т (БЕЗПЕКА)",
+    "file": "68-dodatkovi-pytannya-shchodo-katehoriyi-t-bezpeka.json",
+    "count": 12
+  }
+]
