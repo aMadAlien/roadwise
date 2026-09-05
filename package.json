@@ -3,10 +3,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "parse:questions": "node parse-questions.mjs"
+    "parse:questions": "node parse-questions.mjs",
+    "parse": "tsx src/parser.ts"
   },
   "dependencies": {
     "@napi-rs/canvas": "^0.1.68",
     "pdfjs-dist": "^5.4.149"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.1",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
   }
 }
