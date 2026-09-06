@@ -13,6 +13,13 @@ const AVAILABLE_TOPICS = [
   "11-pochatok-rukhu-ta-zmina-yoho-napryamku",
   "12-roztashuvannya-transportnykh-zasobiv-na-dorozi",
 
+  "14-dystantsiya-interval-zustrichnyy-roz-yizd",
+
+  "17-1-proyizd-perekhrest-rehulovani-perekhrestya",
+
+  "19-perevahy-marshrutnykh-transportnykh-zasobiv",
+  "20-proyizd-pishokhidnykh-perekhodiv-i-zupynok-transportnykh-zasobiv",
+
 
 ];
 const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]") };
