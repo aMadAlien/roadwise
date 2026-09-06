@@ -10,11 +10,17 @@ const maxBodySize = 20_000;
 const analyticsPath = path.join(root, "analytics.json");
 const analyticsKey = process.env.ANALYTICS_KEY;
 const criticalAlertCooldownMs = 5 * 60 * 1000;
+const reportRateLimitMax = Number(process.env.REPORT_RATE_LIMIT_MAX || 5);
+const reportRateLimitWindowMs = Number(process.env.REPORT_RATE_LIMIT_WINDOW_MS || 10 * 60 * 1000);
+const telegramRateLimitMax = Number(process.env.TELEGRAM_RATE_LIMIT_MAX || 20);
+const telegramRateLimitWindowMs = Number(process.env.TELEGRAM_RATE_LIMIT_WINDOW_MS || 60 * 1000);
 const mimeTypes = { ".css": "text/css; charset=utf-8", ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".json": "application/json; charset=utf-8", ".txt": "text/plain; charset=utf-8", ".xml": "application/xml; charset=utf-8", ".jpg": "image/jpeg", ".png": "image/png" };
 
 let analytics = loadAnalytics();
 let analyticsWrite = Promise.resolve();
 let lastCriticalAlert = new Map();
+const reportRateLimit = new Map();
+const telegramRateLimit = new Map();
 
 function loadAnalytics() {
   try {
@@ -57,6 +63,46 @@ function corsHeaders(request) {
 function sendJson(response, status, payload) {
   response.writeHead(status, { "Content-Type": "application/json; charset=utf-8", ...response.corsHeaders });
   response.end(JSON.stringify(payload));
+}
+
+function requestIp(request) {
+  return request.headers["x-forwarded-for"]?.split(",")[0].trim() || request.socket.remoteAddress || "unknown";
+}
+
+function consumeRateLimit(store, key, max, windowMs) {
+  const now = Date.now();
+  const timestamps = (store.get(key) || []).filter((timestamp) => now - timestamp < windowMs);
+  if (timestamps.length >= max) {
+    store.set(key, timestamps);
+    return { allowed: false, retryAfter: Math.max(1, Math.ceil((timestamps[0] + windowMs - now) / 1000)) };
+  }
+  timestamps.push(now);
+  store.set(key, timestamps);
+  return { allowed: true, retryAfter: 0 };
+}
+
+function pruneRateLimitStore(store, windowMs) {
+  const cutoff = Date.now() - windowMs;
+  for (const [key, timestamps] of store) {
+    const active = timestamps.filter((timestamp) => timestamp > cutoff);
+    if (active.length) store.set(key, active);
+    else store.delete(key);
+  }
+}
+
+function rejectRateLimitedRequest(response, retryAfter) {
+  response.setHeader("Retry-After", String(retryAfter));
+  sendJson(response, 429, { error: "Забагато повідомлень. Спробуйте пізніше.", retryAfter });
+}
+
+function allowReport(request, response) {
+  pruneRateLimitStore(reportRateLimit, reportRateLimitWindowMs);
+  const clientLimit = consumeRateLimit(reportRateLimit, requestIp(request), reportRateLimitMax, reportRateLimitWindowMs);
+  if (!clientLimit.allowed) {
+    rejectRateLimitedRequest(response, clientLimit.retryAfter);
+    return false;
+  }
+  return true;
 }
 
 function readBody(request) {
@@ -104,6 +150,12 @@ async function reportCriticalError(error, context = "server") {
     console.error("Critical alert skipped: Telegram is not configured", text);
     return;
   }
+  pruneRateLimitStore(telegramRateLimit, telegramRateLimitWindowMs);
+  const telegramLimit = consumeRateLimit(telegramRateLimit, "global", telegramRateLimitMax, telegramRateLimitWindowMs);
+  if (!telegramLimit.allowed) {
+    console.error(`Critical alert skipped: Telegram rate limit exceeded, retry in ${telegramLimit.retryAfter}s`);
+    return;
+  }
   try {
     const telegramResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
       method: "POST",
@@ -145,6 +197,12 @@ async function reportQuestion(request, response) {
     return;
   }
   try {
+    pruneRateLimitStore(telegramRateLimit, telegramRateLimitWindowMs);
+    const telegramLimit = consumeRateLimit(telegramRateLimit, "global", telegramRateLimitMax, telegramRateLimitWindowMs);
+    if (!telegramLimit.allowed) {
+      rejectRateLimitedRequest(response, telegramLimit.retryAfter);
+      return;
+    }
     const payload = JSON.parse(await readBody(request));
     const question = payload.question;
     if (!payload.message?.trim() || !question?.id || !question?.text || !question?.topic) {
@@ -223,7 +281,7 @@ const server = http.createServer((request, response) => {
     return;
   }
   if (request.method === "POST" && requestPath === "/api/report-question") {
-    reportQuestion(request, response);
+    if (allowReport(request, response)) reportQuestion(request, response);
   } else if (request.method === "POST" && requestPath === "/api/client-error") {
     reportClientError(request, response);
   } else if (request.method === "GET") {
