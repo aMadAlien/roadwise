@@ -88,6 +88,7 @@ function renderHome() {
 function showView(viewName) {
   document.querySelectorAll(".view").forEach((view) => view.classList.toggle("is-visible", view.id === `${viewName}-view`));
   document.querySelectorAll("[data-view]").forEach((link) => link.classList.toggle("is-active", link.dataset.view === viewName));
+  if (viewName === "home" && state.topicCatalog.length) renderHome();
 }
 
 async function startTest(mode = "random", topic = null) {
@@ -246,7 +247,11 @@ function finishTest() {
   wrongQuestions.forEach((question) => { if (!state.errors.includes(question.id)) state.errors.push(question.id); });
   const percent = Math.round((correct / state.currentTest.length) * 100);
   state.lastResult = { correct, total: state.currentTest.length, percent, wrongQuestions };
-  state.history.push({ percent, date: new Date().toISOString() }); saveProgress(); renderResults(); showView("results");
+  state.history.push({ percent, date: new Date().toISOString() });
+  saveProgress();
+  renderHome();
+  renderResults();
+  showView("results");
 }
 
 function renderResults() {

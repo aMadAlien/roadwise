@@ -292,7 +292,12 @@ const server = http.createServer((request, response) => {
 });
 
 server.on("clientError", (error, socket) => {
-  reportCriticalError(error, "http-client");
+  const clientAddress = socket.remoteAddress || "unknown";
+  const clientError = `${error.code || "HTTP_CLIENT_ERROR"}: ${error.message} (remote: ${clientAddress})`;
+  console.warn("HTTP client error:", clientError);
+  if (error.code !== "HPE_INVALID_METHOD" && error.code !== "HPE_INVALID_URL" && error.code !== "HPE_HEADER_OVERFLOW") {
+    reportCriticalError(new Error(clientError), "http-client");
+  }
   socket.end("HTTP/1.1 400 Bad Request\r\n\r\n");
 });
 
