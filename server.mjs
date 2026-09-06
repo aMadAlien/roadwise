@@ -89,6 +89,56 @@ function telegramText(payload) {
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
+function errorDetails(error) {
+  return error instanceof Error ? `${error.name}: ${error.message}\n${error.stack || ""}` : String(error);
+}
+
+async function reportCriticalError(error, context = "server") {
+  const details = errorDetails(error).slice(0, 3000);
+  const alertKey = `${context}:${details.split("\n")[0]}`;
+  const lastSentAt = lastCriticalAlert.get(alertKey) || 0;
+  if (Date.now() - lastSentAt < criticalAlertCooldownMs) return;
+  lastCriticalAlert.set(alertKey, Date.now());
+  const text = `🚨 Критична помилка Roadwise\nКонтекст: ${context}\nЧас: ${new Date().toISOString()}\n\n${details}`;
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    console.error("Critical alert skipped: Telegram is not configured", text);
+    return;
+  }
+  try {
+    const telegramResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: text.slice(0, 4000) })
+    });
+    if (!telegramResponse.ok) console.error("Critical Telegram alert failed:", await telegramResponse.text());
+  } catch (alertError) {
+    console.error("Critical Telegram alert request failed:", errorDetails(alertError));
+  }
+}
+
+function clientErrorPayload(payload) {
+  if (!payload || typeof payload !== "object") return null;
+  const message = typeof payload.message === "string" ? payload.message.trim().slice(0, 1000) : "";
+  const stack = typeof payload.stack === "string" ? payload.stack.trim().slice(0, 2000) : "";
+  const url = typeof payload.url === "string" ? payload.url.slice(0, 500) : "";
+  return message ? { message, stack, url } : null;
+}
+
+async function reportClientError(request, response) {
+  try {
+    const payload = clientErrorPayload(JSON.parse(await readBody(request)));
+    if (!payload) {
+      sendJson(response, 400, { error: "Некоректні дані помилки" });
+      return;
+    }
+    await reportCriticalError({ name: "ClientError", message: `${payload.message}\nURL: ${payload.url}\n${payload.stack}` }, "browser");
+    sendJson(response, 204, null);
+  } catch (error) {
+    await reportCriticalError(error, "client-error-endpoint");
+    sendJson(response, error.message === "Повідомлення завелике" ? 413 : 400, { error: "Не вдалося обробити помилку" });
+  }
+}
+
 async function reportQuestion(request, response) {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
     sendJson(response, 503, { error: "Telegram ще не налаштований на сервері" });
@@ -126,31 +176,76 @@ async function reportQuestion(request, response) {
 }
 
 function serveStatic(request, response) {
-  const requestedPath = decodeURIComponent(new URL(request.url, `http://${request.headers.host}`).pathname);
+  let requestedPath;
+  try {
+    requestedPath = decodeURIComponent(new URL(request.url, `http://${request.headers.host}`).pathname);
+  } catch (error) {
+    reportCriticalError(error, "static-path");
+    response.writeHead(400); response.end("Bad request"); return;
+  }
   const relativePath = requestedPath === "/" ? "index.html" : requestedPath.replace(/^\//, "");
   const filePath = path.resolve(root, relativePath);
   if (!filePath.startsWith(root) || !fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
     response.writeHead(404); response.end("Not found"); return;
   }
+  if (request.method === "GET" && (relativePath === "index.html" || relativePath === "")) trackPageView(request);
   response.writeHead(200, { "Content-Type": mimeTypes[path.extname(filePath)] || "application/octet-stream" });
-  fs.createReadStream(filePath).pipe(response);
+  const stream = fs.createReadStream(filePath);
+  stream.on("error", (error) => {
+    reportCriticalError(error, `static-file:${relativePath}`);
+    if (!response.headersSent) response.writeHead(500);
+    response.end("Internal server error");
+  });
+  stream.pipe(response);
 }
 
 const server = http.createServer((request, response) => {
   response.corsHeaders = corsHeaders(request);
-  const requestPath = new URL(request.url, "http://localhost").pathname.replace(/^\/roadwise/, "");
+  let requestPath;
+  try {
+    requestPath = new URL(request.url, "http://localhost").pathname.replace(/^\/roadwise/, "");
+  } catch (error) {
+    reportCriticalError(error, "request-path");
+    sendJson(response, 400, { error: "Некоректний запит" });
+    return;
+  }
   if (request.method === "OPTIONS" && requestPath === "/api/report-question") {
     response.writeHead(204, response.corsHeaders);
     response.end();
     return;
   }
+  if (request.method === "GET" && requestPath === "/api/analytics") {
+    if (!analyticsKey || request.headers["x-analytics-key"] !== analyticsKey) {
+      sendJson(response, 401, { error: "Unauthorized" });
+      return;
+    }
+    sendJson(response, 200, publicAnalytics());
+    return;
+  }
   if (request.method === "POST" && requestPath === "/api/report-question") {
     reportQuestion(request, response);
+  } else if (request.method === "POST" && requestPath === "/api/client-error") {
+    reportClientError(request, response);
   } else if (request.method === "GET") {
     serveStatic(request, response);
   } else {
     sendJson(response, 405, { error: "Method not allowed" });
   }
+});
+
+server.on("clientError", (error, socket) => {
+  reportCriticalError(error, "http-client");
+  socket.end("HTTP/1.1 400 Bad Request\r\n\r\n");
+});
+
+process.on("uncaughtException", (error) => {
+  console.error("Uncaught exception:", errorDetails(error));
+  reportCriticalError(error, "uncaught-exception");
+});
+
+process.on("unhandledRejection", (error) => {
+  console.error("Unhandled rejection:", errorDetails(error));
+  reportCriticalError(error, "unhandled-rejection");
 });
 
 server.listen(port, () => console.log(`Roadwise server: http://localhost:${port}`));

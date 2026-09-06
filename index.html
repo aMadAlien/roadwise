@@ -31,6 +31,10 @@
       </aside>
 
       <main class="main-content">
+        <div class="app-status hidden" id="app-status" role="alert">
+          <span id="app-status-message"></span>
+          <button type="button" id="app-status-retry">Повторити</button>
+        </div>
         <header class="topbar">
           <div class="mobile-brand"><span class="brand-mark">↗</span> roadwise</div>
           <div class="topbar-spacer"></div>
@@ -66,7 +70,7 @@
             </button>
           </div>
 
-          <div class="topics-section"><div class="section-heading compact"><div><p class="eyebrow">Структура бази</p><h2>Доступні теми</h2></div><span class="topic-count" id="topic-count">0 тем</span></div><div class="topic-list" id="topic-list"></div></div>
+          <div class="topics-section"><div class="section-heading compact"><div><p class="eyebrow">Структура бази</p><h2>Теми</h2></div><span class="topic-count" id="topic-count">0 тем</span></div><div class="topic-list" id="topic-list"></div></div>
         </section>
 
         <section id="test-view" class="view">

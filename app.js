@@ -10,13 +10,39 @@ const AVAILABLE_TOPICS = [
   "08-1-rehulyuvannya-dorozhnoho-rukhu-rehulovani-perekhrestya",
   "09-2-rehulyuvannya-dorozhnoho-rukhu-nerehulovani-perekhrestya",
   "10-poperedzhuvalni-syhnaly",
+  "11-pochatok-rukhu-ta-zmina-yoho-napryamku",
+  "12-roztashuvannya-transportnykh-zasobiv-na-dorozi",
+
 
 ];
 const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]") };
 const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
+let lastClientErrorAt = 0;
+
+function showAppError(message, retry = null) {
+  const status = $("#app-status");
+  $("#app-status-message").textContent = message;
+  $("#app-status-retry").classList.toggle("hidden", !retry);
+  status.classList.remove("hidden");
+  status.dataset.retry = retry ? "available" : "none";
+  state.retryAction = retry;
+}
+
+function clearAppError() {
+  $("#app-status").classList.add("hidden");
+  state.retryAction = null;
+}
+
+function reportClientError(error) {
+  if (Date.now() - lastClientErrorAt < 30_000) return;
+  lastClientErrorAt = Date.now();
+  const payload = { message: error?.message || String(error), stack: error?.stack || "", url: window.location.href };
+  fetch("api/client-error", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), keepalive: true }).catch(() => {});
+}
 
 async function loadQuestions() {
+  clearAppError();
   const indexResponse = await fetch("questions.by-topic/index.json");
   if (!indexResponse.ok) throw new Error(`Не вдалося завантажити індекс тем: ${indexResponse.status}`);
 
@@ -25,7 +51,7 @@ async function loadQuestions() {
   renderHome();
 }
 
-function topics() { return availableTopicCatalog().map((topic) => topic.topic); }
+function topics() { return state.topicCatalog.map((topic) => topic.topic); }
 function topicId(topic) { return state.topicIds[topic]; }
 function isTopicAvailable(topic) { return AVAILABLE_TOPICS.length === 0 || AVAILABLE_TOPICS.includes(topicId(topic)); }
 function availableTopicCatalog() { return state.topicCatalog.filter((topic) => isTopicAvailable(topic.topic)); }
@@ -82,14 +108,15 @@ async function startTest(mode = "random", topic = null) {
   try {
     state.questions = await loadQuestionsForTopics(topicEntries.filter(Boolean));
   } catch (error) {
-    alert(error.message);
+    reportClientError(error);
+    showAppError("Не вдалося завантажити питання. Перевір з'єднання та спробуй ще раз.", () => startTest(mode, topic));
     return;
   }
   let pool = mode === "mistakes" ? state.questions.filter((question) => state.errors.includes(question.id)) : topic ? state.questions.filter((question) => question.topic === topic) : state.questions;
   const testSize = mode === "topic" ? pool.length : Math.min(20, pool.length);
   state.currentTest = shuffle(pool).slice(0, testSize);
   state.currentTest.forEach((question) => { delete question.userAnswer; });
-  if (!state.currentTest.length) { alert("Тут поки немає питань. Спочатку пройди звичайний тест."); return; }
+  if (!state.currentTest.length) { showAppError("Тут поки немає питань для цього режиму."); return; }
   $("#test-mode-label").textContent = mode === "mistakes" ? "Мої помилки" : topic ? '' : "Випадковий тест";
   $(".question-nav").classList.remove("hidden");
   $(".progress-track").classList.remove("hidden");
@@ -234,9 +261,22 @@ function init() {
   $("#report-button").addEventListener("click", openReportModal);
   $("#report-close").addEventListener("click", closeReportModal);
   $("#report-form").addEventListener("submit", submitReport);
+  $("#app-status-retry").addEventListener("click", () => {
+    if (state.retryAction) state.retryAction();
+    else loadQuestions().catch(handleInitialLoadError);
+  });
   $("#report-modal").addEventListener("click", (event) => { if (event.target.id === "report-modal") closeReportModal(); });
   document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeReportModal(); });
-  loadQuestions().catch((error) => { console.error(error); $("#question-title").textContent = "Не вдалося завантажити questions.parsed.json"; });
+  window.addEventListener("error", (event) => reportClientError(event.error || new Error(event.message)));
+  window.addEventListener("unhandledrejection", (event) => reportClientError(event.reason || new Error("Unhandled promise rejection")));
+  loadQuestions().catch(handleInitialLoadError);
+}
+
+function handleInitialLoadError(error) {
+  console.error(error);
+  reportClientError(error);
+  $("#question-title").textContent = "Питання тимчасово недоступні";
+  showAppError("Не вдалося завантажити базу питань. Перевір з'єднання та спробуй ще раз.", loadQuestions);
 }
 
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
