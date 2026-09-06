@@ -26,3 +26,4 @@ button { cursor: pointer; }
 .question-image-wrapper { margin: -12px 0 34px; }.question-image { display: block; width: 100%; max-height: 430px; object-fit: contain; background: var(--white); border: 1px solid var(--line); }.hidden { display: none !important; }
 @media (max-width: 800px) {.topic-picker{grid-template-columns: 1fr;}}
 .hero-description { max-width: 470px; margin: 20px 0 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.show-correct-button { display: block; margin: 14px 0 0 auto; padding: 8px 11px; border: 1px solid var(--line); background: transparent; color: var(--muted); font-size: 11px; font-weight: 700; }.show-correct-button:hover { border-color: var(--mint-dark); color: var(--ink); }.show-correct-button.hidden { display: none; }.answer-option.answer-revealed { box-shadow: 0 0 0 2px var(--mint-dark); }

@@ -116,7 +116,7 @@ async function startTest(mode = "random", topic = null) {
   let pool = mode === "mistakes" ? state.questions.filter((question) => state.errors.includes(question.id)) : topic ? state.questions.filter((question) => question.topic === topic) : state.questions;
   const testSize = mode === "topic" ? pool.length : Math.min(20, pool.length);
   state.currentTest = shuffle(pool).slice(0, testSize);
-  state.currentTest.forEach((question) => { delete question.userAnswer; });
+  state.currentTest.forEach((question) => { delete question.userAnswer; delete question.showCorrectAnswer; });
   if (!state.currentTest.length) { showAppError("Тут поки немає питань для цього режиму."); return; }
   $("#test-mode-label").textContent = mode === "mistakes" ? "Мої помилки" : topic ? '' : "Випадковий тест";
   $(".question-nav").classList.remove("hidden");
@@ -150,6 +150,7 @@ function renderQuestion() {
     questionImageWrapper: $("#question-image-wrapper"),
     questionImage: $("#question-image"),
     answersList: $("#answers-list"),
+    showCorrectButton: $("#show-correct-button"),
     nextButton: $("#next-button"),
     reportButton: $("#report-button")
   };
@@ -174,10 +175,14 @@ function renderQuestion() {
   }
   elements.reportButton.dataset.questionId = question.id;
   elements.answersList.innerHTML = question.answers.map((answer, index) => {
-    const answerState = question.userAnswer === index ? question.userAnswer === question.correctAnswer ? "selected answer-correct" : "selected answer-wrong" : "";
+    const isSelected = question.userAnswer === index;
+    const isCorrectAnswerRevealed = question.showCorrectAnswer && index === question.correctAnswer;
+    const answerState = isSelected ? question.userAnswer === question.correctAnswer ? "selected answer-correct" : "selected answer-wrong" : isCorrectAnswerRevealed ? "answer-correct answer-revealed" : "";
     const answered = question.userAnswer !== undefined;
-    return `<button class="answer-option ${answerState}" type="button" data-answer="${index}" ${answered ? "disabled" : ""} aria-pressed="${question.userAnswer === index}"><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${answer}</span></button>`;
+    return `<button class="answer-option ${answerState}" type="button" data-answer="${index}" ${answered ? "disabled" : ""} aria-pressed="${isSelected}"><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${answer}</span></button>`;
   }).join("");
+  const answeredIncorrectly = question.userAnswer !== undefined && question.userAnswer !== question.correctAnswer;
+  elements.showCorrectButton.classList.toggle("hidden", !answeredIncorrectly || question.showCorrectAnswer);
   elements.nextButton.disabled = question.userAnswer === undefined;
   elements.nextButton.innerHTML = state.currentIndex === state.currentTest.length - 1 ? "Завершити тест <span>✓</span>" : "Наступне питання <span>→</span>";
   elements.questionNav.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => { state.currentIndex = Number(button.dataset.questionIndex); renderQuestion(); }));
@@ -189,8 +194,14 @@ function renderQuestion() {
     elements.answersList.querySelectorAll("button").forEach((item) => item.classList.remove("selected", "answer-correct", "answer-wrong"));
     button.classList.add("selected", answer === question.correctAnswer ? "answer-correct" : "answer-wrong");
     elements.nextButton.disabled = false;
+    elements.showCorrectButton.classList.toggle("hidden", answer === question.correctAnswer);
     renderQuestionNav();
   }));
+  elements.showCorrectButton.onclick = () => {
+    if (question.userAnswer === undefined || question.userAnswer === question.correctAnswer) return;
+    question.showCorrectAnswer = true;
+    renderQuestion();
+  };
 }
 
 function openReportModal() {
