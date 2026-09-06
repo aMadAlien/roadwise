@@ -14,6 +14,9 @@ const reportRateLimitMax = Number(process.env.REPORT_RATE_LIMIT_MAX || 5);
 const reportRateLimitWindowMs = Number(process.env.REPORT_RATE_LIMIT_WINDOW_MS || 10 * 60 * 1000);
 const telegramRateLimitMax = Number(process.env.TELEGRAM_RATE_LIMIT_MAX || 20);
 const telegramRateLimitWindowMs = Number(process.env.TELEGRAM_RATE_LIMIT_WINDOW_MS || 60 * 1000);
+const analyticsRateLimitMax = Number(process.env.ANALYTICS_RATE_LIMIT_MAX || 120);
+const analyticsRateLimitWindowMs = Number(process.env.ANALYTICS_RATE_LIMIT_WINDOW_MS || 60 * 1000);
+const visitorCookieName = "roadwise_visitor";
 const mimeTypes = { ".css": "text/css; charset=utf-8", ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".json": "application/json; charset=utf-8", ".txt": "text/plain; charset=utf-8", ".xml": "application/xml; charset=utf-8", ".jpg": "image/jpeg", ".png": "image/png" };
 
 let analytics = loadAnalytics();
@@ -21,12 +24,23 @@ let analyticsWrite = Promise.resolve();
 let lastCriticalAlert = new Map();
 const reportRateLimit = new Map();
 const telegramRateLimit = new Map();
+const analyticsRateLimit = new Map();
 
 function loadAnalytics() {
   try {
-    return JSON.parse(fs.readFileSync(analyticsPath, "utf8"));
+    const saved = JSON.parse(fs.readFileSync(analyticsPath, "utf8"));
+    return {
+      totalPageViews: saved.totalPageViews || 0,
+      totalUniqueVisitors: saved.totalUniqueVisitors || 0,
+      totalReturningVisitors: saved.totalReturningVisitors || 0,
+      totalTestStarts: saved.totalTestStarts || 0,
+      totalTestsCompleted: saved.totalTestsCompleted || 0,
+      totalQuestionsAnswered: saved.totalQuestionsAnswered || 0,
+      daily: saved.daily || {},
+      visitors: saved.visitors || {}
+    };
   } catch {
-    return { totalPageViews: 0, daily: {} };
+    return { totalPageViews: 0, totalUniqueVisitors: 0, totalReturningVisitors: 0, totalTestStarts: 0, totalTestsCompleted: 0, totalQuestionsAnswered: 0, daily: {}, visitors: {} };
   }
 }
 
@@ -35,22 +49,67 @@ function saveAnalytics() {
   return analyticsWrite;
 }
 
-function trackPageView(request) {
+function parseCookies(request) {
+  return Object.fromEntries((request.headers.cookie || "").split(";").map((part) => part.trim().split("=")).filter(([key, value]) => key && value).map(([key, ...value]) => [key, decodeURIComponent(value.join("="))]));
+}
+
+function getVisitorId(request) {
+  const existing = parseCookies(request)[visitorCookieName];
+  return existing && /^[a-f0-9]{32}$/.test(existing) ? existing : crypto.randomBytes(16).toString("hex");
+}
+
+function analyticsDay(day = new Date().toISOString().slice(0, 10)) {
+  return analytics.daily[day] || { views: 0, visitors: [], newVisitors: 0, returningVisitors: 0, testStarts: 0, testsCompleted: 0, questionsAnswered: 0, modes: {}, topics: {} };
+}
+
+function visitorRecord(visitorId, now) {
+  return analytics.visitors[visitorId] || { firstSeen: now, lastSeen: now, visits: 0, testStarts: 0, testsCompleted: 0, questionsAnswered: 0 };
+}
+
+function trackPageView(request, response) {
+  const visitorId = getVisitorId(request);
+  const now = new Date().toISOString();
   const day = new Date().toISOString().slice(0, 10);
-  const forwardedIp = request.headers["x-forwarded-for"]?.split(",")[0].trim();
-  const ip = forwardedIp || request.socket.remoteAddress || "unknown";
-  const visitorHash = crypto.createHash("sha256").update(`${day}:${ip}`).digest("hex");
-  const daily = analytics.daily[day] || { views: 0, visitors: [] };
+  const daily = analyticsDay(day);
+  const visitor = visitorRecord(visitorId, now);
+  const isReturning = visitor.visits > 0;
   daily.views += 1;
-  if (!daily.visitors.includes(visitorHash)) daily.visitors.push(visitorHash);
+  if (!daily.visitors.includes(visitorId)) daily.visitors.push(visitorId);
+  if (!isReturning) daily.newVisitors += 1;
+  else daily.returningVisitors += 1;
+  visitor.visits += 1;
+  visitor.lastSeen = now;
+  analytics.visitors[visitorId] = visitor;
   analytics.totalPageViews += 1;
+  if (!isReturning) analytics.totalUniqueVisitors += 1;
+  else analytics.totalReturningVisitors += 1;
   analytics.daily[day] = daily;
+  response.setHeader("Set-Cookie", `${visitorCookieName}=${visitorId}; Max-Age=31536000; Path=/; SameSite=Lax; HttpOnly`);
   saveAnalytics().catch((error) => console.error("Analytics write error:", error.message));
 }
 
 function publicAnalytics() {
-  const daily = Object.fromEntries(Object.entries(analytics.daily).map(([date, value]) => [date, { views: value.views, uniqueVisitors: value.visitors.length }]));
-  return { totalPageViews: analytics.totalPageViews, daily };
+  const daily = Object.fromEntries(Object.entries(analytics.daily).map(([date, value]) => [date, {
+    views: value.views,
+    uniqueVisitors: value.visitors.length,
+    newVisitors: value.newVisitors || 0,
+    returningVisitors: value.returningVisitors || 0,
+    testStarts: value.testStarts || 0,
+    testsCompleted: value.testsCompleted || 0,
+    questionsAnswered: value.questionsAnswered || 0,
+    modes: value.modes || {},
+    topics: value.topics || {}
+  }]));
+  return {
+    totalPageViews: analytics.totalPageViews,
+    totalUniqueVisitors: analytics.totalUniqueVisitors,
+    totalReturningVisitors: analytics.totalReturningVisitors,
+    totalTestStarts: analytics.totalTestStarts,
+    totalTestsCompleted: analytics.totalTestsCompleted,
+    totalQuestionsAnswered: analytics.totalQuestionsAnswered,
+    completionRate: analytics.totalTestStarts ? Math.round((analytics.totalTestsCompleted / analytics.totalTestStarts) * 100) : 0,
+    daily
+  };
 }
 
 function corsHeaders(request) {
@@ -63,6 +122,69 @@ function corsHeaders(request) {
 function sendJson(response, status, payload) {
   response.writeHead(status, { "Content-Type": "application/json; charset=utf-8", ...response.corsHeaders });
   response.end(JSON.stringify(payload));
+}
+
+function allowAnalyticsEvent(request, response) {
+  pruneRateLimitStore(analyticsRateLimit, analyticsRateLimitWindowMs);
+  const limit = consumeRateLimit(analyticsRateLimit, requestIp(request), analyticsRateLimitMax, analyticsRateLimitWindowMs);
+  if (!limit.allowed) {
+    rejectRateLimitedRequest(response, limit.retryAfter);
+    return false;
+  }
+  return true;
+}
+
+function analyticsEventPayload(payload) {
+  if (!payload || typeof payload !== "object") return null;
+  const allowedEvents = new Set(["test_started", "test_completed"]);
+  const event = typeof payload.event === "string" ? payload.event : "";
+  if (!allowedEvents.has(event)) return null;
+  const mode = typeof payload.mode === "string" ? payload.mode.slice(0, 40) : "unknown";
+  const topic = typeof payload.topic === "string" ? payload.topic.slice(0, 200) : "all";
+  const total = Number.isInteger(payload.total) ? Math.max(0, Math.min(payload.total, 1000)) : 0;
+  const correct = Number.isInteger(payload.correct) ? Math.max(0, Math.min(payload.correct, total)) : 0;
+  return { event, mode, topic, total, correct };
+}
+
+async function trackAnalyticsEvent(request, response) {
+  try {
+    const payload = analyticsEventPayload(JSON.parse(await readBody(request)));
+    if (!payload) {
+      sendJson(response, 400, { error: "Некоректна аналітична подія" });
+      return;
+    }
+    const visitorId = getVisitorId(request);
+    const now = new Date().toISOString();
+    const day = analyticsDay();
+    const visitor = visitorRecord(visitorId, now);
+    const modeKey = payload.mode || "unknown";
+    const topicKey = payload.topic || "all";
+    day.modes[modeKey] = day.modes[modeKey] || { starts: 0, completed: 0 };
+    day.topics[topicKey] = day.topics[topicKey] || { starts: 0, completed: 0 };
+    if (payload.event === "test_started") {
+      analytics.totalTestStarts += 1;
+      day.testStarts += 1;
+      day.modes[modeKey].starts += 1;
+      day.topics[topicKey].starts += 1;
+      visitor.testStarts += 1;
+    } else {
+      analytics.totalTestsCompleted += 1;
+      analytics.totalQuestionsAnswered += payload.total;
+      day.testsCompleted += 1;
+      day.questionsAnswered += payload.total;
+      day.modes[modeKey].completed += 1;
+      day.topics[topicKey].completed += 1;
+      visitor.testsCompleted += 1;
+      visitor.questionsAnswered += payload.total;
+    }
+    visitor.lastSeen = now;
+    analytics.visitors[visitorId] = visitor;
+    analytics.daily[new Date().toISOString().slice(0, 10)] = day;
+    saveAnalytics().catch((error) => console.error("Analytics write error:", error.message));
+    sendJson(response, 204, null);
+  } catch (error) {
+    sendJson(response, error.message === "Повідомлення завелике" ? 413 : 400, { error: "Не вдалося зберегти аналітичну подію" });
+  }
 }
 
 function requestIp(request) {
@@ -290,7 +412,7 @@ function serveStatic(request, response) {
   if (!filePath.startsWith(root) || !fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
     response.writeHead(404); response.end("Not found"); return;
   }
-  if (request.method === "GET" && (relativePath === "index.html" || relativePath === "")) trackPageView(request);
+  if (request.method === "GET" && (relativePath === "index.html" || relativePath === "")) trackPageView(request, response);
   response.writeHead(200, { "Content-Type": mimeTypes[path.extname(filePath)] || "application/octet-stream" });
   const stream = fs.createReadStream(filePath);
   stream.on("error", (error) => {
@@ -311,7 +433,7 @@ const server = http.createServer((request, response) => {
     sendJson(response, 400, { error: "Некоректний запит" });
     return;
   }
-  if (request.method === "OPTIONS" && (requestPath === "/api/report-question" || requestPath === "/api/feedback")) {
+  if (request.method === "OPTIONS" && (requestPath === "/api/report-question" || requestPath === "/api/feedback" || requestPath === "/api/analytics/event")) {
     response.writeHead(204, response.corsHeaders);
     response.end();
     return;
@@ -330,6 +452,8 @@ const server = http.createServer((request, response) => {
     if (allowReport(request, response)) submitFeedback(request, response);
   } else if (request.method === "POST" && requestPath === "/api/client-error") {
     reportClientError(request, response);
+  } else if (request.method === "POST" && requestPath === "/api/analytics/event") {
+    if (allowAnalyticsEvent(request, response)) trackAnalyticsEvent(request, response);
   } else if (request.method === "GET") {
     serveStatic(request, response);
   } else {

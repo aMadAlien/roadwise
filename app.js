@@ -40,6 +40,14 @@ function reportClientError(error) {
   const payload = { message: error?.message || String(error), stack: error?.stack || "", url: window.location.href };
   fetch("api/client-error", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), keepalive: true }).catch(() => { });
 }
+function trackAnalyticsEvent(event, details = {}) {
+  fetch("api/analytics/event", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ event, ...details }),
+    keepalive: true
+  }).catch(() => { });
+}
 
 async function loadQuestions() {
   clearAppError();
@@ -124,6 +132,7 @@ async function startTest(mode = "random", topic = null) {
   $(".test-progress-label").classList.remove("hidden");
   $("#topic-picker").classList.add("hidden");
   $("#question-layout").classList.remove("hidden");
+    trackAnalyticsEvent("test_started", { mode, topic: topic || "all", total: testSize });
   showView("test"); renderQuestion();
 }
 
@@ -289,6 +298,7 @@ function finishTest() {
   const percent = Math.round((correct / state.currentTest.length) * 100);
   state.lastResult = { correct, total: state.currentTest.length, percent, wrongQuestions };
   state.history.push({ percent, date: new Date().toISOString() });
+    trackAnalyticsEvent("test_completed", { mode: state.mode, topic: state.topic || "all", total: state.currentTest.length, correct });
   saveProgress();
   renderHome();
   renderResults();
