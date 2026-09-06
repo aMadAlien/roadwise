@@ -45,7 +45,10 @@ function loadAnalytics() {
 }
 
 function saveAnalytics() {
-  analyticsWrite = analyticsWrite.then(() => fs.promises.writeFile(analyticsPath, JSON.stringify(analytics, null, 2)));
+  analyticsWrite = analyticsWrite.catch(() => {}).then(() => fs.promises.writeFile(analyticsPath, JSON.stringify(analytics, null, 2))).catch((error) => {
+    console.error(`Analytics write error (${analyticsPath}):`, error.message);
+    throw error;
+  });
   return analyticsWrite;
 }
 
@@ -56,6 +59,10 @@ function parseCookies(request) {
 function getVisitorId(request) {
   const existing = parseCookies(request)[visitorCookieName];
   return existing && /^[a-f0-9]{32}$/.test(existing) ? existing : crypto.randomBytes(16).toString("hex");
+}
+
+function setVisitorCookie(response, visitorId) {
+  response.setHeader("Set-Cookie", `${visitorCookieName}=${visitorId}; Max-Age=31536000; Path=/; SameSite=Lax; HttpOnly`);
 }
 
 function analyticsDay(day = new Date().toISOString().slice(0, 10)) {
@@ -84,7 +91,7 @@ function trackPageView(request, response) {
   if (!isReturning) analytics.totalUniqueVisitors += 1;
   else analytics.totalReturningVisitors += 1;
   analytics.daily[day] = daily;
-  response.setHeader("Set-Cookie", `${visitorCookieName}=${visitorId}; Max-Age=31536000; Path=/; SameSite=Lax; HttpOnly`);
+  setVisitorCookie(response, visitorId);
   saveAnalytics().catch((error) => console.error("Analytics write error:", error.message));
 }
 
@@ -136,7 +143,7 @@ function allowAnalyticsEvent(request, response) {
 
 function analyticsEventPayload(payload) {
   if (!payload || typeof payload !== "object") return null;
-  const allowedEvents = new Set(["test_started", "test_completed"]);
+  const allowedEvents = new Set(["page_view", "test_started", "test_completed"]);
   const event = typeof payload.event === "string" ? payload.event : "";
   if (!allowedEvents.has(event)) return null;
   const mode = typeof payload.mode === "string" ? payload.mode.slice(0, 40) : "unknown";
@@ -154,6 +161,7 @@ async function trackAnalyticsEvent(request, response) {
       return;
     }
     const visitorId = getVisitorId(request);
+    setVisitorCookie(response, visitorId);
     const now = new Date().toISOString();
     const day = analyticsDay();
     const visitor = visitorRecord(visitorId, now);
@@ -161,7 +169,20 @@ async function trackAnalyticsEvent(request, response) {
     const topicKey = payload.topic || "all";
     day.modes[modeKey] = day.modes[modeKey] || { starts: 0, completed: 0 };
     day.topics[topicKey] = day.topics[topicKey] || { starts: 0, completed: 0 };
-    if (payload.event === "test_started") {
+    if (payload.event === "page_view") {
+      const isReturning = visitor.visits > 0;
+      day.views += 1;
+      if (!day.visitors.includes(visitorId)) day.visitors.push(visitorId);
+      if (!isReturning) {
+        day.newVisitors += 1;
+        analytics.totalUniqueVisitors += 1;
+      } else {
+        day.returningVisitors += 1;
+        analytics.totalReturningVisitors += 1;
+      }
+      analytics.totalPageViews += 1;
+      visitor.visits += 1;
+    } else if (payload.event === "test_started") {
       analytics.totalTestStarts += 1;
       day.testStarts += 1;
       day.modes[modeKey].starts += 1;
@@ -412,7 +433,6 @@ function serveStatic(request, response) {
   if (!filePath.startsWith(root) || !fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
     response.writeHead(404); response.end("Not found"); return;
   }
-  if (request.method === "GET" && (relativePath === "index.html" || relativePath === "")) trackPageView(request, response);
   response.writeHead(200, { "Content-Type": mimeTypes[path.extname(filePath)] || "application/octet-stream" });
   const stream = fs.createReadStream(filePath);
   stream.on("error", (error) => {
@@ -481,4 +501,4 @@ process.on("unhandledRejection", (error) => {
   reportCriticalError(error, "unhandled-rejection");
 });
 
-server.listen(port, () => console.log(`Roadwise server: http://localhost:${port}`));
+server.listen(port, () => console.log(`Roadwise server: http://localhost:${port}; analytics: ${analyticsPath}`));
