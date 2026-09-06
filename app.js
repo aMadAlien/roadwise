@@ -38,7 +38,7 @@ function reportClientError(error) {
   if (Date.now() - lastClientErrorAt < 30_000) return;
   lastClientErrorAt = Date.now();
   const payload = { message: error?.message || String(error), stack: error?.stack || "", url: window.location.href };
-  fetch("api/client-error", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), keepalive: true }).catch(() => {});
+  fetch("api/client-error", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), keepalive: true }).catch(() => { });
 }
 
 async function loadQuestions() {
@@ -166,7 +166,7 @@ function renderQuestion() {
   elements.questionTitle.textContent = question.question;
   elements.questionImageWrapper.classList.toggle("hidden", !question.image);
   if (question.image) {
-    elements.questionImage.src = '/roadwise' + question.image;
+    elements.questionImage.src = question.image;
     elements.questionImage.alt = `Ілюстрація до питання ${question.id}`;
   } else {
     elements.questionImage.removeAttribute("src");
@@ -174,12 +174,14 @@ function renderQuestion() {
   elements.reportButton.dataset.questionId = question.id;
   elements.answersList.innerHTML = question.answers.map((answer, index) => {
     const answerState = question.userAnswer === index ? question.userAnswer === question.correctAnswer ? "selected answer-correct" : "selected answer-wrong" : "";
-    return `<button class="answer-option ${answerState}" type="button" data-answer="${index}"><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${answer}</span></button>`;
+    const answered = question.userAnswer !== undefined;
+    return `<button class="answer-option ${answerState}" type="button" data-answer="${index}" ${answered ? "disabled" : ""} aria-pressed="${question.userAnswer === index}"><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${answer}</span></button>`;
   }).join("");
   elements.nextButton.disabled = question.userAnswer === undefined;
   elements.nextButton.innerHTML = state.currentIndex === state.currentTest.length - 1 ? "Завершити тест <span>✓</span>" : "Наступне питання <span>→</span>";
   elements.questionNav.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => { state.currentIndex = Number(button.dataset.questionIndex); renderQuestion(); }));
   elements.answersList.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => {
+    if (question.userAnswer !== undefined) return;
     const answer = Number(button.dataset.answer);
     question.userAnswer = answer;
     state.selectedAnswer = answer;

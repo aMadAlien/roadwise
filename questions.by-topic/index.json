@@ -1,81 +1,81 @@
 [
   {
-    "topic": "ЗАГАЛЬНІ ПОЛОЖЕННЯ",
+    "topic": "1. ЗАГАЛЬНІ ПОЛОЖЕННЯ",
     "file": "01-zahalni-polozhennya.json",
     "count": 79
   },
   {
-    "topic": "ОБОВ'ЯЗКИ І ПРАВА ВОДІЇВ МЕХАНІЧНИХ ТРАНСПОРТНИХ ЗАСОБІВ",
+    "topic": "2. ОБОВ'ЯЗКИ І ПРАВА ВОДІЇВ МЕХАНІЧНИХ ТРАНСПОРТНИХ ЗАСОБІВ",
     "file": "02-obov-yazky-i-prava-vodiyiv-mekhanichnykh-transportnykh-zasobiv.json",
     "count": 37
   },
   {
-    "topic": "РУХ ТРАНСПОРТНИХ ЗАСОБІВ ІЗ СПЕЦІАЛЬНИМИ СИГНАЛАМИ",
+    "topic": "3. РУХ ТРАНСПОРТНИХ ЗАСОБІВ ІЗ СПЕЦІАЛЬНИМИ СИГНАЛАМИ",
     "file": "03-rukh-transportnykh-zasobiv-iz-spetsialnymy-syhnalamy.json",
     "count": 16
   },
   {
-    "topic": "ОБОВ'ЯЗКИ І ПРАВА ПІШОХОДІВ",
+    "topic": "4. ОБОВ'ЯЗКИ І ПРАВА ПІШОХОДІВ",
     "file": "04-obov-yazky-i-prava-pishokhodiv.json",
     "count": 26
   },
   {
-    "topic": "ОБОВ'ЯЗКИ І ПРАВА ПАСАЖИРІВ",
+    "topic": "5. ОБОВ'ЯЗКИ І ПРАВА ПАСАЖИРІВ",
     "file": "05-obov-yazky-i-prava-pasazhyriv.json",
     "count": 16
   },
   {
-    "topic": "ВИМОГИ ДО ВЕЛОСИПЕДИСТІВ",
+    "topic": "6. ВИМОГИ ДО ВЕЛОСИПЕДИСТІВ",
     "file": "06-vymohy-do-velosypedystiv.json",
     "count": 22
   },
   {
-    "topic": "ВИМОГИ ДО ОСІБ, ЯКІ КЕРУЮТЬ ГУЖОВИМ ТРАНСПОРТОМ, І ПОГОНИЧІВ ТВАРИН",
+    "topic": "7. ВИМОГИ ДО ОСІБ, ЯКІ КЕРУЮТЬ ГУЖОВИМ ТРАНСПОРТОМ, І ПОГОНИЧІВ ТВАРИН",
     "file": "07-vymohy-do-osib-yaki-keruyut-huzhovym-transportom-i-pohonychiv-tvaryn.json",
     "count": 8
   },
   {
-    "topic": "1. РЕГУЛЮВАННЯ ДОРОЖНЬОГО РУХУ (РЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
+    "topic": "8.1. РЕГУЛЮВАННЯ ДОРОЖНЬОГО РУХУ (РЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
     "file": "08-1-rehulyuvannya-dorozhnoho-rukhu-rehulovani-perekhrestya.json",
     "count": 84
   },
   {
-    "topic": "2. РЕГУЛЮВАННЯ ДОРОЖНЬОГО РУХУ (НЕРЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
+    "topic": "8.2. РЕГУЛЮВАННЯ ДОРОЖНЬОГО РУХУ (НЕРЕГУЛЬОВАНІ ПЕРЕХРЕСТЯ)",
     "file": "09-2-rehulyuvannya-dorozhnoho-rukhu-nerehulovani-perekhrestya.json",
     "count": 7
   },
   {
-    "topic": "ПОПЕРЕДЖУВАЛЬНІ СИГНАЛИ",
+    "topic": "9. ПОПЕРЕДЖУВАЛЬНІ СИГНАЛИ",
     "file": "10-poperedzhuvalni-syhnaly.json",
     "count": 60
   },
   {
-    "topic": "ПОЧАТОК РУХУ ТА ЗМІНА ЙОГО НАПРЯМКУ",
+    "topic": "10. ПОЧАТОК РУХУ ТА ЗМІНА ЙОГО НАПРЯМКУ",
     "file": "11-pochatok-rukhu-ta-zmina-yoho-napryamku.json",
     "count": 76
   },
   {
-    "topic": "РОЗТАШУВАННЯ ТРАНСПОРТНИХ ЗАСОБІВ НА ДОРОЗІ",
+    "topic": "11.РОЗТАШУВАННЯ ТРАНСПОРТНИХ ЗАСОБІВ НА ДОРОЗІ",
     "file": "12-roztashuvannya-transportnykh-zasobiv-na-dorozi.json",
     "count": 39
   },
   {
-    "topic": "ШВИДКІСТЬ РУХУ",
+    "topic": "12. ШВИДКІСТЬ РУХУ",
     "file": "13-shvydkist-rukhu.json",
     "count": 41
   },
   {
-    "topic": "ДИСТАНЦІЯ, ІНТЕРВАЛ, ЗУСТРІЧНИЙ РОЗ'ЇЗД",
+    "topic": "13. ДИСТАНЦІЯ, ІНТЕРВАЛ, ЗУСТРІЧНИЙ РОЗ'ЇЗД",
     "file": "14-dystantsiya-interval-zustrichnyy-roz-yizd.json",
     "count": 13
   },
   {
-    "topic": "ОБГІН",
+    "topic": "14. ОБГІН",
     "file": "15-obhin.json",
     "count": 56
   },
   {
-    "topic": "ЗУПИНКА І СТОЯНКА",
+    "topic": "15. ЗУПИНКА І СТОЯНКА",
     "file": "16-zupynka-i-stoyanka.json",
     "count": 97
   },
@@ -90,47 +90,47 @@
     "count": 109
   },
   {
-    "topic": "ПЕРЕВАГИ МАРШРУТНИХ ТРАНСПОРТНИХ ЗАСОБІВ",
+    "topic": "17. ПЕРЕВАГИ МАРШРУТНИХ ТРАНСПОРТНИХ ЗАСОБІВ",
     "file": "19-perevahy-marshrutnykh-transportnykh-zasobiv.json",
     "count": 11
   },
   {
-    "topic": "ПРОЇЗД ПІШОХІДНИХ ПЕРЕХОДІВ І ЗУПИНОК ТРАНСПОРТНИХ ЗАСОБІВ",
+    "topic": "18. ПРОЇЗД ПІШОХІДНИХ ПЕРЕХОДІВ І ЗУПИНОК ТРАНСПОРТНИХ ЗАСОБІВ",
     "file": "20-proyizd-pishokhidnykh-perekhodiv-i-zupynok-transportnykh-zasobiv.json",
     "count": 19
   },
   {
-    "topic": "КОРИСТУВАННЯ ЗОВНІШНІМИ СВІТЛОВИМИ ПРИЛАДАМИ",
+    "topic": "19. КОРИСТУВАННЯ ЗОВНІШНІМИ СВІТЛОВИМИ ПРИЛАДАМИ",
     "file": "21-korystuvannya-zovnishnimy-svitlovymy-pryladamy.json",
     "count": 33
   },
   {
-    "topic": "РУХ ЧЕРЕЗ ЗАЛІЗНИЧНІ ПЕРЕЇЗДИ",
+    "topic": "20. РУХ ЧЕРЕЗ ЗАЛІЗНИЧНІ ПЕРЕЇЗДИ",
     "file": "22-rukh-cherez-zaliznychni-pereyizdy.json",
     "count": 31
   },
   {
-    "topic": "ПЕРЕВЕЗЕННЯ ПАСАЖИРІВ",
+    "topic": "21. ПЕРЕВЕЗЕННЯ ПАСАЖИРІВ",
     "file": "23-perevezennya-pasazhyriv.json",
     "count": 12
   },
   {
-    "topic": "ПЕРЕВЕЗЕННЯ ВАНТАЖУ",
+    "topic": "22. ПЕРЕВЕЗЕННЯ ВАНТАЖУ",
     "file": "24-perevezennya-vantazhu.json",
     "count": 6
   },
   {
-    "topic": "БУКСИРУВАННЯ ТА ЕКСПЛУАТАЦІЯ ТРАНСПОРТНИХ СОСТАВІВ",
+    "topic": "23. БУКСИРУВАННЯ ТА ЕКСПЛУАТАЦІЯ ТРАНСПОРТНИХ СОСТАВІВ",
     "file": "25-buksyruvannya-ta-ekspluatatsiya-transportnykh-sostaviv.json",
     "count": 20
   },
   {
-    "topic": "НАВЧАЛЬНА ЇЗДА",
+    "topic": "24. НАВЧАЛЬНА ЇЗДА",
     "file": "26-navchalna-yizda.json",
     "count": 14
   },
   {
-    "topic": "РУХ ТРАНСПОРТНИХ ЗАСОБІВ У КОЛОНАХ",
+    "topic": "25.РУХ ТРАНСПОРТНИХ ЗАСОБІВ У КОЛОНАХ",
     "file": "27-rukh-transportnykh-zasobiv-u-kolonakh.json",
     "count": 8
   },
