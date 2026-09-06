@@ -10,7 +10,7 @@ const maxBodySize = 20_000;
 const analyticsPath = path.join(root, "analytics.json");
 const analyticsKey = process.env.ANALYTICS_KEY;
 const criticalAlertCooldownMs = 5 * 60 * 1000;
-const mimeTypes = { ".css": "text/css; charset=utf-8", ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".json": "application/json; charset=utf-8", ".jpg": "image/jpeg", ".png": "image/png" };
+const mimeTypes = { ".css": "text/css; charset=utf-8", ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".json": "application/json; charset=utf-8", ".txt": "text/plain; charset=utf-8", ".xml": "application/xml; charset=utf-8", ".jpg": "image/jpeg", ".png": "image/png" };
 
 let analytics = loadAnalytics();
 let analyticsWrite = Promise.resolve();
