@@ -3,3 +3,4 @@
 /.env
 /question-images
 /questions.parsed.json
+/analytics.json

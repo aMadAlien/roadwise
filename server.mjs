@@ -1,12 +1,51 @@
 import http from "http";
 import fs from "fs";
 import path from "path";
+import crypto from "crypto";
 import { fileURLToPath } from "url";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT || 3000);
 const maxBodySize = 20_000;
+const analyticsPath = path.join(root, "analytics.json");
+const analyticsKey = process.env.ANALYTICS_KEY;
+const criticalAlertCooldownMs = 5 * 60 * 1000;
 const mimeTypes = { ".css": "text/css; charset=utf-8", ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".json": "application/json; charset=utf-8", ".jpg": "image/jpeg", ".png": "image/png" };
+
+let analytics = loadAnalytics();
+let analyticsWrite = Promise.resolve();
+let lastCriticalAlert = new Map();
+
+function loadAnalytics() {
+  try {
+    return JSON.parse(fs.readFileSync(analyticsPath, "utf8"));
+  } catch {
+    return { totalPageViews: 0, daily: {} };
+  }
+}
+
+function saveAnalytics() {
+  analyticsWrite = analyticsWrite.then(() => fs.promises.writeFile(analyticsPath, JSON.stringify(analytics, null, 2)));
+  return analyticsWrite;
+}
+
+function trackPageView(request) {
+  const day = new Date().toISOString().slice(0, 10);
+  const forwardedIp = request.headers["x-forwarded-for"]?.split(",")[0].trim();
+  const ip = forwardedIp || request.socket.remoteAddress || "unknown";
+  const visitorHash = crypto.createHash("sha256").update(`${day}:${ip}`).digest("hex");
+  const daily = analytics.daily[day] || { views: 0, visitors: [] };
+  daily.views += 1;
+  if (!daily.visitors.includes(visitorHash)) daily.visitors.push(visitorHash);
+  analytics.totalPageViews += 1;
+  analytics.daily[day] = daily;
+  saveAnalytics().catch((error) => console.error("Analytics write error:", error.message));
+}
+
+function publicAnalytics() {
+  const daily = Object.fromEntries(Object.entries(analytics.daily).map(([date, value]) => [date, { views: value.views, uniqueVisitors: value.visitors.length }]));
+  return { totalPageViews: analytics.totalPageViews, daily };
+}
 
 function corsHeaders(request) {
   const origin = request.headers.origin;
