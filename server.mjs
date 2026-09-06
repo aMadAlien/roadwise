@@ -132,6 +132,14 @@ function telegramText(payload) {
   ].join("\n\n");
 }
 
+function feedbackText(payload) {
+  return [
+    "💬 Нове повідомлення Roadwise",
+    `Повідомлення: ${payload.message}`,
+    `Контакт: ${payload.contact || "анонімно"}`
+  ].join("\n\n");
+}
+
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
@@ -233,6 +241,42 @@ async function reportQuestion(request, response) {
   }
 }
 
+async function submitFeedback(request, response) {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    sendJson(response, 503, { error: "Telegram ще не налаштований на сервері" });
+    return;
+  }
+  try {
+    const payload = JSON.parse(await readBody(request));
+    const message = typeof payload.message === "string" ? payload.message.trim().slice(0, 2000) : "";
+    const contact = typeof payload.contact === "string" ? payload.contact.trim().slice(0, 200) : "";
+    if (!message) {
+      sendJson(response, 400, { error: "Напишіть ваше повідомлення" });
+      return;
+    }
+    pruneRateLimitStore(telegramRateLimit, telegramRateLimitWindowMs);
+    const telegramLimit = consumeRateLimit(telegramRateLimit, "global", telegramRateLimitMax, telegramRateLimitWindowMs);
+    if (!telegramLimit.allowed) {
+      rejectRateLimitedRequest(response, telegramLimit.retryAfter);
+      return;
+    }
+    const telegramResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: feedbackText({ message, contact }).slice(0, 4000) })
+    });
+    if (!telegramResponse.ok) {
+      console.error("Telegram feedback error:", await telegramResponse.text());
+      sendJson(response, 502, { error: "Telegram не прийняв повідомлення" });
+      return;
+    }
+    sendJson(response, 200, { ok: true });
+  } catch (error) {
+    const status = error.message === "Повідомлення завелике" ? 413 : error instanceof SyntaxError ? 400 : 502;
+    sendJson(response, status, { error: error.message || "Не вдалося надіслати повідомлення" });
+  }
+}
+
 function serveStatic(request, response) {
   let requestedPath;
   try {
@@ -267,7 +311,7 @@ const server = http.createServer((request, response) => {
     sendJson(response, 400, { error: "Некоректний запит" });
     return;
   }
-  if (request.method === "OPTIONS" && requestPath === "/api/report-question") {
+  if (request.method === "OPTIONS" && (requestPath === "/api/report-question" || requestPath === "/api/feedback")) {
     response.writeHead(204, response.corsHeaders);
     response.end();
     return;
@@ -282,6 +326,8 @@ const server = http.createServer((request, response) => {
   }
   if (request.method === "POST" && requestPath === "/api/report-question") {
     if (allowReport(request, response)) reportQuestion(request, response);
+  } else if (request.method === "POST" && requestPath === "/api/feedback") {
+    if (allowReport(request, response)) submitFeedback(request, response);
   } else if (request.method === "POST" && requestPath === "/api/client-error") {
     reportClientError(request, response);
   } else if (request.method === "GET") {

@@ -243,6 +243,36 @@ async function submitReport(event) {
   } finally { submitButton.disabled = false; }
 }
 
+async function submitFeedback(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const message = $("#feedback-message").value.trim();
+  const contact = $("#feedback-contact").value.trim();
+  const submitButton = $("#feedback-submit");
+  const status = $("#feedback-status");
+  if (!message) return;
+  submitButton.disabled = true;
+  status.textContent = "Надсилаємо...";
+  status.className = "report-status";
+  try {
+    const response = await fetch("api/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message, contact })
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "Не вдалося надіслати повідомлення");
+    form.reset();
+    status.textContent = "Дякуємо! Повідомлення надіслано. Ми зв’яжемося з вами якнайшвидше.";
+    status.className = "report-status is-success";
+  } catch (error) {
+    status.textContent = error.message;
+    status.className = "report-status is-error";
+  } finally {
+    submitButton.disabled = false;
+  }
+}
+
 function renderQuestionNav() {
   const questionNav = $("#question-nav");
   questionNav.querySelectorAll("button").forEach((button, index) => {
@@ -279,6 +309,7 @@ function init() {
   $("#report-button").addEventListener("click", openReportModal);
   $("#report-close").addEventListener("click", closeReportModal);
   $("#report-form").addEventListener("submit", submitReport);
+  $("#feedback-form").addEventListener("submit", submitFeedback);
   $("#app-status-retry").addEventListener("click", () => {
     if (state.retryAction) state.retryAction();
     else loadQuestions().catch(handleInitialLoadError);

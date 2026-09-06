@@ -51,6 +51,7 @@
         </nav>
 
         <div class="sidebar-bottom">
+          <a href="#feedback" data-view="feedback" class="nav-link sidebar-feedback"><span>✉</span>Зворотний зв’язок</a>
           <div class="local-note"><span class="status-dot"></span><span>Дані зберігаються локально</span></div>
           <div class="sidebar-version"><span class="beta-badge" aria-label="Бета-версія додатка">BETA</span><span>v0.1 · від 29.10.2025 № 225</span></div>
         </div>
@@ -121,6 +122,22 @@
           <div class="result-score"><div class="score-ring"><strong id="result-percent">0%</strong><span>результат</span></div><div class="result-breakdown"><div><span class="result-dot correct"></span><strong id="correct-count">0</strong><span>правильних</span></div><div><span class="result-dot wrong"></span><strong id="wrong-count">0</strong><span>помилок</span></div><div><span class="result-dot neutral"></span><strong id="result-total">20</strong><span>усього</span></div></div></div>
           <div class="results-actions"><button class="primary-button" type="button" id="retry-button">↻ Пройти ще раз</button><button class="secondary-button" type="button" data-view="home">До меню</button></div>
           <div class="mistakes-preview" id="mistakes-preview"></div>
+        </section>
+
+        <section id="feedback-view" class="view">
+          <div class="feedback-hero">
+            <p class="eyebrow">Ми на зв’язку</p>
+            <h1>Є питання,<br /><em>скарга чи пропозиція?</em></h1>
+            <p>Пишіть нам усе, що допоможе зробити Roadwise кращим. Можна залишитися анонімним або додати контакти для зворотного зв’язку. Ми відповімо якнайшвидше.</p>
+          </div>
+          <form class="feedback-form" id="feedback-form">
+            <label for="feedback-message">Ваше повідомлення</label>
+            <textarea id="feedback-message" name="message" rows="7" maxlength="2000" placeholder="Розкажіть, що трапилося або що варто покращити" required></textarea>
+            <label for="feedback-contact">Контакт для відповіді <span>необов’язково</span></label>
+            <input id="feedback-contact" name="contact" type="text" maxlength="200" placeholder="Telegram, email або телефон" />
+            <button class="next-button feedback-submit" type="submit" id="feedback-submit">Надіслати повідомлення <span>→</span></button>
+            <p class="report-status" id="feedback-status" role="status"></p>
+          </form>
         </section>
       </main>
     </div>
