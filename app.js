@@ -15,7 +15,8 @@ const AVAILABLE_TOPICS = [
   "13-shvydkist-rukhu",
   "14-dystantsiya-interval-zustrichnyy-roz-yizd",
 
-  "17-1-proyizd-perekhrest-rehulovani-perekhrestya",
+  // додати фото в тему 17-1 
+  // "17-1-proyizd-perekhrest-rehulovani-perekhrestya", 
 
   "19-perevahy-marshrutnykh-transportnykh-zasobiv",
   "20-proyizd-pishokhidnykh-perekhodiv-i-zupynok-transportnykh-zasobiv",
