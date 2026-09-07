@@ -123,7 +123,7 @@
           <div class="progress-track"><span id="progress-bar"></span></div>
           <div class="question-nav" id="question-nav" aria-label="Навігація по питаннях"></div>
           <div id="topic-picker" class="topic-picker hidden"></div>
-          <div class="test-empty-state" id="test-empty-state">
+          <div class="empty-state" id="test-empty-state">
             <p class="eyebrow">Тест ще не розпочато</p>
             <h2>Оберіть режим і почніть тест</h2>
             <button class="primary-button" type="button" data-mode="random">Почати випадковий тест →</button>
@@ -140,10 +140,23 @@
         </section>
 
         <section id="results-view" class="view">
-          <div class="results-hero"><p class="eyebrow">Тест завершено</p><h1 id="results-title">Гарний старт.</h1><p id="results-subtitle">Твій результат збережено локально.</p></div>
-          <div class="result-score"><div class="score-ring"><strong id="result-percent">0%</strong><span>результат</span></div><div class="result-breakdown"><div><span class="result-dot correct"></span><strong id="correct-count">0</strong><span>правильних</span></div><div><span class="result-dot wrong"></span><strong id="wrong-count">0</strong><span>помилок</span></div><div><span class="result-dot neutral"></span><strong id="result-total">20</strong><span>усього</span></div></div></div>
-          <div class="results-actions"><button class="primary-button" type="button" id="retry-button">↻ Пройти ще раз</button><button class="secondary-button" type="button" data-view="home">До меню</button></div>
+          <div class="results-hero" id="results-hero"><p class="eyebrow">Тест завершено</p><h1 id="results-title">Гарний старт.</h1><p id="results-subtitle">Твій результат збережено локально.</p></div>
+          <div class="result-score" id="result-score"><div class="score-ring"><strong id="result-percent">0%</strong><span id="result-percent-label">результат</span></div><div class="result-breakdown" id="result-breakdown"><div><span class="result-dot correct"></span><strong id="correct-count">0</strong><span>правильних</span></div><div><span class="result-dot wrong"></span><strong id="wrong-count">0</strong><span>помилок</span></div><div><span class="result-dot neutral"></span><strong id="result-total">20</strong><span>усього</span></div></div></div>
+          <div class="results-actions" id="results-actions"><button class="primary-button" type="button" id="retry-button">↻ Пройти ще раз</button><button class="secondary-button" type="button" data-view="home">До меню</button></div>
+          <div class="results-stats-list hidden" id="results-stats">
+            <div><span>Всього тестів</span><strong id="stat-total-tests">0</strong></div>
+            <div><span>Всього питань</span><strong id="stat-total-questions">0</strong></div>
+            <div><span>Всього правильних</span><strong id="stat-total-correct">0</strong></div>
+            <div><span>Іспитів складено / не складено</span><strong id="stat-exams-passed-failed">0 / 0</strong></div>
+            <div><span>Помилок</span><strong id="stat-total-errors">0</strong></div>
+            <div><span>Помилки на повторенні</span><strong id="stat-errors-review">0</strong></div>
+          </div>
           <div class="mistakes-preview" id="mistakes-preview"></div>
+          <div class="empty-state hidden" id="results-empty-state">
+            <p class="eyebrow">Ще немає завершених тестів</p>
+            <h2>Пройди перший тест, щоб побачити статистику</h2>
+            <button class="primary-button" type="button" data-mode="random">Почати тест →</button>
+          </div>
         </section>
 
         <section id="feedback-view" class="view">
@@ -175,6 +188,14 @@
           <button class="next-button" type="submit" id="report-submit">Надіслати повідомлення <span>→</span></button>
           <p class="report-status" id="report-status" role="status"></p>
         </form>
+      </div>
+    </div>
+    <div class="report-modal hidden" id="exam-failed-modal" role="dialog" aria-modal="true" aria-labelledby="exam-failed-title">
+      <div class="report-dialog">
+        <p class="eyebrow">Результат іспиту</p>
+        <h2 id="exam-failed-title">Іспит не складено</h2>
+        <p class="report-question">Ви припустилися 3 помилок — за правилами реального іспиту він вважається не складеним. Бажаєте продовжити тест? Усі 20 питань буде зараховано.</p>
+        <button class="next-button" type="button" id="exam-failed-continue">Продовжити тест <span>→</span></button>
       </div>
     </div>
     <script src="app.js"></script>

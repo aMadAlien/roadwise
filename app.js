@@ -31,7 +31,7 @@ const AVAILABLE_TOPICS = [
   "30-rukh-po-hirskykh-dorohakh-i-na-krutykh-spuskakh",
   "31-mizhnarodnyy-rukh",
 ];
-const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]") };
+const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]") };
 const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
 let lastClientErrorAt = 0;
@@ -115,10 +115,11 @@ function showView(viewName) {
   document.querySelectorAll(".view").forEach((view) => view.classList.toggle("is-visible", view.id === `${viewName}-view`));
   document.querySelectorAll("[data-view]").forEach((link) => link.classList.toggle("is-active", link.dataset.view === viewName));
   if (viewName === "home" && state.topicCatalog.length) renderHome();
+  if (viewName === "results") renderResultsView();
 }
 
 async function startTest(mode = "random", topic = null) {
-  state.mode = mode; state.topic = topic; state.currentIndex = 0; state.selectedAnswer = null;
+  state.mode = mode; state.topic = topic; state.currentIndex = 0; state.selectedAnswer = null; state.examFailed = false;
   $("#test-empty-state").classList.add("hidden");
   if (mode === "topic" && topic && !isTopicAvailable(topic)) return;
   if (mode === "topic" && !topic) {
@@ -224,12 +225,24 @@ function renderQuestion() {
     elements.nextButton.disabled = false;
     elements.showCorrectButton.classList.toggle("hidden", answer === question.correctAnswer);
     renderQuestionNav();
+    maybeShowExamFailedNotice();
   }));
   elements.showCorrectButton.onclick = () => {
     if (question.userAnswer === undefined || question.userAnswer === question.correctAnswer) return;
     question.showCorrectAnswer = true;
     renderQuestion();
   };
+}
+
+const EXAM_FAIL_MISTAKES = 3;
+
+function countWrongAnswers() {
+  return state.currentTest.filter((question) => question.userAnswer !== undefined && question.userAnswer !== question.correctAnswer).length;
+}
+
+function maybeShowExamFailedNotice() {
+  if (state.mode !== "random" || state.examFailed) return;
+  if (countWrongAnswers() >= EXAM_FAIL_MISTAKES) { state.examFailed = true; $("#exam-failed-modal").classList.remove("hidden"); }
 }
 
 function openReportModal() {
@@ -315,20 +328,58 @@ function finishTest() {
   const wrongQuestions = state.currentTest.filter((question) => question.userAnswer !== question.correctAnswer);
   wrongQuestions.forEach((question) => { if (!state.errors.includes(question.id)) state.errors.push(question.id); });
   const percent = Math.round((correct / state.currentTest.length) * 100);
-  state.lastResult = { correct, total: state.currentTest.length, percent, wrongQuestions };
-  state.history.push({ percent, date: new Date().toISOString() });
+  const passed = wrongQuestions.length < EXAM_FAIL_MISTAKES;
+  state.lastResult = { correct, total: state.currentTest.length, percent, wrongQuestions, passed };
+  state.history.push({ percent, correct, total: state.currentTest.length, passed, date: new Date().toISOString() });
   trackAnalyticsEvent("test_completed", { mode: state.mode, topic: state.topic || "all", total: state.currentTest.length, correct });
   saveProgress();
   renderHome();
-  renderResults();
   showView("results");
 }
 
 function renderResults() {
   const result = state.lastResult; $("#result-percent").textContent = `${result.percent}%`; $("#correct-count").textContent = result.correct; $("#wrong-count").textContent = result.total - result.correct; $("#result-total").textContent = result.total;
-  $("#results-title").textContent = result.percent >= 80 ? "Відмінний результат." : result.percent >= 50 ? "Гарний старт." : "Є над чим попрацювати.";
-  $("#results-subtitle").textContent = `Правильних відповідей: ${result.correct} з ${result.total}. Результат збережено локально.`;
+  $("#result-percent-label").textContent = "результат";
+  $("#result-breakdown").classList.remove("hidden");
+  $("#results-title").textContent = !result.passed ? "Іспит не складено." : result.percent >= 80 ? "Відмінний результат." : result.percent >= 50 ? "Гарний старт." : "Є над чим попрацювати.";
+  $("#results-subtitle").textContent = result.passed ? `Правильних відповідей: ${result.correct} з ${result.total}. Результат збережено локально.` : `Правильних відповідей: ${result.correct} з ${result.total}. Допущено ${result.total - result.correct} помилок (3 і більше — іспит не складено). Результат збережено локально.`;
   $("#mistakes-preview").innerHTML = result.wrongQuestions.length ? `<p class="eyebrow">Питання для повторення</p>${result.wrongQuestions.map((question) => `<div class="mistake-item"><strong>${question.question}</strong><span>${question.topic}</span></div>`).join("")}` : `<p class="eyebrow">Без помилок</p><p>Усі відповіді правильні. Так тримати.</p>`;
+}
+
+function pluralizeUk(count, one, few, many) {
+  const mod10 = count % 10; const mod100 = count % 100;
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
+  return many;
+}
+
+function renderResultsView() {
+  const hasHistory = state.history.length > 0;
+  const showEmpty = !state.lastResult && !hasHistory;
+  $("#results-empty-state").classList.toggle("hidden", !showEmpty);
+  $("#results-hero").classList.toggle("hidden", showEmpty);
+  $("#results-actions").classList.toggle("hidden", showEmpty);
+  $("#mistakes-preview").classList.toggle("hidden", showEmpty);
+  if (showEmpty) { $("#result-score").classList.add("hidden"); $("#results-stats").classList.add("hidden"); return; }
+  if (state.lastResult) { $("#results-stats").classList.add("hidden"); $("#result-score").classList.remove("hidden"); renderResults(); return; }
+  $("#result-score").classList.add("hidden");
+  $("#results-stats").classList.remove("hidden");
+  const totalTests = state.history.length;
+  const totalQuestions = state.history.reduce((sum, item) => sum + (item.total || 0), 0);
+  const totalCorrect = state.history.reduce((sum, item) => sum + (item.correct || 0), 0);
+  const passedExams = state.history.filter((item) => item.passed !== undefined ? item.passed : item.percent >= 90).length;
+  const failedExams = totalTests - passedExams;
+  const totalErrors = totalQuestions - totalCorrect;
+  const testsWord = pluralizeUk(totalTests, "тест", "тести", "тестів");
+  $("#results-title").textContent = "Твоя статистика";
+  $("#results-subtitle").textContent = `Пройдено ${totalTests} ${testsWord}. Результат збережено локально.`;
+  $("#stat-total-tests").textContent = totalTests;
+  $("#stat-total-questions").textContent = totalQuestions;
+  $("#stat-total-correct").textContent = totalCorrect;
+  $("#stat-exams-passed-failed").textContent = `${passedExams} / ${failedExams}`;
+  $("#stat-total-errors").textContent = totalErrors;
+  $("#stat-errors-review").textContent = state.errors.length;
+  $("#mistakes-preview").innerHTML = state.errors.length ? `<p class="eyebrow">Незавершені помилки</p><p>У тебе ${state.errors.length} питань для повторення.</p>` : `<p class="eyebrow">Без помилок</p><p>Немає збережених помилок для повторення.</p>`;
 }
 
 function init() {
@@ -339,6 +390,7 @@ function init() {
   $("#report-close").addEventListener("click", closeReportModal);
   $("#report-form").addEventListener("submit", submitReport);
   $("#feedback-form").addEventListener("submit", submitFeedback);
+  $("#exam-failed-continue").addEventListener("click", () => $("#exam-failed-modal").classList.add("hidden"));
   $("#app-status-retry").addEventListener("click", () => {
     if (state.retryAction) state.retryAction();
     else loadQuestions().catch(handleInitialLoadError);
