@@ -126,7 +126,7 @@
           <div class="empty-state" id="test-empty-state">
             <p class="eyebrow">Тест ще не розпочато</p>
             <h2>Оберіть режим і почніть тест</h2>
-            <button class="primary-button" type="button" data-mode="random">Почати випадковий тест →</button>
+            <button class="primary-button" type="button" data-mode="random"><span></span> Почати випадковий тест <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><title>arrow-next-ltr</title><path fill="currentColor" d="M18 9.804v1.392l-5.688 5.883l-1.436-1.39L14.93 11.5H1v-2h13.923l-4.047-4.165l1.434-1.394z"/></svg></button>
           </div>
           <div class="question-layout hidden" id="question-layout">
             <div class="question-meta"><span class="question-topic" id="question-topic">Тема</span><span class="question-id" id="question-id">Q-001</span></div>
@@ -134,7 +134,9 @@
             <div class="question-image-wrapper hidden" id="question-image-wrapper"><img class="question-image" id="question-image" alt="Ілюстрація до питання" /></div>
             <div class="answers-list" id="answers-list"></div>
             <button class="show-correct-button hidden" type="button" id="show-correct-button">Показати правильну відповідь</button>
-            <button class="next-button" type="button" id="next-button" disabled>Наступне питання <span>→</span></button>
+            <button class="next-button" type="button" id="next-button" disabled><span></span>Наступне питання 
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><title>arrow-next-ltr</title><path fill="currentColor" d="M18 9.804v1.392l-5.688 5.883l-1.436-1.39L14.93 11.5H1v-2h13.923l-4.047-4.165l1.434-1.394z"/></svg>
+            </button>
             <button class="report-button" type="button" id="report-button">⚠️ Помилка в питанні?</button>
           </div>
         </section>
@@ -142,7 +144,7 @@
         <section id="results-view" class="view">
           <div class="results-hero" id="results-hero"><p class="eyebrow">Тест завершено</p><h1 id="results-title">Гарний старт.</h1><p id="results-subtitle">Твій результат збережено локально.</p></div>
           <div class="result-score" id="result-score"><div class="score-ring"><strong id="result-percent">0%</strong><span id="result-percent-label">результат</span></div><div class="result-breakdown" id="result-breakdown"><div><span class="result-dot correct"></span><strong id="correct-count">0</strong><span>правильних</span></div><div><span class="result-dot wrong"></span><strong id="wrong-count">0</strong><span>помилок</span></div><div><span class="result-dot neutral"></span><strong id="result-total">20</strong><span>усього</span></div></div></div>
-          <div class="results-actions" id="results-actions"><button class="primary-button" type="button" id="retry-button">↻ Пройти ще раз</button><button class="secondary-button" type="button" data-view="home">До меню</button></div>
+          <div class="results-actions" id="results-actions"><button class="primary-button" type="button" id="retry-button"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><title>redo</title><path fill="currentColor" d="m13.146 11.05l-.174-1.992l2.374-.208a5 5 0 1 0 .82 6.173l2.002.5a7 7 0 1 1-1.315-7.996l-.245-2.803L18.6 4.55l.523 5.977z"/></svg> Пройти ще раз</button><button class="secondary-button" type="button" data-view="home">До меню</button></div>
           <div class="results-stats-list hidden" id="results-stats">
             <div><span>Всього тестів</span><strong id="stat-total-tests">0</strong></div>
             <div><span>Всього питань</span><strong id="stat-total-questions">0</strong></div>
@@ -155,7 +157,7 @@
           <div class="empty-state hidden" id="results-empty-state">
             <p class="eyebrow">Ще немає завершених тестів</p>
             <h2>Пройди перший тест, щоб побачити статистику</h2>
-            <button class="primary-button" type="button" data-mode="random">Почати тест →</button>
+            <button class="primary-button" type="button" data-mode="random"><span></span>Почати тест <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><title>arrow-next-ltr</title><path fill="currentColor" d="M18 9.804v1.392l-5.688 5.883l-1.436-1.39L14.93 11.5H1v-2h13.923l-4.047-4.165l1.434-1.394z"/></svg></button>
           </div>
         </section>
 
@@ -170,7 +172,7 @@
             <textarea id="feedback-message" name="message" rows="7" maxlength="2000" placeholder="Розкажіть, що трапилося або що варто покращити" required></textarea>
             <label for="feedback-contact">Контакт для відповіді <span>необов’язково</span></label>
             <input id="feedback-contact" name="contact" type="text" maxlength="200" placeholder="Telegram, email або телефон" />
-            <button class="next-button feedback-submit" type="submit" id="feedback-submit">Надіслати повідомлення <span>→</span></button>
+            <button class="next-button feedback-submit" type="submit" id="feedback-submit"><span></span>Надіслати повідомлення <span>→</span></button>
             <p class="report-status" id="feedback-status" role="status"></p>
           </form>
         </section>
@@ -185,7 +187,7 @@
         <form id="report-form">
           <label for="report-message">Опишіть помилку</label>
           <textarea id="report-message" name="message" rows="4" maxlength="1000" placeholder="Наприклад: правильна відповідь не збігається з ПДР" required></textarea>
-          <button class="next-button" type="submit" id="report-submit">Надіслати повідомлення <span>→</span></button>
+          <button class="next-button" type="submit" id="report-submit"><span></span>Надіслати повідомлення <span>→</span></button>
           <p class="report-status" id="report-status" role="status"></p>
         </form>
       </div>

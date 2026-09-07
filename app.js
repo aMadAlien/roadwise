@@ -159,9 +159,9 @@ async function startTest(mode = "random", topic = null) {
 function renderTopicPicker() {
   $("#topic-picker").innerHTML = `<p class="topic-picker-title">Питання з якої теми тренуємо?</p>${topics().map((topic) => {
     const available = isTopicAvailable(topic);
-    const topicMeta = available ? `${topicEntry(topic).count} питань` : "🔒 У розробці";
+    const topicMeta = available ? `${topicEntry(topic).count} питань` : '<svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 2048 2048"><path fill="#3d8f68" d="M837 844q-23 37-53 67t-68 54l51 124l-118 48l-51-123q-40 10-86 10t-86-10l-51 123l-118-48l51-124q-37-23-67-53t-54-68L63 895L15 777l123-51q-10-40-10-86t10-86L15 503l48-118l124 51q46-75 121-121l-51-124l118-48l51 123q40-10 86-10t86 10l51-123l118 48l-51 124q75 46 121 121l124-51l48 118l-123 51q10 40 10 86t-10 86l123 51l-48 118zm-325 52q53 0 99-20t82-55t55-81t20-100q0-53-20-99t-55-82t-81-55t-100-20q-53 0-99 20t-82 55t-55 81t-20 100q0 53 20 99t55 82t81 55t100 20m1408 448q0 55-14 111l137 56l-48 119l-138-57q-59 98-156 156l57 137l-119 49l-56-137q-56 14-111 14t-111-14l-56 137l-119-49l57-137q-98-58-156-156l-138 57l-48-119l137-56q-14-56-14-111t14-111l-137-56l48-119l138 57q58-97 156-156l-57-138l119-48l56 137q56-14 111-14t111 14l56-137l119 48l-57 138q97 59 156 156l138-57l48 119l-137 56q14 56 14 111m-448 320q66 0 124-25t101-68t69-102t26-125t-25-124t-69-101t-102-69t-124-26t-124 25t-102 69t-69 102t-25 124t25 124t68 102t102 69t125 25"/></svg> У розробці';
     const developmentNote = available ? "" : "<small>Ми вже працюємо над цією темою.</small>";
-    return `<button type="button" class="${topic === state.topic ? "is-selected" : ""} ${available ? "" : "is-unavailable"}" data-topic="${topic}" ${available ? "" : "disabled"}><span class="topic-picker-name">${topic}${developmentNote}</span><span style="flex-shrink: 0;">${topicMeta}</span></button>`;
+    return `<button type="button" class="${topic === state.topic ? "is-selected" : ""} ${available ? "" : "is-unavailable"}" data-topic="${topic}" ${available ? "" : "disabled"}><span class="topic-picker-name">${topic}${developmentNote}</span><span class="locked-dev" style="flex-shrink: 0;">${topicMeta}</span></button>`;
   }).join("")}`;
   $("#topic-picker").querySelectorAll("button:not(:disabled)").forEach((button) => button.addEventListener("click", () => startTest("topic", button.dataset.topic)));
 }
@@ -213,7 +213,7 @@ function renderQuestion() {
   const answeredIncorrectly = question.userAnswer !== undefined && question.userAnswer !== question.correctAnswer;
   elements.showCorrectButton.classList.toggle("hidden", !answeredIncorrectly || question.showCorrectAnswer);
   elements.nextButton.disabled = question.userAnswer === undefined;
-  elements.nextButton.innerHTML = state.currentIndex === state.currentTest.length - 1 ? "Завершити тест <span>✓</span>" : "Наступне питання <span>→</span>";
+  elements.nextButton.innerHTML = state.currentIndex === state.currentTest.length - 1 ? "Завершити тест <span>✓</span>" : `<span></span> Наступне питання <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><title>arrow-next-ltr</title><path fill="currentColor" d="M18 9.804v1.392l-5.688 5.883l-1.436-1.39L14.93 11.5H1v-2h13.923l-4.047-4.165l1.434-1.394z"/></svg>`;
   elements.questionNav.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => { state.currentIndex = Number(button.dataset.questionIndex); renderQuestion(); }));
   elements.answersList.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => {
     if (question.userAnswer !== undefined) return;
@@ -361,9 +361,10 @@ function renderResultsView() {
   $("#results-actions").classList.toggle("hidden", showEmpty);
   $("#mistakes-preview").classList.toggle("hidden", showEmpty);
   if (showEmpty) { $("#result-score").classList.add("hidden"); $("#results-stats").classList.add("hidden"); return; }
-  if (state.lastResult) { $("#results-stats").classList.add("hidden"); $("#result-score").classList.remove("hidden"); renderResults(); return; }
+  if (state.lastResult) { $("#results-stats").classList.add("hidden"); $("#result-score").classList.remove("hidden"); $("#results-actions").classList.remove("hidden"); renderResults(); return; }
   $("#result-score").classList.add("hidden");
   $("#results-stats").classList.remove("hidden");
+  $("#results-actions").classList.add("hidden");
   const totalTests = state.history.length;
   const totalQuestions = state.history.reduce((sum, item) => sum + (item.total || 0), 0);
   const totalCorrect = state.history.reduce((sum, item) => sum + (item.correct || 0), 0);
