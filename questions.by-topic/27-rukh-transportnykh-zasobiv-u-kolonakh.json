@@ -11,7 +11,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 251,
@@ -30,7 +30,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 251,
@@ -47,7 +47,7 @@
       "Колона може рухатися в будь-якій смузі.",
       "Колона повинна рухатися лише в один ряд якнайближче до правого краю проїзної частини, за винятком випадків, коли її супроводжують оперативні транспортні засоби."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 251,
@@ -64,7 +64,7 @@
       "Тільки за режимом руху головної машини відповідно до вимог Правил дорожнього руху на певній ділянці дороги.",
       "Старшим колони або за режимом руху головної машини відповідно до вимог Правил дорожнього руху на певній ділянці дороги."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 252,
@@ -83,7 +83,7 @@
       "Відповіді 1, 2 і 3.",
       "Відповіді 1 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 252,
@@ -102,7 +102,7 @@
       "Проблискові маячки оранжевого кольору.",
       "Відповіді 3 і 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 252,
@@ -118,7 +118,7 @@
       "Не можуть.",
       "Можуть."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 252,
@@ -135,7 +135,7 @@
       "У разі виконання випередження колони.",
       "У разі виконання обгону колони."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 252,

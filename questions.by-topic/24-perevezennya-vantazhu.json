@@ -11,7 +11,7 @@
       "На 0,5 м.",
       "На 0,6 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 244,
@@ -29,7 +29,7 @@
       "На 1 м.",
       "На 2 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 244,
@@ -46,7 +46,7 @@
       "Забезпечити надійність кріплення вантажу.",
       "Усе перелічене вище."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 244,
@@ -63,7 +63,7 @@
       "Під час руху контролювати надійність розташування і кріплення вантажу.",
       "Виконувати обидві дії."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 244,
@@ -82,7 +82,7 @@
       "За умови, що вантаж не закриває зовнішніх світлових приладів, світлоповертачів, номерних і розпізнавальних знаків, а також не перешкоджає сприйманню сигналів, що подаються рукою.",
       "У разі дотримання всіх перелічених вище умов."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 244,
@@ -101,7 +101,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 245,

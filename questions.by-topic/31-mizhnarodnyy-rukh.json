@@ -9,7 +9,7 @@
       "Посвідчення водія, що відповідає вимогам Конвенції про дорожній рух.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 259,

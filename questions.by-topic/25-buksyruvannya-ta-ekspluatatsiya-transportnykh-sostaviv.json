@@ -8,7 +8,7 @@
       "При дотриманні максимальної швидкості руху в 40 км/год.",
       "За умови, що фактична маса буксируваного транспортного засобу не перевищує половини фактичної маси транспортного засобу, що буксирує."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 245,
@@ -27,7 +27,7 @@
       "4 м.",
       "5 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 245,
@@ -43,7 +43,7 @@
       "Не можуть.",
       "Можуть."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 245,
@@ -61,7 +61,7 @@
       "Тільки в кабіні і кузові автомобіля, що буксирує.",
       "Лише в кабіні автомобіля, що буксирує."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 245,
@@ -79,7 +79,7 @@
       "Під час буксирування на жорсткому або гнучкому зчепленні – в легковому автомобілі.",
       "Завжди, під час будь-якого буксирування – в будь-якому буксируваному автомобілі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 246,
@@ -98,7 +98,7 @@
       "Відповіді, зазначені в пунктах 1, 2.",
       "Відповіді, зазначені в пунктах 1, 2, 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 246,
@@ -116,7 +116,7 @@
       "Дозволяється при довжині гнучкого зчеплення понад 5 м.",
       "Дозволяється на дорогах з неінтенсивним рухом."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 246,
@@ -134,7 +134,7 @@
       "Тільки на гнучкому зчепленні.",
       "На жорсткому зчепленні або способом часткового навантаження."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 246,
@@ -152,7 +152,7 @@
       "Під час руху по дорогах з неінтенсивним рухом.",
       "За погодженням із уповноваженим підрозділом Національної поліції."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 246,
@@ -170,7 +170,7 @@
       "На жорсткому зчепленні або способом часткового навантаження.",
       "Лише способом часткового навантаження."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 246,
@@ -187,7 +187,7 @@
       "Лише на гнучкому зчепленні.",
       "Лише на жорсткому зчепленні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 247,
@@ -204,7 +204,7 @@
       "За умови наявності технічно справного зчіпного пристрою тільки у транспортного засобу, що буксирує.",
       "За умови наявності справного зчіпного пристрою у буксируваного транспортного засобу, а також у транспортного засобу, що буксирує."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 247,
@@ -223,7 +223,7 @@
       "5–7 м.",
       "4–7 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 247,
@@ -240,7 +240,7 @@
       "З використанням покриття із світлоповертального матеріалу.",
       "Одним із вищевказаних способів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 247,
@@ -257,7 +257,7 @@
       "Тільки гальмова система.",
       "Рульове керування і гальмова система."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 247,
@@ -276,7 +276,7 @@
       "З несправною підвіскою.",
       "Із несправними гальмовою системою і рульовим керуванням."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 247,
@@ -294,7 +294,7 @@
       "З несправною аварійною сигналізацією.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 248,
@@ -310,7 +310,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 248,
@@ -328,7 +328,7 @@
       "За умови, що конструкція жорсткого зчеплення забезпечує буксируваному транспортному засобу повторення траєкторії руху транспортного засобу, що буксирує, незалежно від величини поворотів.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 248,
@@ -344,7 +344,7 @@
       "Забороняється.",
       "Дозволяється."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 248,

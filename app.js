@@ -12,7 +12,7 @@ const AVAILABLE_TOPICS = [
   "10-poperedzhuvalni-syhnaly",
   "11-pochatok-rukhu-ta-zmina-yoho-napryamku",
   "12-roztashuvannya-transportnykh-zasobiv-na-dorozi",
-
+  "13-shvydkist-rukhu",
   "14-dystantsiya-interval-zustrichnyy-roz-yizd",
 
   "17-1-proyizd-perekhrest-rehulovani-perekhrestya",
@@ -20,7 +20,15 @@ const AVAILABLE_TOPICS = [
   "19-perevahy-marshrutnykh-transportnykh-zasobiv",
   "20-proyizd-pishokhidnykh-perekhodiv-i-zupynok-transportnykh-zasobiv",
 
+  "23-perevezennya-pasazhyriv",
+  "24-perevezennya-vantazhu",
+  "25-buksyruvannya-ta-ekspluatatsiya-transportnykh-sostaviv",
+  "26-navchalna-yizda",
+  "27-rukh-transportnykh-zasobiv-u-kolonakh",
 
+  "29-rukh-po-avtomahistralyakh",
+  "30-rukh-po-hirskykh-dorohakh-i-na-krutykh-spuskakh",
+  "31-mizhnarodnyy-rukh",
 ];
 const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]") };
 const $ = (selector) => document.querySelector(selector);
