@@ -106,7 +106,12 @@
           <div class="progress-track"><span id="progress-bar"></span></div>
           <div class="question-nav" id="question-nav" aria-label="Навігація по питаннях"></div>
           <div id="topic-picker" class="topic-picker hidden"></div>
-          <div class="question-layout" id="question-layout">
+          <div class="test-empty-state" id="test-empty-state">
+            <p class="eyebrow">Тест ще не розпочато</p>
+            <h2>Оберіть режим і почніть тест</h2>
+            <button class="primary-button" type="button" data-mode="random">Почати випадковий тест →</button>
+          </div>
+          <div class="question-layout hidden" id="question-layout">
             <div class="question-meta"><span class="question-topic" id="question-topic">Тема</span><span class="question-id" id="question-id">Q-001</span></div>
             <h2 class="question-title" id="question-title">Завантаження питання...</h2>
             <div class="question-image-wrapper hidden" id="question-image-wrapper"><img class="question-image" id="question-image" alt="Ілюстрація до питання" /></div>

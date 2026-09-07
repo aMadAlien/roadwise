@@ -118,6 +118,7 @@ function showView(viewName) {
 
 async function startTest(mode = "random", topic = null) {
   state.mode = mode; state.topic = topic; state.currentIndex = 0; state.selectedAnswer = null;
+  $("#test-empty-state").classList.add("hidden");
   if (mode === "topic" && topic && !isTopicAvailable(topic)) return;
   if (mode === "topic" && !topic) {
     $("#test-mode-label").textContent = "Обери тему";
