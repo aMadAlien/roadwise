@@ -1,6 +1,6 @@
 import { AVAILABLE_TOPICS } from "./available-topics.js";
 
-const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null, timerInterval: null, timerStartedAt: null };
+const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null, timerInterval: null, timerStartedAt: null, savedQuestions: JSON.parse(localStorage.getItem("roadwise-saved") || "[]") };
 const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
 let lastClientErrorAt = 0;
@@ -76,6 +76,7 @@ async function loadQuestions() {
 
   state.topicCatalog = await indexResponse.json();
   state.topicIds = Object.fromEntries(state.topicCatalog.map((topic) => [topic.topic, topic.file.replace(/\.json$/, "")]));
+  updateNavBadge();
   renderHome();
 }
 
@@ -110,6 +111,52 @@ function saveProgress() {
   localStorage.setItem("roadwise-history", JSON.stringify(state.history));
   localStorage.setItem("roadwise-topic-progress", JSON.stringify(state.topicProgress));
   localStorage.setItem("roadwise-last-topic", state.lastOpenedTopic || "");
+  localStorage.setItem("roadwise-saved", JSON.stringify(state.savedQuestions));
+}
+
+function isQuestionSaved(id) { return state.savedQuestions.some((item) => item.id === id); }
+
+function toggleSavedQuestion(question) {
+  const index = state.savedQuestions.findIndex((item) => item.id === question.id);
+  if (index >= 0) state.savedQuestions.splice(index, 1);
+  else state.savedQuestions.push({ id: question.id, topic: question.topic, question: question.question, answers: question.answers, correctAnswer: question.correctAnswer, image: question.image ?? null, savedAt: new Date().toISOString() });
+  saveProgress();
+  updateNavBadge();
+}
+
+function removeSavedQuestion(id) {
+  state.savedQuestions = state.savedQuestions.filter((item) => item.id !== id);
+  saveProgress();
+  renderSavedView();
+  updateNavBadge();
+}
+
+function clearSavedQuestions() {
+  state.savedQuestions = [];
+  saveProgress();
+  renderSavedView();
+  updateNavBadge();
+}
+
+function updateNavBadge() {
+  const badge = $("#saved-nav-count");
+  badge.textContent = state.savedQuestions.length;
+  badge.classList.toggle("hidden", !state.savedQuestions.length);
+}
+
+function renderSavedView() {
+  const list = $("#saved-list");
+  const hasSaved = state.savedQuestions.length > 0;
+  $("#saved-empty-state").classList.toggle("hidden", hasSaved);
+  $("#saved-actions").classList.toggle("hidden", !hasSaved);
+  $("#saved-count").textContent = `${state.savedQuestions.length} питань`;
+  list.innerHTML = hasSaved ? state.savedQuestions.map((question) => `<div class="saved-item" data-question-id="${question.id}"><button type="button" class="saved-item-header"><div class="saved-item-labels"><span class="saved-item-topic">${question.topic}</span><span class="saved-item-question">${question.question}</span></div><span class="saved-item-toggle"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1024 1024"><title>arrow-down-bold</title><path fill="currentColor" d="M104.7 338.8a64 64 0 0 1 90.5 0L512 655.6l316.8-316.8a64 64 0 0 1 90.5 90.4l-362 362.1a64 64 0 0 1-90.5 0l-362.1-362a64 64 0 0 1 0-90.5"/></svg></span></button><div class="saved-item-body hidden">${question.image ? `<img class="saved-item-image" src="${question.image}" alt="Ілюстрація до питання ${question.id}" loading="lazy" />` : ""}<ul class="saved-item-answers">${question.answers.map((answer, index) => `<li class="${index === question.correctAnswer ? "is-correct" : ""}">${answer}</li>`).join("")}</ul><button type="button" class="saved-item-remove" data-remove-id="${question.id}">Видалити</button></div></div>`).join("") : "";
+  list.querySelectorAll(".saved-item-header").forEach((header) => header.addEventListener("click", () => {
+    const item = header.closest(".saved-item");
+    item.classList.toggle("is-open");
+    item.querySelector(".saved-item-body").classList.toggle("hidden");
+  }));
+  list.querySelectorAll("[data-remove-id]").forEach((button) => button.addEventListener("click", (event) => { event.stopPropagation(); removeSavedQuestion(button.dataset.removeId); }));
 }
 
 function markTopicStarted(topic) {
@@ -160,6 +207,7 @@ function showView(viewName) {
   if (viewName !== "test") stopExamTimer();
   if (viewName === "home" && state.topicCatalog.length) renderHome();
   if (viewName === "results") renderResultsView();
+  if (viewName === "saved") renderSavedView();
 }
 
 function formatTimerDuration(ms) {
@@ -218,6 +266,9 @@ async function startTest(mode = "random", topic = null) {
       return;
     }
     testSize = state.currentTest.length;
+  } else if (mode === "saved") {
+    state.currentTest = shuffle(state.savedQuestions.map((question) => ({ ...question })));
+    testSize = state.currentTest.length;
   } else {
     const topicEntries = topic ? [topicEntry(topic)] : availableTopicCatalog();
     try {
@@ -233,7 +284,7 @@ async function startTest(mode = "random", topic = null) {
   }
   state.currentTest.forEach((question) => { delete question.userAnswer; delete question.showCorrectAnswer; });
   if (!state.currentTest.length) { showAppError("Тут поки немає питань для цього режиму."); return; }
-  $("#test-mode-label").textContent = mode === "mistakes" ? "Мої помилки" : topic ? '' : "Випадковий тест";
+  $("#test-mode-label").textContent = mode === "mistakes" ? "Мої помилки" : mode === "saved" ? "Збережені питання" : topic ? '' : "Випадковий тест";
   $(".question-nav").classList.remove("hidden");
   $(".progress-track").classList.remove("hidden");
   $(".test-progress-label").classList.remove("hidden");
@@ -278,7 +329,9 @@ function renderQuestion() {
     answersList: $("#answers-list"),
     showCorrectButton: $("#show-correct-button"),
     nextButton: $("#next-button"),
-    reportButton: $("#report-button")
+    reportButton: $("#report-button"),
+    saveButton: $("#save-question-button"),
+    saveButtonLabel: $("#save-button-label")
   };
   const missingElement = Object.entries(elements).find(([, element]) => !element);
   if (missingElement) throw new Error(`renderQuestion: не знайдено елемент ${missingElement[0]} у index.html`);
@@ -301,6 +354,15 @@ function renderQuestion() {
     elements.questionImage.removeAttribute("src");
   }
   elements.reportButton.dataset.questionId = question.id;
+  const isSaved = isQuestionSaved(question.id);
+  elements.saveButton.classList.toggle("is-saved", isSaved);
+  elements.saveButtonLabel.textContent = isSaved ? "Збережено" : "Зберегти";
+  elements.saveButton.onclick = () => {
+    toggleSavedQuestion(question);
+    const nowSaved = isQuestionSaved(question.id);
+    elements.saveButton.classList.toggle("is-saved", nowSaved);
+    elements.saveButtonLabel.textContent = nowSaved ? "Збережено" : "Зберегти";
+  };
   elements.answersList.innerHTML = question.answers.map((answer, index) => {
     const isSelected = question.userAnswer === index;
     const isCorrectAnswerRevealed = question.showCorrectAnswer && index === question.correctAnswer;
@@ -483,7 +545,7 @@ function renderResultsView() {
   $("#stat-total-tests").textContent = totalTests;
   $("#stat-total-questions").textContent = totalQuestions;
   $("#stat-total-correct").textContent = totalCorrect;
-  $("#stat-exams-passed-failed").textContent = `${passedExams} / ${failedExams}`;
+  $("#stat-exams-passed-failed").innerHTML = `<span style="color: #449E48;">${passedExams}</span> / <span style="color: #E64444;">${failedExams}</span>`;
   $("#stat-total-errors").textContent = totalErrors;
   $("#stat-errors-review").textContent = state.errors.length;
   $("#mistakes-preview").innerHTML = state.errors.length ? `<p class="eyebrow">Незавершені помилки</p><p>У тебе ${state.errors.length} питань для повторення.</p>` : `<p class="eyebrow">Без помилок</p><p>Немає збережених помилок для повторення.</p>`;
@@ -499,6 +561,7 @@ function init() {
   $("#report-form").addEventListener("submit", submitReport);
   $("#feedback-form").addEventListener("submit", submitFeedback);
   $("#exam-failed-continue").addEventListener("click", () => $("#exam-failed-modal").classList.add("hidden"));
+  $("#saved-clear-all").addEventListener("click", clearSavedQuestions);
   $("#app-status-retry").addEventListener("click", () => {
     if (state.retryAction) state.retryAction();
     else loadQuestions().catch(handleInitialLoadError);
