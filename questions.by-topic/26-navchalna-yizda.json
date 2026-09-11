@@ -8,7 +8,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 248,
@@ -25,7 +25,7 @@
       "Дозволена.",
       "Дозволена під час руху по навчальному маршруту."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 248,
@@ -43,7 +43,7 @@
       "Знаками 1, 2, 4 і 5.",
       "Всіма зазначеними знаками."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 249,
@@ -62,7 +62,7 @@
       "Знаками 1, 2, 3 і 4.",
       "Знаками 1, 2 і 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 249,
@@ -80,7 +80,7 @@
       "Відсутність медичних протипоказань, що підтверджується дійсною медичною довідкою встановленого зразка.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 249,
@@ -97,7 +97,7 @@
       "Одразу на вулицях населеного пункту, де є інші учасники дорожнього руху, а в кінці на автодромі.",
       "На складних перехрестях і дорогах з одностороннім рухом."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 249,
@@ -114,7 +114,7 @@
       "Дзеркалом або дзеркалами заднього виду для спеціаліста з підготовки водіїв, а також розпізнавальними знаками «Навчальний транспортний засіб», встановленими відповідно до вимог Правил дорожнього руху.",
       "Правильні відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 250,
@@ -133,7 +133,7 @@
       "Правильні відповіді 1 і 2.",
       "Правильні відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 250,
@@ -150,7 +150,7 @@
       "Дозволена за умови присутності водія зі стажем не менше трьох років.",
       "Дозволена в присутності будь-якого досвідченого водія."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 250,
@@ -168,7 +168,7 @@
       "На дорогах з неінтенсивним рухом.",
       "На закритих майданчиках, автодромах або у місцях, де немає інших учасників дорожнього руху."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 250,
@@ -184,7 +184,7 @@
       "Не повинна.",
       "Повинна обов'язково."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 250,
@@ -203,7 +203,7 @@
       "З 18 років.",
       "З 19 років."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 250,
@@ -220,7 +220,7 @@
       "Може розпочати навчання водінню до вивчення правил проїзду перехресть.",
       "Зобов’язана знати і виконувати вимоги Правил дорожнього руху."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 250,
@@ -236,7 +236,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 251,
