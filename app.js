@@ -1,6 +1,6 @@
 import { AVAILABLE_TOPICS } from "./available-topics.mjs";
 
-const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]") };
+const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null };
 const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
 let lastClientErrorAt = 0;
@@ -105,7 +105,28 @@ async function loadRandomQuestions(count) {
   const data = await response.json();
   return Array.isArray(data.questions) ? data.questions : [];
 }
-function saveProgress() { localStorage.setItem("roadwise-errors", JSON.stringify(state.errors)); localStorage.setItem("roadwise-history", JSON.stringify(state.history)); }
+function saveProgress() {
+  localStorage.setItem("roadwise-errors", JSON.stringify(state.errors));
+  localStorage.setItem("roadwise-history", JSON.stringify(state.history));
+  localStorage.setItem("roadwise-topic-progress", JSON.stringify(state.topicProgress));
+  localStorage.setItem("roadwise-last-topic", state.lastOpenedTopic || "");
+}
+
+function markTopicStarted(topic) {
+  const id = topicId(topic);
+  if (!id) return;
+  const existing = state.topicProgress[id];
+  state.topicProgress[id] = { status: existing?.status === "completed" ? "completed" : "started", lastOpenedAt: new Date().toISOString() };
+  state.lastOpenedTopic = topic;
+  saveProgress();
+}
+
+function markTopicCompleted(topic, mistakes) {
+  const id = topicId(topic);
+  if (!id) return;
+  state.topicProgress[id] = { status: "completed", mistakes, lastOpenedAt: new Date().toISOString() };
+  saveProgress();
+}
 
 function renderHome() {
   const topicList = $("#topic-list");
@@ -142,6 +163,7 @@ async function startTest(mode = "random", topic = null) {
     showView("test");
     return;
   }
+  if (mode === "topic" && topic) markTopicStarted(topic);
   let testSize;
   if (mode === "random") {
     try {
@@ -182,7 +204,13 @@ function renderTopicPicker() {
     const available = isTopicAvailable(topic);
     const topicMeta = available ? `${topicEntry(topic).count} питань` : '<svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 2048 2048"><path fill="#3d8f68" d="M837 844q-23 37-53 67t-68 54l51 124l-118 48l-51-123q-40 10-86 10t-86-10l-51 123l-118-48l51-124q-37-23-67-53t-54-68L63 895L15 777l123-51q-10-40-10-86t10-86L15 503l48-118l124 51q46-75 121-121l-51-124l118-48l51 123q40-10 86-10t86 10l51-123l118 48l-51 124q75 46 121 121l124-51l48 118l-123 51q10 40 10 86t-10 86l123 51l-48 118zm-325 52q53 0 99-20t82-55t55-81t20-100q0-53-20-99t-55-82t-81-55t-100-20q-53 0-99 20t-82 55t-55 81t-20 100q0 53 20 99t55 82t81 55t100 20m1408 448q0 55-14 111l137 56l-48 119l-138-57q-59 98-156 156l57 137l-119 49l-56-137q-56 14-111 14t-111-14l-56 137l-119-49l57-137q-98-58-156-156l-138 57l-48-119l137-56q-14-56-14-111t14-111l-137-56l48-119l138 57q58-97 156-156l-57-138l119-48l56 137q56-14 111-14t111 14l56-137l119 48l-57 138q97 59 156 156l138-57l48 119l-137 56q14 56 14 111m-448 320q66 0 124-25t101-68t69-102t26-125t-25-124t-69-101t-102-69t-124-26t-124 25t-102 69t-69 102t-25 124t25 124t68 102t102 69t125 25"/></svg> У розробці';
     const developmentNote = available ? "" : "<small>Ми вже працюємо над цією темою.</small>";
-    return `<button type="button" class="${topic === state.topic ? "is-selected" : ""} ${available ? "" : "is-unavailable"}" data-topic="${topic}" ${available ? "" : "disabled"}><span class="topic-picker-name">${topic}${developmentNote}</span><span class="locked-dev" style="flex-shrink: 0;">${topicMeta}</span></button>`;
+    const topicProgress = state.topicProgress[topicId(topic)];
+    const progress = topicProgress?.status;
+    const isPerfect = progress === "completed" && !topicProgress.mistakes;
+    const progressClass = progress === "completed" ? (isPerfect ? "is-completed-perfect" : "is-completed") : progress === "started" ? "is-started" : "";
+    const isLastOpened = available && topic === state.lastOpenedTopic;
+    const progressBadge = progress === "completed" ? (isPerfect ? '<span class="topic-progress-badge perfect">Відмінно</span>' : `<span class="topic-progress-badge completed">Завершено · ${topicProgress.mistakes} помилок</span>`) : progress === "started" ? '<span class="topic-progress-badge started">Почато</span>' : "";
+    return `<button type="button" class="${topic === state.topic ? "is-selected" : ""} ${available ? "" : "is-unavailable"} ${progressClass} ${isLastOpened ? "is-last-opened" : ""}" data-topic="${topic}" ${available ? "" : "disabled"}><span class="topic-picker-name">${topic}${developmentNote}${progressBadge}</span><span class="locked-dev" style="flex-shrink: 0;">${topicMeta}</span></button>`;
   }).join("")}`;
   $("#topic-picker").querySelectorAll("button:not(:disabled)").forEach((button) => button.addEventListener("click", () => startTest("topic", button.dataset.topic)));
 }
@@ -237,7 +265,7 @@ function renderQuestion() {
   const answeredIncorrectly = question.userAnswer !== undefined && question.userAnswer !== question.correctAnswer;
   elements.showCorrectButton.classList.toggle("hidden", !answeredIncorrectly || question.showCorrectAnswer);
   elements.nextButton.disabled = question.userAnswer === undefined;
-  elements.nextButton.innerHTML = state.currentIndex === state.currentTest.length - 1 ? "Завершити тест <span>✓</span>" : `<span></span> Наступне питання <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><title>arrow-next-ltr</title><path fill="currentColor" d="M18 9.804v1.392l-5.688 5.883l-1.436-1.39L14.93 11.5H1v-2h13.923l-4.047-4.165l1.434-1.394z"/></svg>`;
+  elements.nextButton.innerHTML = state.currentIndex === state.currentTest.length - 1 ? "<span></span> Завершити тест <span>✓</span>" : `<span></span> Наступне питання <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><title>arrow-next-ltr</title><path fill="currentColor" d="M18 9.804v1.392l-5.688 5.883l-1.436-1.39L14.93 11.5H1v-2h13.923l-4.047-4.165l1.434-1.394z"/></svg>`;
   elements.questionNav.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => { state.currentIndex = Number(button.dataset.questionIndex); renderQuestion(); }));
   elements.answersList.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => {
     if (question.userAnswer !== undefined) return;
@@ -355,6 +383,7 @@ function finishTest() {
   const passed = wrongQuestions.length < EXAM_FAIL_MISTAKES;
   state.lastResult = { correct, total: state.currentTest.length, percent, wrongQuestions, passed };
   state.history.push({ percent, correct, total: state.currentTest.length, passed, date: new Date().toISOString() });
+  if (state.mode === "topic" && state.topic) markTopicCompleted(state.topic, wrongQuestions.length);
   trackAnalyticsEvent("test_completed", { mode: state.mode, topic: state.topic || "all", total: state.currentTest.length, correct });
   saveProgress();
   renderHome();
