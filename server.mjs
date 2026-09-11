@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 import { fileURLToPath } from "url";
-import { AVAILABLE_TOPICS } from "./available-topics.mjs";
+import { AVAILABLE_TOPICS } from "./available-topics.js";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT || 3000);

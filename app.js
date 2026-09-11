@@ -1,4 +1,4 @@
-import { AVAILABLE_TOPICS } from "./available-topics.mjs";
+import { AVAILABLE_TOPICS } from "./available-topics.js";
 
 const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null };
 const $ = (selector) => document.querySelector(selector);
