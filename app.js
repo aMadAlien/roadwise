@@ -1,6 +1,6 @@
 import { AVAILABLE_TOPICS } from "./available-topics.js";
 
-const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null };
+const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null, timerInterval: null, timerStartedAt: null };
 const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
 let lastClientErrorAt = 0;
@@ -157,8 +157,39 @@ function renderHome() {
 function showView(viewName) {
   document.querySelectorAll(".view").forEach((view) => view.classList.toggle("is-visible", view.id === `${viewName}-view`));
   document.querySelectorAll("[data-view]").forEach((link) => link.classList.toggle("is-active", link.dataset.view === viewName));
+  if (viewName !== "test") stopExamTimer();
   if (viewName === "home" && state.topicCatalog.length) renderHome();
   if (viewName === "results") renderResultsView();
+}
+
+function formatTimerDuration(ms) {
+  const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+function startExamTimer() {
+  stopExamTimer();
+  const timerButton = $("#test-timer");
+  const timerValue = $("#test-timer-value");
+  state.timerStartedAt = Date.now();
+  timerValue.textContent = "00:00";
+  timerButton.classList.remove("hidden");
+  timerButton.classList.toggle("is-hidden", localStorage.getItem("roadwise-timer-hidden") === "1");
+  state.timerInterval = setInterval(() => { timerValue.textContent = formatTimerDuration(Date.now() - state.timerStartedAt); }, 1000);
+}
+
+function stopExamTimer() {
+  if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+  $("#test-timer").classList.add("hidden");
+}
+
+function toggleExamTimerVisibility() {
+  const timerButton = $("#test-timer");
+  const nowHidden = !timerButton.classList.contains("is-hidden");
+  timerButton.classList.toggle("is-hidden", nowHidden);
+  localStorage.setItem("roadwise-timer-hidden", nowHidden ? "1" : "0");
 }
 
 async function startTest(mode = "random", topic = null) {
@@ -209,6 +240,7 @@ async function startTest(mode = "random", topic = null) {
   $("#topic-picker").classList.add("hidden");
   $("#question-layout").classList.remove("hidden");
   trackAnalyticsEvent("test_started", { mode, topic: topic || "all", total: testSize });
+  if (mode === "random") startExamTimer();
   showView("test"); renderQuestion();
 }
 
@@ -398,6 +430,7 @@ function finishTest() {
   state.history.push({ percent, correct, total: state.currentTest.length, passed, date: new Date().toISOString() });
   if (state.mode === "topic" && state.topic) markTopicCompleted(state.topic, wrongQuestions.length);
   trackAnalyticsEvent("test_completed", { mode: state.mode, topic: state.topic || "all", total: state.currentTest.length, correct });
+  stopExamTimer();
   saveProgress();
   renderHome();
   showView("results");
@@ -453,6 +486,7 @@ function init() {
   document.addEventListener("click", (event) => { const modeButton = event.target.closest("[data-mode]"); if (modeButton) startTest(modeButton.dataset.mode); const viewLink = event.target.closest("[data-view]"); if (viewLink && !viewLink.dataset.mode) showView(viewLink.dataset.view); });
   $("#next-button").addEventListener("click", () => { if (state.currentIndex === state.currentTest.length - 1) finishTest(); else { state.currentIndex += 1; renderQuestion(); } });
   $("#retry-button").addEventListener("click", () => startTest(state.mode, state.topic));
+  $("#test-timer").addEventListener("click", toggleExamTimerVisibility);
   $("#report-button").addEventListener("click", openReportModal);
   $("#report-close").addEventListener("click", closeReportModal);
   $("#report-form").addEventListener("submit", submitReport);
