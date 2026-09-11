@@ -1,36 +1,5 @@
-// Leave empty to make every loaded topic available. Use topic file IDs such as "01", "08-1", or "10".
-const AVAILABLE_TOPICS = [
-  "01-zahalni-polozhennya",
-  "02-obov-yazky-i-prava-vodiyiv-mekhanichnykh-transportnykh-zasobiv",
-  "03-rukh-transportnykh-zasobiv-iz-spetsialnymy-syhnalamy",
-  "04-obov-yazky-i-prava-pishokhodiv",
-  "05-obov-yazky-i-prava-pasazhyriv",
-  "06-vymohy-do-velosypedystiv",
-  "07-vymohy-do-osib-yaki-keruyut-huzhovym-transportom-i-pohonychiv-tvaryn",
-  "08-1-rehulyuvannya-dorozhnoho-rukhu-rehulovani-perekhrestya",
-  "09-2-rehulyuvannya-dorozhnoho-rukhu-nerehulovani-perekhrestya",
-  "10-poperedzhuvalni-syhnaly",
-  "11-pochatok-rukhu-ta-zmina-yoho-napryamku",
-  "12-roztashuvannya-transportnykh-zasobiv-na-dorozi",
-  "13-shvydkist-rukhu",
-  "14-dystantsiya-interval-zustrichnyy-roz-yizd",
+import { AVAILABLE_TOPICS } from "./available-topics.mjs";
 
-  // додати фото в тему 17-1 
-  // "17-1-proyizd-perekhrest-rehulovani-perekhrestya", 
-
-  "19-perevahy-marshrutnykh-transportnykh-zasobiv",
-  "20-proyizd-pishokhidnykh-perekhodiv-i-zupynok-transportnykh-zasobiv",
-
-  "23-perevezennya-pasazhyriv",
-  "24-perevezennya-vantazhu",
-  "25-buksyruvannya-ta-ekspluatatsiya-transportnykh-sostaviv",
-  "26-navchalna-yizda",
-  "27-rukh-transportnykh-zasobiv-u-kolonakh",
-
-  "29-rukh-po-avtomahistralyakh",
-  "30-rukh-po-hirskykh-dorohakh-i-na-krutykh-spuskakh",
-  "31-mizhnarodnyy-rukh",
-];
 const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]") };
 const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
@@ -96,6 +65,13 @@ async function loadQuestionsForTopics(topicEntries) {
   const questionGroups = await Promise.all(topicEntries.map((entry) => loadTopicQuestions(entry)));
   return questionGroups.flat();
 }
+
+async function loadRandomQuestions(count) {
+  const response = await fetch(`api/questions/random?count=${count}`);
+  if (!response.ok) throw new Error(`Не вдалося завантажити питання: ${response.status}`);
+  const data = await response.json();
+  return Array.isArray(data.questions) ? data.questions : [];
+}
 function saveProgress() { localStorage.setItem("roadwise-errors", JSON.stringify(state.errors)); localStorage.setItem("roadwise-history", JSON.stringify(state.history)); }
 
 function renderHome() {
@@ -133,17 +109,29 @@ async function startTest(mode = "random", topic = null) {
     showView("test");
     return;
   }
-  const topicEntries = topic ? [topicEntry(topic)] : availableTopicCatalog();
-  try {
-    state.questions = await loadQuestionsForTopics(topicEntries.filter(Boolean));
-  } catch (error) {
-    reportClientError(error);
-    showAppError("Не вдалося завантажити питання. Перевір з'єднання та спробуй ще раз.", () => startTest(mode, topic));
-    return;
+  let testSize;
+  if (mode === "random") {
+    try {
+      state.currentTest = await loadRandomQuestions(20);
+    } catch (error) {
+      reportClientError(error);
+      showAppError("Не вдалося завантажити питання. Перевір з'єднання та спробуй ще раз.", () => startTest(mode, topic));
+      return;
+    }
+    testSize = state.currentTest.length;
+  } else {
+    const topicEntries = topic ? [topicEntry(topic)] : availableTopicCatalog();
+    try {
+      state.questions = await loadQuestionsForTopics(topicEntries.filter(Boolean));
+    } catch (error) {
+      reportClientError(error);
+      showAppError("Не вдалося завантажити питання. Перевір з'єднання та спробуй ще раз.", () => startTest(mode, topic));
+      return;
+    }
+    const pool = mode === "mistakes" ? state.questions.filter((question) => state.errors.includes(question.id)) : topic ? state.questions.filter((question) => question.topic === topic) : state.questions;
+    testSize = mode === "topic" ? pool.length : Math.min(20, pool.length);
+    state.currentTest = shuffle(pool).slice(0, testSize);
   }
-  let pool = mode === "mistakes" ? state.questions.filter((question) => state.errors.includes(question.id)) : topic ? state.questions.filter((question) => question.topic === topic) : state.questions;
-  const testSize = mode === "topic" ? pool.length : Math.min(20, pool.length);
-  state.currentTest = shuffle(pool).slice(0, testSize);
   state.currentTest.forEach((question) => { delete question.userAnswer; delete question.showCorrectAnswer; });
   if (!state.currentTest.length) { showAppError("Тут поки немає питань для цього режиму."); return; }
   $("#test-mode-label").textContent = mode === "mistakes" ? "Мої помилки" : topic ? '' : "Випадковий тест";

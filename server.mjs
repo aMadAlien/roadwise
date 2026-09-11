@@ -3,12 +3,15 @@ import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 import { fileURLToPath } from "url";
+import { AVAILABLE_TOPICS } from "./available-topics.mjs";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT || 3000);
 const maxBodySize = 20_000;
 const analyticsPath = path.join(root, "analytics.json");
+const questionsDir = path.join(root, "questions.by-topic");
 const analyticsKey = process.env.ANALYTICS_KEY;
+const AVAILABLE_RANDOM_TOPICS = AVAILABLE_TOPICS;
 const criticalAlertCooldownMs = 5 * 60 * 1000;
 const reportRateLimitMax = Number(process.env.REPORT_RATE_LIMIT_MAX || 5);
 const reportRateLimitWindowMs = Number(process.env.REPORT_RATE_LIMIT_WINDOW_MS || 10 * 60 * 1000);
@@ -17,11 +20,13 @@ const telegramRateLimitWindowMs = Number(process.env.TELEGRAM_RATE_LIMIT_WINDOW_
 const analyticsRateLimitMax = Number(process.env.ANALYTICS_RATE_LIMIT_MAX || 120);
 const analyticsRateLimitWindowMs = Number(process.env.ANALYTICS_RATE_LIMIT_WINDOW_MS || 60 * 1000);
 const visitorCookieName = "roadwise_visitor";
-const mimeTypes = { ".css": "text/css; charset=utf-8", ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".json": "application/json; charset=utf-8", ".txt": "text/plain; charset=utf-8", ".xml": "application/xml; charset=utf-8", ".jpg": "image/jpeg", ".png": "image/png" };
+const mimeTypes = { ".css": "text/css; charset=utf-8", ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".mjs": "text/javascript; charset=utf-8", ".json": "application/json; charset=utf-8", ".txt": "text/plain; charset=utf-8", ".xml": "application/xml; charset=utf-8", ".jpg": "image/jpeg", ".png": "image/png" };
 
 let analytics = loadAnalytics();
 let analyticsWrite = Promise.resolve();
 let lastCriticalAlert = new Map();
+let topicIndexCache = null;
+const topicFileCache = new Map();
 const reportRateLimit = new Map();
 const telegramRateLimit = new Map();
 const analyticsRateLimit = new Map();
@@ -210,6 +215,48 @@ async function trackAnalyticsEvent(request, response) {
 
 function requestIp(request) {
   return request.headers["x-forwarded-for"]?.split(",")[0].trim() || request.socket.remoteAddress || "unknown";
+}
+
+function loadTopicIndex() {
+  if (!topicIndexCache) {
+    topicIndexCache = JSON.parse(fs.readFileSync(path.join(questionsDir, "index.json"), "utf8"));
+  }
+  return topicIndexCache;
+}
+
+function loadTopicFile(file) {
+  if (!topicFileCache.has(file)) {
+    topicFileCache.set(file, JSON.parse(fs.readFileSync(path.join(questionsDir, file), "utf8")));
+  }
+  return topicFileCache.get(file);
+}
+
+function shuffleArray(items) {
+  const array = [...items];
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function getRandomQuestions(count) {
+  const index = loadTopicIndex();
+  const entries = AVAILABLE_RANDOM_TOPICS.length ? index.filter((entry) => AVAILABLE_RANDOM_TOPICS.includes(entry.file.replace(/\.json$/, ""))) : index;
+  const pool = entries.flatMap((entry) => loadTopicFile(entry.file));
+  return shuffleArray(pool).slice(0, count);
+}
+
+function handleRandomQuestions(request, response) {
+  try {
+    const url = new URL(request.url, "http://localhost");
+    const requestedCount = Number(url.searchParams.get("count"));
+    const count = Number.isInteger(requestedCount) && requestedCount > 0 ? Math.min(requestedCount, 50) : 20;
+    sendJson(response, 200, { questions: getRandomQuestions(count) });
+  } catch (error) {
+    reportCriticalError(error, "questions-random");
+    sendJson(response, 500, { error: "Не вдалося отримати питання" });
+  }
 }
 
 function consumeRateLimit(store, key, max, windowMs) {
@@ -460,6 +507,10 @@ const server = http.createServer((request, response) => {
   if (request.method === "OPTIONS" && (requestPath === "/api/report-question" || requestPath === "/api/feedback" || requestPath === "/api/analytics/event")) {
     response.writeHead(204, response.corsHeaders);
     response.end();
+    return;
+  }
+  if (request.method === "GET" && requestPath === "/api/questions/random") {
+    handleRandomQuestions(request, response);
     return;
   }
   if (request.method === "GET" && requestPath === "/api/analytics") {
