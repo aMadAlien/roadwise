@@ -211,7 +211,8 @@ function renderQuestion() {
   if (missingElement) throw new Error(`renderQuestion: не знайдено елемент ${missingElement[0]} у index.html`);
 
   elements.progressBar.style.width = `${((state.currentIndex + 1) / state.currentTest.length) * 100}%`;
-  elements.progressLabel.innerHTML = `<span>${state.currentIndex + 1}</span> / ${state.currentTest.length}`;
+  const answeredCount = state.currentTest.filter((item) => item.userAnswer !== undefined).length;
+  elements.progressLabel.innerHTML = `<span class="test-progress-errors">${countWrongAnswers()}</span> / <span>${answeredCount}</span> / ${state.currentTest.length}`;
   elements.questionNav.innerHTML = state.currentTest.map((item, index) => {
     const status = item.userAnswer === undefined ? "" : item.userAnswer === item.correctAnswer ? "correct" : "wrong";
     return `<button type="button" class="question-nav-item ${status} ${index === state.currentIndex ? "active" : ""}" data-question-index="${index}" aria-label="Питання ${index + 1}">${index + 1}</button>`;
