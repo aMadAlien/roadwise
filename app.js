@@ -290,6 +290,7 @@ function renderQuestion() {
     const status = item.userAnswer === undefined ? "" : item.userAnswer === item.correctAnswer ? "correct" : "wrong";
     return `<button type="button" class="question-nav-item ${status} ${index === state.currentIndex ? "active" : ""}" data-question-index="${index}" aria-label="Питання ${index + 1}">${index + 1}</button>`;
   }).join("");
+  scrollActiveQuestionNavIntoView();
   elements.questionTopic.textContent = question.topic;
   elements.questionId.textContent = question.id;
   elements.questionTitle.textContent = question.question;
@@ -411,12 +412,18 @@ async function submitFeedback(event) {
   }
 }
 
+function scrollActiveQuestionNavIntoView() {
+  const activeButton = $("#question-nav .question-nav-item.active");
+  if (activeButton) activeButton.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+}
+
 function renderQuestionNav() {
   const questionNav = $("#question-nav");
   questionNav.querySelectorAll("button").forEach((button, index) => {
     const question = state.currentTest[index];
     button.className = `question-nav-item ${question.userAnswer === undefined ? "" : question.userAnswer === question.correctAnswer ? "correct" : "wrong"} ${index === state.currentIndex ? "active" : ""}`;
   });
+  scrollActiveQuestionNavIntoView();
 }
 
 function finishTest() {
