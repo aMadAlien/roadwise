@@ -489,10 +489,11 @@ server.on("clientError", (error, socket) => {
   const clientAddress = socket.remoteAddress || "unknown";
   const clientError = `${error.code || "HTTP_CLIENT_ERROR"}: ${error.message} (remote: ${clientAddress})`;
   console.warn("HTTP client error:", clientError);
-  if (error.code !== "HPE_INVALID_METHOD" && error.code !== "HPE_INVALID_URL" && error.code !== "HPE_HEADER_OVERFLOW") {
+  const isBenignClientDisconnect = ["ECONNRESET", "EPIPE", "HPE_INVALID_METHOD", "HPE_INVALID_URL", "HPE_HEADER_OVERFLOW"].includes(error.code);
+  if (!isBenignClientDisconnect) {
     reportCriticalError(new Error(clientError), "http-client");
   }
-  socket.end("HTTP/1.1 400 Bad Request\r\n\r\n");
+  if (!socket.destroyed) socket.end("HTTP/1.1 400 Bad Request\r\n\r\n");
 });
 
 process.on("uncaughtException", (error) => {
