@@ -128,6 +128,19 @@ function markTopicCompleted(topic, mistakes) {
   saveProgress();
 }
 
+function calculateStreak() {
+  if (!state.history.length) return 0;
+  const activeDays = new Set(state.history.map((item) => item.date.slice(0, 10)));
+  const cursor = new Date();
+  if (!activeDays.has(cursor.toISOString().slice(0, 10))) cursor.setDate(cursor.getDate() - 1);
+  let streak = 0;
+  while (activeDays.has(cursor.toISOString().slice(0, 10))) {
+    streak += 1;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return streak;
+}
+
 function renderHome() {
   const topicList = $("#topic-list");
   const counts = Object.fromEntries(state.topicCatalog.map((topic) => [topic.topic, topic.count]));
@@ -137,7 +150,7 @@ function renderHome() {
   const average = state.history.length ? Math.round(state.history.reduce((sum, item) => sum + item.percent, 0) / state.history.length) : null;
   $("#average-score").textContent = average === null ? "—" : `${average}%`;
   $("#mistakes-description").textContent = state.errors.length ? `${state.errors.length} питань для повторення` : "Поки що помилок немає";
-  $("#streak-count").textContent = state.history.length ? "1" : "0";
+  $("#streak-count").textContent = calculateStreak();
   topicList.innerHTML = topics().map((topic) => `<div class="topic-row"><span class="topic-bullet"></span><span class="topic-name">${topic}</span><span class="topic-questions">${counts[topic]} питань</span></div>`).join("");
 }
 
