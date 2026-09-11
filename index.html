@@ -132,7 +132,13 @@
           <div class="question-layout hidden" id="question-layout">
             <div class="question-meta"><span class="question-topic" id="question-topic">Тема</span><span class="question-id" id="question-id">Q-001</span></div>
             <h2 class="question-title" id="question-title">Завантаження питання...</h2>
-            <div class="question-image-wrapper hidden" id="question-image-wrapper"><img class="question-image" id="question-image" alt="Ілюстрація до питання" /></div>
+            <div class="question-image-wrapper hidden" id="question-image-wrapper">
+              <img class="question-image" id="question-image" alt="Ілюстрація до питання" />
+              <div class="question-image-fallback hidden" id="question-image-fallback">
+                <p class="question-image-fallback-text" id="question-image-fallback-text">Не вдалося завантажити зображення.</p>
+                <button type="button" class="question-image-retry-button hidden" id="question-image-retry">Спробувати ще раз</button>
+              </div>
+            </div>
             <div class="answers-list" id="answers-list"></div>
             <button class="show-correct-button hidden" type="button" id="show-correct-button">Показати правильну відповідь</button>
             <button class="next-button" type="button" id="next-button" disabled><span></span>Наступне питання 

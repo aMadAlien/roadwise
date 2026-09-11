@@ -25,6 +25,39 @@ function reportClientError(error) {
   const payload = { message: error?.message || String(error), stack: error?.stack || "", url: window.location.href };
   fetch("api/client-error", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), keepalive: true }).catch(() => { });
 }
+
+function loadQuestionImage(elements, question) {
+  elements.questionImageFallback.classList.add("hidden");
+  elements.questionImageRetryButton.classList.remove("hidden");
+  elements.questionImageFallbackText.textContent = "Не вдалося завантажити зображення.";
+  elements.questionImage.classList.remove("hidden");
+  elements.questionImage.onload = () => elements.questionImageFallback.classList.add("hidden");
+  elements.questionImage.onerror = () => {
+    elements.questionImage.classList.add("hidden");
+    elements.questionImageFallback.classList.remove("hidden");
+  };
+  elements.questionImageRetryButton.onclick = () => retryQuestionImage(elements, question);
+  elements.questionImage.src = question.image;
+  elements.questionImage.alt = `Ілюстрація до питання ${question.id}`;
+}
+
+function retryQuestionImage(elements, question) {
+  elements.questionImageRetryButton.classList.add("hidden");
+  elements.questionImage.onload = () => elements.questionImageFallback.classList.add("hidden");
+  elements.questionImage.onerror = () => {
+    elements.questionImageFallbackText.textContent = "Перепрошуємо, зображення тимчасово недоступне.";
+    reportImageLoadError(question);
+  };
+  const separator = question.image.includes("?") ? "&" : "?";
+  elements.questionImage.src = `${question.image}${separator}retry=${Date.now()}`;
+}
+
+function reportImageLoadError(question) {
+  if (Date.now() - lastClientErrorAt < 30_000) return;
+  lastClientErrorAt = Date.now();
+  const payload = { message: `Зображення не завантажилось після повторної спроби: ${question.image} (питання ${question.id})`, stack: "", url: window.location.href };
+  fetch("api/client-error", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), keepalive: true }).catch(() => { });
+}
 function trackAnalyticsEvent(event, details = {}) {
   fetch("api/analytics/event", {
     method: "POST",
@@ -166,6 +199,9 @@ function renderQuestion() {
     questionTitle: $("#question-title"),
     questionImageWrapper: $("#question-image-wrapper"),
     questionImage: $("#question-image"),
+    questionImageFallback: $("#question-image-fallback"),
+    questionImageFallbackText: $("#question-image-fallback-text"),
+    questionImageRetryButton: $("#question-image-retry"),
     answersList: $("#answers-list"),
     showCorrectButton: $("#show-correct-button"),
     nextButton: $("#next-button"),
@@ -185,8 +221,7 @@ function renderQuestion() {
   elements.questionTitle.textContent = question.question;
   elements.questionImageWrapper.classList.toggle("hidden", !question.image);
   if (question.image) {
-    elements.questionImage.src = question.image;
-    elements.questionImage.alt = `Ілюстрація до питання ${question.id}`;
+    loadQuestionImage(elements, question);
   } else {
     elements.questionImage.removeAttribute("src");
   }
