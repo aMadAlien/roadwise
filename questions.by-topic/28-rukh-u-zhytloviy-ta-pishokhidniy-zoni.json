@@ -3,9 +3,12 @@
     "id": "PDF-0977",
     "topic": "26. РУХ У ЖИТЛОВІЙ ТА ПІШОХІДНІЙ ЗОНІ",
     "question": "Житловою зоною вважаються:",
-    "image": null,
-    "answers": [],
-    "correctAnswer": null,
+    "image": "/images/26.1.jpg",
+    "answers": [
+      "Дворові території, а також частини населених пунктів, позначені дорожнім знаком 5.53.",
+      "Дворові території, а також частини населених пунктів, позначені дорожнім знаком 5.34."
+    ],
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 253,
@@ -13,45 +16,16 @@
     }
   },
   {
-    "id": "PDF-0978",
-    "topic": "26. РУХ У ЖИТЛОВІЙ ТА ПІШОХІДНІЙ ЗОНІ",
-    "question": "34",
-    "image": null,
-    "answers": [],
-    "correctAnswer": null,
-    "source": {
-      "file": "questions.pdf",
-      "page": 253,
-      "number": 5
-    }
-  },
-  {
-    "id": "PDF-0979",
-    "topic": "26. РУХ У ЖИТЛОВІЙ ТА ПІШОХІДНІЙ ЗОНІ",
-    "question": "53",
-    "image": null,
-    "answers": [
-      "Дворові території, а також частини населених пунктів, позначені дорожнім знаком 5.53.",
-      "Дворові території, а також частини населених пунктів, позначені дорожнім знаком 5.34."
-    ],
-    "correctAnswer": null,
-    "source": {
-      "file": "questions.pdf",
-      "page": 253,
-      "number": 5
-    }
-  },
-  {
     "id": "PDF-0980",
     "topic": "26. РУХ У ЖИТЛОВІЙ ТА ПІШОХІДНІЙ ЗОНІ",
     "question": "Виїжджаючи із житлової зони, водій синього автомобіля повинен дати дорогу:",
-    "image": null,
+    "image": "/images/26.2.jpg",
     "answers": [
       "Пішоходу і велосипедисту.",
       "Автомобілю і велосипеду.",
       "Пішоходу і автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 253,
@@ -69,7 +43,7 @@
       "Автомобілям (мотоколяскам), позначеним розпізнавальним знаком «Водій з інвалідністю», якими керують водії з інвалідністю або водії, які перевозять пасажирів з інвалідністю.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 253,
@@ -80,13 +54,13 @@
     "id": "PDF-0982",
     "topic": "26. РУХ У ЖИТЛОВІЙ ТА ПІШОХІДНІЙ ЗОНІ",
     "question": "Чи дозволяється навчальна їзда в житловій зоні?",
-    "image": null,
+    "image": "/images/26.4.jpg",
     "answers": [
       "Дозволяється.",
       "Дозволяється з особливою обережністю.",
       "Забороняється."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 253,
@@ -97,13 +71,13 @@
     "id": "PDF-0983",
     "topic": "26. РУХ У ЖИТЛОВІЙ ТА ПІШОХІДНІЙ ЗОНІ",
     "question": "Виїжджаючи з пішохідної зони, водій синього автомобіля повинен дати дорогу:",
-    "image": null,
+    "image": "/images/26.5.jpg",
     "answers": [
       "Пішоходу.",
       "Автомобілю.",
       "Пішоходу і автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 254,
@@ -119,7 +93,7 @@
       "Повинен завжди.",
       "Не повинен."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 254,
@@ -136,7 +110,7 @@
       "Дозволено тільки найкоротшим шляхом.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 254,
@@ -155,7 +129,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 254,
@@ -172,7 +146,7 @@
       "Рухатися по проїжджій частині лише в світлий час доби.",
       "Рухатися по проїжджій частині, поступаючись дорогою транспортним засобам."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 255,
@@ -189,7 +163,7 @@
       "По тротуарах і по проїжджій частині.",
       "По тротуарах і по проїжджій частині в разі відсутності тротуарів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 255,
@@ -206,7 +180,7 @@
       "У будь-якому місці за умови, що це не утруднює рух пішоходів.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 255,
@@ -217,12 +191,12 @@
     "id": "PDF-0990",
     "topic": "26. РУХ У ЖИТЛОВІЙ ТА ПІШОХІДНІЙ ЗОНІ",
     "question": "Чи дозволено водієві зеленого автомобіля поставити автомобіль на стоянку так як показано на малюнку?",
-    "image": null,
+    "image": "/images/26.12.jpg",
     "answers": [
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 255,
@@ -238,7 +212,7 @@
       "Так.",
       "Ні. 256 І ДОРОГАХ ДЛЯ АВТОМОБІЛІВ"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 255,
