@@ -155,32 +155,32 @@
     "count": 1
   },
   {
-    "topic": "НОМЕРНІ, РОЗПІЗНАВАЛЬНІ ЗНАКИ, НАПИСИ І ПОЗНАЧЕННЯ",
+    "topic": "30. НОМЕРНІ, РОЗПІЗНАВАЛЬНІ ЗНАКИ, НАПИСИ І ПОЗНАЧЕННЯ",
     "file": "32-nomerni-rozpiznavalni-znaky-napysy-i-poznachennya.json",
     "count": 14
   },
   {
-    "topic": "ТЕХНІЧНИЙ СТАН ТРАНСПОРТНИХ ЗАСОБІВ ТА ЇХ ОБЛАДНАННЯ",
+    "topic": "31. ТЕХНІЧНИЙ СТАН ТРАНСПОРТНИХ ЗАСОБІВ ТА ЇХ ОБЛАДНАННЯ",
     "file": "33-tekhnichnyy-stan-transportnykh-zasobiv-ta-yikh-obladnannya.json",
     "count": 18
   },
   {
-    "topic": "ОКРЕМІ ПИТАННЯ ДОРОЖНЬОГО РУХУ, ЩО ПОТРЕБУЮТЬ УЗГОДЖЕННЯ",
+    "topic": "32. ОКРЕМІ ПИТАННЯ ДОРОЖНЬОГО РУХУ, ЩО ПОТРЕБУЮТЬ УЗГОДЖЕННЯ",
     "file": "34-okremi-pytannya-dorozhnoho-rukhu-shcho-potrebuyut-uzhodzhennya.json",
     "count": 5
   },
   {
-    "topic": "ДОРОЖНІ ЗНАКИ",
+    "topic": "33. ДОРОЖНІ ЗНАКИ",
     "file": "35-dorozhni-znaky.json",
-    "count": 358
+    "count": 357
   },
   {
-    "topic": "ДОРОЖНЯ РОЗМІТКА",
+    "topic": "34. ДОРОЖНЯ РОЗМІТКА",
     "file": "36-dorozhnya-rozmitka.json",
     "count": 37
   },
   {
-    "topic": "ОСНОВИ БЕЗПЕЧНОГО ВОДІННЯ",
+    "topic": "35. ОСНОВИ БЕЗПЕЧНОГО ВОДІННЯ",
     "file": "37-osnovy-bezpechnoho-vodinnya.json",
     "count": 171
   },
