@@ -9,7 +9,7 @@
       "Інформує про те, що дорога повертає праворуч.",
       "Попереджає про наближення до звуження проїзної частини."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 351,
@@ -26,7 +26,7 @@
       "Не дозволяє зупинку транспортних засобів.",
       "Означає бордюри на небезпечних ділянках доріг."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 352,
@@ -43,7 +43,7 @@
       "Дозволено тільки з частковим заїздом на тротуар.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 352,
@@ -60,7 +60,7 @@
       "Попереджає про наближення до пристрою примусового зниження швидкості руху транспортних засобів.",
       "Місце, де починається заборона на подальший рух."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 352,
@@ -78,7 +78,7 @@
       "Тільки розворот.",
       "Жоден з вищеперерахованих маневрів не заборонено.."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 353,
@@ -95,7 +95,7 @@
       "Рекомендовану швидкість руху на цій ділянці дороги.",
       "Дозволену максимальну швидкість руху на цій ділянці дороги, дублюючи дорожній знак «Обмеження максимальної швидкості»."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 353,
@@ -112,7 +112,7 @@
       "Тільки в'їзд у неосвітлені тунелі.",
       "Будь-які елементи дорожніх споруд, які становлять небезпеку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 353,
@@ -129,7 +129,7 @@
       "Відстань до найближчого населеного пункту.",
       "Номер дороги або маршруту."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 354,
@@ -146,7 +146,7 @@
       "Смугу призначену для руху транспортних засобів, що рухаються за встановленими маршрутами, мопедів, мотоциклів (за винятком мотоциклів з боковим причепом, мотоколясок, триколісних транспортних засобів), таксі та велосипедистів.",
       "Місце зупинки і стоянки будь-яких автобусів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 354,
@@ -163,7 +163,7 @@
       "Місця, де заборонено будь-яку зупинку.",
       "Місця зупинки маршрутних транспортних засобів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 354,
@@ -180,7 +180,7 @@
       "Можете продовжити рух по смузі тільки до перехрестя.",
       "За відсутності зустрічних транспортних засобів продовжити рух по смузі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 354,
@@ -197,7 +197,7 @@
       "Тільки по траєкторії Б.",
       "По будь-якій."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 355,
@@ -214,7 +214,7 @@
       "Маршрутні транспортні засоби та таксі.",
       "Будь-які автобуси."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 355,
@@ -230,7 +230,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 355,
@@ -248,7 +248,7 @@
       "Дозволено, якщо не буде створено перешкод маршрутним транспортним засобам.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 356,
@@ -265,7 +265,7 @@
       "Дозволяє Вам тільки розворот.",
       "Дозволяє Вам поворот ліворуч і розворот."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 356,
@@ -282,7 +282,7 @@
       "Так, якщо Ви не створите перешкод руху маршрутних транспортних засобів.",
       "Ні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 356,
@@ -299,7 +299,7 @@
       "Про наближення до небезпечного перетину.",
       "Про рух по небезпечній ділянці дороги."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 357,
@@ -316,7 +316,7 @@
       "Попереджає про наближення до дорожньої розмітки, перед якою водій повинен у разі потреби зупинитися і дати дорогу транспортним засобам, які рухаються по дорозі, що перетинається.",
       "Показує місце, де потрібно зупинитися."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 357,
@@ -333,7 +333,7 @@
       "Так, але тільки якщо швидкість трактора менш ніж 30 км/год.",
       "Ні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 357,
@@ -349,7 +349,7 @@
       "Усі вертикальні елементи дорожніх споруд.",
       "Торцеві частини штучних споруд."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 358,
@@ -365,7 +365,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 358,
@@ -379,29 +379,16 @@
     "image": null,
     "answers": [
       "Перед знаком.",
-      "Перед перехрестям біля лінії розмітки"
+      "Перед знаком.",
+      "Перед перехрестям біля лінії розмітки 1.13.",
+      "На перехресті перед переривчастою лінією розмітки.",
+      "У будь-якому місці на розсуд водія."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 358,
       "number": 23
-    }
-  },
-  {
-    "id": "PDF-1432",
-    "topic": "34. ДОРОЖНЯ РОЗМІТКА",
-    "question": "13.",
-    "image": null,
-    "answers": [
-      "На перехресті перед переривчастою лінією розмітки.",
-      "У будь-якому місці на розсуд водія."
-    ],
-    "correctAnswer": null,
-    "source": {
-      "file": "questions.pdf",
-      "page": 358,
-      "number": 1
     }
   },
   {
@@ -415,7 +402,7 @@
       "Обидва порушують.",
       "Обидва не порушують."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 358,
@@ -432,7 +419,7 @@
       "У будь-якому.",
       "У жодному."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 359,
@@ -449,7 +436,7 @@
       "Дозволено, якщо при цьому не буде створено перешкод руху маршрутних транспортних засобів.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 359,
@@ -466,7 +453,7 @@
       "Край проїзної частини.",
       "Межу між основною смугою руху і смугою гальмування."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 359,
@@ -483,7 +470,7 @@
       "Дозволено без заїзду на тротуар.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 360,
@@ -500,7 +487,7 @@
       "Дозволяє, якщо швидкість трактора менш ніж 30 км/год.",
       "Забороняє."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 360,
@@ -517,7 +504,7 @@
       "Зупинитися перед дорожньою розміткою «Стоп-лінія».",
       "За відсутності інших транспортних засобів проїхати перехрестя без зупинки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 360,
@@ -534,7 +521,7 @@
       "Вимогами дорожніх знаків.",
       "Правила цю ситуацію не регламентують."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 360,
@@ -548,28 +535,14 @@
     "image": null,
     "answers": [
       "Наближення до регульованого перехрестя.",
-      "Наближення до поперечної розмітки"
+      "Наближення до поперечної розмітки 1.12 (стоп-лінія)",
+      "Наближення до дорожнього знаку «Дати дорогу»."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 360,
       "number": 32
-    }
-  },
-  {
-    "id": "PDF-1442",
-    "topic": "34. ДОРОЖНЯ РОЗМІТКА",
-    "question": "12 (стоп-лінія).",
-    "image": null,
-    "answers": [
-      "Наближення до дорожнього знаку «Дати дорогу»."
-    ],
-    "correctAnswer": null,
-    "source": {
-      "file": "questions.pdf",
-      "page": 360,
-      "number": 1
     }
   },
   {
@@ -583,7 +556,7 @@
       "Дозволено тільки в разі інтенсивного руху.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 361,
@@ -599,7 +572,7 @@
       "Так.",
       "Ні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 361,
@@ -615,7 +588,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 361,

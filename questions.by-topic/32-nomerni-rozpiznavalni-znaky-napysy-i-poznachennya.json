@@ -9,7 +9,7 @@
       "Встановлено зимові шини.",
       "Встановлено всесезонні шини."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 260,
@@ -26,7 +26,7 @@
       "На бічній поверхні транспортного засобу.",
       "На даху або на бічній поверхні транспортного засобу."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 260,
@@ -44,7 +44,7 @@
       "На транспортних засобах, що мають особливу форму.",
       "Відповіді 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 260,
@@ -61,7 +61,7 @@
       "Другий.",
       "Третій."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 260,
@@ -79,7 +79,7 @@
       "Під час перевезення великовагового вантажу.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 261,
@@ -97,7 +97,7 @@
       "Якими керують глухі або глухонімі водії.",
       "Якими керують водії-лікарі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 261,
@@ -114,7 +114,7 @@
       "Перевозять небезпечні вантажі.",
       "Перевозять великогабаритні вантажі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 261,
@@ -131,7 +131,7 @@
       "На тих, якими керують глухі або глухонімі водії.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 261,
@@ -149,7 +149,7 @@
       "Третім.",
       "Четвертим."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 261,
@@ -166,7 +166,7 @@
       "Перевозять організовані групи дітей.",
       "Перевозять пасажирів, велика частина з яких діти."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 262,
@@ -183,7 +183,7 @@
       "Другий.",
       "Третій."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 262,
@@ -200,7 +200,7 @@
       "На транспортних засобах, якими керують глухі водії.",
       "На транспортних засобах, якими керують глухі або глухонімі водії."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 262,
@@ -217,7 +217,7 @@
       "Спереду і ззаду.",
       "У передбачених для цього місцях."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 262,
@@ -235,7 +235,7 @@
       "10 діб.",
       "14 діб."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 262,

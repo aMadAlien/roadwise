@@ -27,7 +27,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 267,
@@ -45,7 +45,7 @@
       "Початок ділянки дороги, яка за режимом руху належить до доріг для автомобілів.",
       "Початок ділянки дороги, рух на якій дозволено тільки механічним транспортним засобам."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 267,
@@ -64,7 +64,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 267,
@@ -82,7 +82,7 @@
       "Кінець обмеження мінімальної швидкості руху.",
       "Кінець дії вимог, що стосуються руху в населених пунктах."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 267,
@@ -98,7 +98,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 268,
@@ -134,7 +134,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 268,
@@ -153,7 +153,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 269,
@@ -170,7 +170,7 @@
       "Зі швидкістю, яка дорівнює тій, що вказана на знаку.",
       "Зі швидкістю не меншою від тієї, що вказана на знаку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 269,
@@ -188,7 +188,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 269,
@@ -206,7 +206,7 @@
       "На мопедах і пішоходам.",
       "Пішоходів і велосипедистів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 269,
@@ -223,7 +223,7 @@
       "З правого боку.",
       "З лівого боку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 269,
@@ -240,7 +240,7 @@
       "По дорозі Б.",
       "По будь-якій дорозі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 270,
@@ -256,7 +256,7 @@
       "На перехресті, через яке організовано об'їзд.",
       "На перехресті з круговим рухом; вимагає об'їзду клумби в напрямку, показаному стрілками."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 270,
@@ -275,7 +275,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 270,
@@ -294,7 +294,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 270,
@@ -312,7 +312,7 @@
       "У напрямку А, Б або В.",
       "У будь-якому напрямку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 271,
@@ -330,7 +330,7 @@
       "На велосипедах.",
       "На велосипедах, а також пішоходам за умови, що поряд немає тротуару або доріжки для руху пішоходів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 271,
@@ -348,7 +348,7 @@
       "Водієві мопеда і велосипедистові.",
       "Усім учасникам руху."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 271,
@@ -367,7 +367,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 271,
@@ -385,7 +385,7 @@
       "Кінець дороги з розділювальною смугою.",
       "Кінець дороги або відокремленої проїзної частини, по всій ширині якої рух транспортних засобів здійснюється тільки в одному напрямку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 272,
@@ -403,7 +403,7 @@
       "Початок ділянки дороги, де на одній або кількох смугах напрямок руху може змінюватися на протилежний.",
       "Початок окремої смуги для руху маршрутних транспортних засобів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 272,
@@ -422,7 +422,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 272,
@@ -441,7 +441,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 272,
@@ -459,7 +459,7 @@
       "Напрямок руху по смузі для маршрутних транспортних засобів.",
       "На виїзд на дорогу з реверсивним рухом."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 273,
@@ -476,7 +476,7 @@
       "Кількість смуг на перехресті і дозволені напрямки руху на кожній з них.",
       "Обидва варіанти правильні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 273,
@@ -494,7 +494,7 @@
       "Знак 3.",
       "Знаки 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 273,
@@ -511,7 +511,7 @@
       "Дозволений напрямок руху транспортних засобів на перехресті, дія знака поширюється на всю ширину проїзної частини.",
       "Дозволений напрямок руху по смузі, над якою його встановлено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 273,
@@ -528,7 +528,7 @@
       "Дозволені напрямки руху транспортних засобів по реверсивній смузі.",
       "Те, що смуга використовується для руху тільки певних видів транспортних засобів у зазначених напрямках."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 273,
@@ -547,7 +547,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 273,
@@ -566,7 +566,7 @@
       "Усі наведені вище відповіді.",
       "Відповіді 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 274,
@@ -585,7 +585,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 274,
@@ -602,7 +602,7 @@
       "Дозволено тільки в другий проїзд.",
       "Дозволено тільки в обидва проїзди."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 274,
@@ -618,7 +618,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 275,
@@ -636,7 +636,7 @@
       "Прямо, ліворуч або у зворотному напрямку.",
       "Прямо або ліворуч."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 275,
@@ -653,7 +653,7 @@
       "Напрямок головної дороги на перехресті.",
       "Напрямок руху на дорозі, що перетинається, якщо на ній організовано односторонній рух."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 275,
@@ -670,7 +670,7 @@
       "Дорогу, на якій рух транспортних засобів здійснюється за встановленим маршрутом по спеціально відведеній смузі, розташованій з правого боку проїзної частини.",
       "Дорогу, на якій по спеціально відведеній смузі здійснюється рух транспортних засобів за встановленим маршрутом, мопедів, мотоциклів (за винятком мотоциклів з боковим причепом, мотоколясок, триколісних транспортних засобів) та велосипедистів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 275,
@@ -687,7 +687,7 @@
       "Кінець дороги, на якій рух транспортних засобів здійснюється за встановленим маршрутом по спеціальновідведенійсмузі, розташованійзправогобокупроїзноїчастини.",
       "Кінець дороги, на якій рух транспортних засобів здійснюється по двох зустрічних смугах."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 276,
@@ -706,7 +706,7 @@
       "У напрямку А або Г.",
       "У будь-якому з напрямків."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 276,
@@ -725,7 +725,7 @@
       "У напрямку В або Г.",
       "У будь-якому з напрямків."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 276,
@@ -743,7 +743,7 @@
       "Про дозволені напрямки руху транспортних засобів на перехресті.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 278,
@@ -762,7 +762,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 278,
@@ -781,7 +781,7 @@
       "Відповіді 1 і 3.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 278,
@@ -800,7 +800,7 @@
       "У місці А або Г.",
       "У будь-якому місці."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 278,
@@ -817,7 +817,7 @@
       "Дозволено.",
       "Дозволено на час до 5 хвилин."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 279,
@@ -836,7 +836,7 @@
       "У місці А, В або Г.",
       "У будь-якому місці."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 279,
@@ -855,7 +855,7 @@
       "У місці Б або В.",
       "У місці В або Г."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 279,
@@ -873,7 +873,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 279,
@@ -891,7 +891,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 280,
@@ -908,7 +908,7 @@
       "З 19:00 до 24:00.",
       "З 7:00 до 24:00."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 280,
@@ -924,7 +924,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 280,
@@ -941,7 +941,7 @@
       "Зупинку транспортних засобів.",
       "Стоянку транспортних засобів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 280,
@@ -958,7 +958,7 @@
       "Чорний автомобіль.",
       "Обидва поставлені правильно."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 280,
@@ -976,7 +976,7 @@
       "З білою переривчастою лінією розмітки, яка наноситься біля краю проїзної частини або по верху бордюру.",
       "З білою суцільною лінією розмітки, яка наноситься біля краю проїзної частини або по верху бордюру."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 281,
@@ -994,7 +994,7 @@
       "Жовтий.",
       "Зелений."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 281,
@@ -1013,7 +1013,7 @@
       "Червоний.",
       "Червоний, жовтий і сірий."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 281,
@@ -1031,7 +1031,7 @@
       "Водії синього і фіолетового автомобілів.",
       "Водії білого і фіолетового автомобілів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 282,
@@ -1048,7 +1048,7 @@
       "Водій синього автомобіля.",
       "Обидва водії."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 282,
@@ -1066,7 +1066,7 @@
       "Чорний і червоний.",
       "Усі автомобілі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 282,
@@ -1085,7 +1085,7 @@
       "Чорний, сірий і червоний.",
       "Сірий і червоний."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 283,
@@ -1104,7 +1104,7 @@
       "У місці А або Г.",
       "У місці Б або В."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 283,
@@ -1123,7 +1123,7 @@
       "Знак 4.",
       "Усі перелічені вище знаки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 283,
@@ -1141,7 +1141,7 @@
       "Визначає територію в населеному пункті, на якій тривалість стоянки обмежена незалежно від того, чи справляється за це плата.",
       "Визначає територію в населеному пункті, на якій заборонено зупинку всіх транспортних засобів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 284,
@@ -1159,7 +1159,7 @@
       "Ліворуч або на розворот.",
       "Праворуч або ліворуч."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 284,
@@ -1176,7 +1176,7 @@
       "Ліворуч або на розворот.",
       "Прямо або ліворуч."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 284,
@@ -1193,7 +1193,7 @@
       "Ліворуч або на розворот.",
       "Тільки на розворот."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 284,
@@ -1211,7 +1211,7 @@
       "У напрямку А, Б, В або Г.",
       "У напрямку Б, В або Г."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 285,
@@ -1230,7 +1230,7 @@
       "На транспортні засоби, позначені розпізнавальним знаком «Водій з інвалідністю», якими керують водії з інвалідністю.",
       "Відповіді 1, 2, 3 і 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 285,
@@ -1247,7 +1247,7 @@
       "Тільки автобусу, який рухається за встановленим маршрутом.",
       "Нікому."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 285,
@@ -1265,7 +1265,7 @@
       "У напрямках Б і В.",
       "У напрямках А, Б і В."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 286,
@@ -1282,7 +1282,7 @@
       "Дозволяє повернути тільки праворуч.",
       "Дозволяє об'їзд перешкоди тільки з правого боку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 286,
@@ -1301,7 +1301,7 @@
       "На транспортні засоби, позначені розпізнавальним знаком «Водій з інвалідністю», якими керують водії з інвалідністю.",
       "Відповіді 1, 2, 3 і 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 286,
@@ -1319,7 +1319,7 @@
       "У напрямку Б, В або Г.",
       "У напрямках В і Г."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 286,
@@ -1335,7 +1335,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 287,
@@ -1353,7 +1353,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 287,
@@ -1370,7 +1370,7 @@
       "Перед митними пунктами, біля яких зупинка обов'язкова.",
       "Перед контрольними пунктами пропуску, біля яких зупинка обов'язкова."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 287,
@@ -1389,7 +1389,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 287,
@@ -1406,7 +1406,7 @@
       "Знизити швидкість і проїхати позначене місце, зупинившись тільки на вимогу регулювальника.",
       "Обов'язково зупинитися перед позначеним місцем."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 288,
@@ -1423,7 +1423,7 @@
       "Кінець дії всіх заборон і обмежень, запроваджених Правилами дорожнього руху.",
       "Кінець дії всіх заборон і обмежень, запроваджених деякими заборонними дорожніми знаками."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 288,
@@ -1439,7 +1439,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 288,
@@ -1457,7 +1457,7 @@
       "Дозволено тільки в перший проїзд.",
       "Дозволено тільки в другий проїзд."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 288,
@@ -1473,7 +1473,7 @@
       "Прямо або праворуч.",
       "Тільки прямо."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 289,
@@ -1490,7 +1490,7 @@
       "Перестроїтися на праву смугу.",
       "Перестроїтися на праву смугу лише в тому разі, якщо є перешкода."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 289,
@@ -1508,7 +1508,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 289,
@@ -1526,7 +1526,7 @@
       "Протяжність небезпечної ділянки або зону дії заборонних та інформаційно-вказівних знаків.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 289,
@@ -1545,7 +1545,7 @@
       "Зі знаком 4.",
       "З будь-яким із перелічених вище знаків."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 290,
@@ -1562,7 +1562,7 @@
       "Напрямок руху до позначених об'єктів, що розташовані безпосередньо біля дороги.",
       "Правильні обидві відповіді."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 290,
@@ -1578,7 +1578,7 @@
       "Табличка до дорожнього знаку діє протягом суботніх, недільних і святкових днів.",
       "Табличка до дорожнього знаку діє протягом робочих днів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 290,
@@ -1597,7 +1597,7 @@
       "З табличкою 4.",
       "З табличкою 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 290,
@@ -1615,7 +1615,7 @@
       "На вантажні автомобілі, в тому числі з причепами, дозволеною максимальною масою понад 3,5 т.",
       "На вантажні автомобілі, що перевозять небезпечні вантажі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 290,
@@ -1633,7 +1633,7 @@
       "У напрямках А, Б і В.",
       "У напрямку Б або В."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 291,
@@ -1650,7 +1650,7 @@
       "На транспортні засоби, що виконують буксирування.",
       "Правильні обидві відповіді."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 291,
@@ -1668,7 +1668,7 @@
       "Зі знаком 3.",
       "З знаками 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 291,
@@ -1686,7 +1686,7 @@
       "Відповіді 1 і 2.",
       "Протяжність небезпечної ділянки або зону дії заборонних та інформаційно- вказівних знаків."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 291,
@@ -1704,7 +1704,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 292,
@@ -1722,7 +1722,7 @@
       "Про місце розташування метро.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 292,
@@ -1739,7 +1739,7 @@
       "Про місце розташування автовокзалу або автостанції.",
       "Обидві відповіді правильні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 292,
@@ -1756,7 +1756,7 @@
       "Електрозарядні станції.",
       "Автозаправні та електрозарядні станції."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 292,
@@ -1773,7 +1773,7 @@
       "Електрозарядні станції.",
       "Автозаправні та електрозарядні станції."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 292,
@@ -1790,7 +1790,7 @@
       "Про можливе здійснення контролю за порушенням Правил дорожнього руху за допомогою спеціальних технічних засобів.",
       "Про наближення до місця фіксації швидкості руху."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 293,
@@ -1807,7 +1807,7 @@
       "Про місце розташування телефону для виклику аварійних служб.",
       "Про місце розташування відділення зв'язку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 293,
@@ -1824,7 +1824,7 @@
       "Про місце розташування спільної автозаправної станції.",
       "Про місце розташування автозаправної станції одного виду пального."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 293,
@@ -1840,7 +1840,7 @@
       "Протягом суботніх, недільних і святкових днів.",
       "Протягом робочих днів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 293,
@@ -1858,7 +1858,7 @@
       "На вантажні автомобілі, що перевозять небезпечний вантаж.",
       "На всі транспортні засоби, що перевозять небезпечний вантаж."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 293,
@@ -1875,7 +1875,7 @@
       "Усі правильно.",
       "Мотоцикл з боковим причепом."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 293,
@@ -1894,7 +1894,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 294,
@@ -1912,7 +1912,7 @@
       "Повинні встановлюватися з двох сторін проїжджої частини.",
       "Застосовуються тільки зі знаком обмеження швидкості."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 294,
@@ -1930,7 +1930,7 @@
       "Забороняють рух прямо.",
       "Забороняють стоянку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 294,
@@ -1948,7 +1948,7 @@
       "Інформують про заборонені напрямки руху.",
       "Інформують про рух по одній смузі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 294,
@@ -1966,7 +1966,7 @@
       "Дозволяють поворот праворуч.",
       "Забороняють поворот праворуч."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 294,
@@ -1984,7 +1984,7 @@
       "Інформують про смугу руху для маршрутних транспортних засобів.",
       "Інформують про дорогу з одностороннім рухом."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 295,
@@ -2002,7 +2002,7 @@
       "Інформують про кількість смуг на проїзній частині.",
       "Вказують дозволений рух по смугах."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 295,
@@ -2021,7 +2021,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 295,
@@ -2040,7 +2040,7 @@
       "Зі знаком 4.",
       "Зі знаком 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 295,
@@ -2059,7 +2059,7 @@
       "Табличка 4.",
       "Усі перелічені вище таблички."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 296,
@@ -2075,7 +2075,7 @@
       "Час дії дорожнього знака.",
       "Час обмеження дії дорожнього знака."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 296,
@@ -2094,7 +2094,7 @@
       "Табличка 4.",
       "Табличка 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 296,
@@ -2111,7 +2111,7 @@
       "Вид транспортного засобу, який може бути поставлено на стоянку.",
       "Спосіб поставлення транспортного засобу на стоянку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 296,
@@ -2128,7 +2128,7 @@
       "Те, що залишати на стоянку транспортні засоби дозволено лише з непрацюючим двигуном.",
       "Те, що заборонено стоянку транспортних засобів з підвищеною димністю відпрацьованих газів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 296,
@@ -2147,7 +2147,7 @@
       "Табличка 4.",
       "Табличка 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 297,
@@ -2164,7 +2164,7 @@
       "Смугу руху, на яку поширюється дія знака або світлофора, з яким вона встановлена.",
       "Початок зони дії дорожнього знака, з яким вона встановлена."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 297,
@@ -2182,7 +2182,7 @@
       "Зі знаком 3.",
       "Зі знаком 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 297,
@@ -2199,7 +2199,7 @@
       "Те, що послуги надаються лише за плату.",
       "Зону дії дорожнього знака, з яким вона встановлена."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 297,
@@ -2218,7 +2218,7 @@
       "Зі знаком 4.",
       "Зі знаком 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 297,
@@ -2236,7 +2236,7 @@
       "Завжди дозволяють розворот.",
       "Дозволяють рух прямо для маршрутних транспортних засобів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 298,
@@ -2253,7 +2253,7 @@
       "Про мінімально допустиму швидкість на лівій смузі, що веде на підйом.",
       "Про наявність смуги призначеної для руху транспортних засобів, що рухаються за встановленими маршрутами."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 298,
@@ -2270,7 +2270,7 @@
       "Дороги, які не мають наскрізного проїзду.",
       "Дороги, рух по яких заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 298,
@@ -2286,7 +2286,7 @@
       "Не повинні.",
       "Повинні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 298,
@@ -2305,7 +2305,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 298,
@@ -2321,7 +2321,7 @@
       "Зазначення швидкості, з якою рекомендується рух на даній ділянці дороги.",
       "Зазначення обмеження максимальної швидкості на даній ділянці дороги."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 299,
@@ -2340,7 +2340,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 299,
@@ -2358,7 +2358,7 @@
       "Про в'їзд на територію, що є житловою зоною.",
       "Відповіді 1 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 299,
@@ -2377,7 +2377,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 299,
@@ -2395,7 +2395,7 @@
       "Про в'їзд на територію, що є житловою зоною.",
       "Відповіді 1 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 300,
@@ -2411,7 +2411,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 300,
@@ -2429,7 +2429,7 @@
       "Обов'язкові напрямки руху для вантажних автомобілів і самохідних машин.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 300,
@@ -2446,7 +2446,7 @@
       "Зону за довжиною для розвороту тільки вантажних транспортних засобів; поворот ліворуч у такому місці заборонено.",
       "Зону за довжиною для розвороту транспортних засобів; поворот ліворуч у такому місці заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 300,
@@ -2463,7 +2463,7 @@
       "Про дозволені напрямки руху транспортних засобів на перехресті.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 300,
@@ -2480,7 +2480,7 @@
       "Про прилягання справа до проїзної частини смуги, по якій здійснюється рух транспортних засобів у тому ж напрямку.",
       "Про закінчення додаткової смуги або смуги розгону справа."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 301,
@@ -2498,7 +2498,7 @@
       "Про закінчення смуги, призначеної для руху в даному напрямку.",
       "Відповіді 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 301,
@@ -2517,7 +2517,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 301,
@@ -2536,7 +2536,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 301,
@@ -2554,7 +2554,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 302,
@@ -2571,7 +2571,7 @@
       "Про маршрут руху на перехресті в разі заборони окремих маневрів або про дозволені напрямки руху на складному перехресті.",
       "Про маршрут об'їзду ділянки дороги, яка тимчасово закрита для руху."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 302,
@@ -2588,7 +2588,7 @@
       "Про початок смуги гальмування.",
       "Про розташування смуги, спеціально підготовленої для аварійної зупинки транспортних засобів у разі відмови гальмівної системи."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 302,
@@ -2607,7 +2607,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 302,
@@ -2625,7 +2625,7 @@
       "Надземні пішохідні переходи.",
       "Пішохідні доріжки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 302,
@@ -2643,7 +2643,7 @@
       "Про швидкісні обмеження, що запроваджують на даній дорозі.",
       "Про загальні обмеження швидкості та строк застосування денних ходових вогнів (ближнього світла фар)."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 303,
@@ -2662,7 +2662,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 303,
@@ -2678,7 +2678,7 @@
       "В населеному пункті.",
       "Поза населеним пунктом."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 303,
@@ -2695,7 +2695,7 @@
       "Знак 2.",
       "Знак 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 303,
@@ -2712,7 +2712,7 @@
       "Початок населеного пункту, в якому на даній дорозі не діють вимоги Правил дорожнього руху, що визначають порядок руху в населених пунктах.",
       "Межу, де починається забудова безпосередньо поблизу проїзної частини (за умови наявності такої забудови). Означає обмеження максимальної дозволеної швидкості до 50 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 303,
@@ -2731,7 +2731,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 304,
@@ -2748,7 +2748,7 @@
       "Те, що за цим знаком на постійній основі змінено схему руху і (або) встановлено нові дорожні знаки.",
       "Обидві відповіді правильні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 304,
@@ -2766,7 +2766,7 @@
       "Знак 3",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 304,
@@ -2783,7 +2783,7 @@
       "Початок населеного пункту, в якому на даній дорозі не діють вимоги Правил дорожнього руху, що визначають порядок руху в населених пунктах.",
       "Початок забудови населеного пункту безпосередньо біля проїзної частини."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 304,
@@ -2800,7 +2800,7 @@
       "Початок населеного пункту, в якому не діють вимоги Правил дорожнього руху, що визначають порядок руху в населених пунктах.",
       "Початок щільної забудови безпосередньо біля проїзної частини."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 305,
@@ -2817,7 +2817,7 @@
       "Початок смуги для руху маршрутних транспортних засобів.",
       "Початок смуги для руху тільки автобусів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 305,
@@ -2835,7 +2835,7 @@
       "Знак 3.",
       "Знаки 1, 2, 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 305,
@@ -2853,7 +2853,7 @@
       "Надземні пішохідні переходи.",
       "Пішохідні доріжки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 305,
@@ -2871,7 +2871,7 @@
       "Надземні пішохідні переходи.",
       "Пішохідні доріжки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 305,
@@ -2889,7 +2889,7 @@
       "Для позначення місць і майданчиків з дахом для стоянки транспортних засобів, де є можливість пересадки на маршрутні транспортні засоби.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 306,
@@ -2907,7 +2907,7 @@
       "Для позначення місць і майданчиків під накриттям для стоянки транспортних засобів, де є можливість пересадки на маршрутні транспортні засоби.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 306,
@@ -2919,8 +2919,13 @@
     "topic": "33. ДОРОЖНІ ЗНАКИ",
     "question": "Зображений дорожній знак в поєднанні з табличкою",
     "image": "/images/33/165.jpg",
-    "answers": [],
-    "correctAnswer": null,
+    "answers": [
+      "Для позначення місць і майданчиків з дахом для стоянки транспортних засобів.",
+      "Для позначення місць і майданчиків для стоянки транспортних засобів.",
+      "Для позначення стоянки поблизу зупинки маршрутних транспортних засобів.",
+      "Відповіді 1, 2 і 3."
+    ],
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 306,
@@ -2938,7 +2943,7 @@
       "Для позначення стоянки поблизу зупинки маршрутних транспортних засобів.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 306,
@@ -2955,7 +2960,7 @@
       "Зону, де дозволено стоянку транспортних засобів.",
       "Місце для посадки і висадки пасажирів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 306,
@@ -2972,7 +2977,7 @@
       "Кінець зони стоянки транспортних засобів.",
       "Місце виїзду з майданчика для стоянки транспортних засобів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 306,
@@ -2990,7 +2995,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 307,
@@ -3007,7 +3012,7 @@
       "Про наближення до двох перехресть, де водій, перед яким встановлено цей знак, перебуває на головній дорозі.",
       "Про наближення до двох перехресть, на першому з яких водій має перевагу в русі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 307,
@@ -3025,7 +3030,7 @@
       "На залізничному переїзді зі шлагбаумом з однією колією.",
       "На залізничному переїзді зі шлагбаумом з двома і більше коліями."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 307,
@@ -3043,7 +3048,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 307,
@@ -3060,7 +3065,7 @@
       "Знак 2.",
       "Знак 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 307,
@@ -3077,7 +3082,7 @@
       "Спільно з першим із знаків «Залізничний переїзд із шлагбаумом» або «Залізничний переїзд без шлагбаума».",
       "Спільно з другим із знаків «Залізничний переїзд із шлагбаумом» або «Залізничний переїзд без шлагбаума»."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 308,
@@ -3094,7 +3099,7 @@
       "Знак 2.",
       "Знак 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 308,
@@ -3113,7 +3118,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 308,
@@ -3131,7 +3136,7 @@
       "Місця перетину велосипедної доріжки.",
       "Місця, на якому можлива поява дітей."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 308,
@@ -3148,7 +3153,7 @@
       "Знак 2.",
       "Знак 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 309,
@@ -3166,7 +3171,7 @@
       "На залізничному переїзді зі шлагбаумом з однією колією.",
       "На залізничному переїзді зі шлагбаумом з двома і більше коліями."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 309,
@@ -3184,7 +3189,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 309,
@@ -3203,7 +3208,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 309,
@@ -3221,7 +3226,7 @@
       "Про наближення до порту.",
       "Про наближення до розвідного моста."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 309,
@@ -3240,7 +3245,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 310,
@@ -3258,7 +3263,7 @@
       "Про наближення до ділянки дороги із зустрічним рухом після одностороннього.",
       "Про наближення до ділянки дороги, на якій починається багатосмугова дорога."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 310,
@@ -3276,7 +3281,7 @@
       "Залізничним переїздом із шлагбаумом.",
       "Місцем перетину дороги з трамвайною колією."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 310,
@@ -3294,7 +3299,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 310,
@@ -3312,7 +3317,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 310,
@@ -3330,7 +3335,7 @@
       "Перед залізничним переїздом зі шлагбаумом.",
       "Перед залізничним переїздом без шлагбаума, розташованим за межами населеного пункту."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 311,
@@ -3348,7 +3353,7 @@
       "Ділянкою дороги, на якій можлива поява дітей з території дитячого закладу, прилеглого безпосередньо до дороги.",
       "Ділянкою дороги, на якій можливий вихід людей на проїзну частину."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 311,
@@ -3366,7 +3371,7 @@
       "Ділянкою дороги, на якій можлива поява велосипедистів.",
       "Відповіді 1 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 311,
@@ -3384,7 +3389,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 311,
@@ -3401,7 +3406,7 @@
       "Звуження дороги.",
       "Напрямок повороту."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 311,
@@ -3420,7 +3425,7 @@
       "Знак 4.",
       "Усі зображені дорожні знаки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 312,
@@ -3439,7 +3444,7 @@
       "Знак 4.",
       "Усі зображені дорожні знаки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 312,
@@ -3458,7 +3463,7 @@
       "Знаки 1 і 2.",
       "Знаки 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 312,
@@ -3476,7 +3481,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 312,
@@ -3493,7 +3498,7 @@
       "На нерегульованому перехресті.",
       "На регульованому і нерегульованому перехрестях."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 313,
@@ -3510,7 +3515,7 @@
       "Знизив швидкість або зупинився, щоб дати дорогу транспортним засобам, що рухаються по головній дорозі.",
       "Проїхав, не зупинившись, не даючи дорогу іншим транспортним засобам."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 313,
@@ -3526,7 +3531,7 @@
       "Обов’язкова.",
       "Необов’язкова."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 313,
@@ -3545,7 +3550,7 @@
       "Знак 4.",
       "Знаки 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 313,
@@ -3564,7 +3569,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 313,
@@ -3581,7 +3586,7 @@
       "Ділянкою дороги, на якій можлива поява будь-яких тварин.",
       "Ділянкою дороги, на якій можлива поява худоби."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 314,
@@ -3598,7 +3603,7 @@
       "Ділянкою дороги, на якій можлива поява будь-яких тварин.",
       "Ділянкою дороги, на якій можлива поява диких тварин."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 314,
@@ -3617,7 +3622,7 @@
       "Відповіді 1 і 3.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 314,
@@ -3635,7 +3640,7 @@
       "10—15 м.",
       "Безпосередньо перед таким місцем."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 314,
@@ -3653,7 +3658,7 @@
       "Ділянкою дороги з інтенсивним рухом.",
       "Ділянкою дороги з багатосмуговим рухом."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 314,
@@ -3671,7 +3676,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 315,
@@ -3688,7 +3693,7 @@
       "Про наближення до місця, де звуження проїзної частини спричиняє затори в дорожньому русі.",
       "Правильні обидва варіанти."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 315,
@@ -3706,7 +3711,7 @@
       "Місцем, де звуження проїзної частини спричиняє затори в дорожньому русі.",
       "Місцем, де дорога з удосконаленим покриттям переходить у гравійну або ґрунтову дорогу."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 315,
@@ -3724,7 +3729,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 315,
@@ -3742,7 +3747,7 @@
       "На обох перехрестях.",
       "На обох перехрестях ви взагалі не маєте переваги."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 316,
@@ -3759,7 +3764,7 @@
       "Роботи, пов'язані з будівництвом, реконструкцією, ремонтом чи утриманням автомобільної дороги (вулиці), штучних споруд, споруд дорожнього водовідводу.",
       "Відповіді, зазначені в пунктах 1, 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 316,
@@ -3778,7 +3783,7 @@
       "На напрямок об'їзду ділянки дороги, що ремонтується.",
       "Відповіді 2, 3 і 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 316,
@@ -3796,7 +3801,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 316,
@@ -3813,7 +3818,7 @@
       "Перед небезпечним поворотом дороги.",
       "Перед звуженням дороги з обох боків."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 317,
@@ -3831,7 +3836,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 317,
@@ -3848,7 +3853,7 @@
       "Про звуження дороги ліворуч.",
       "Про закінчення дороги з розділювальною смугою."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 317,
@@ -3866,7 +3871,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 317,
@@ -3883,7 +3888,7 @@
       "Знак 2.",
       "Знак 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 317,
@@ -3900,7 +3905,7 @@
       "Про наближення до крутого підйому.",
       "Про наближення до аварійно небезпечної ділянки дороги."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 318,
@@ -3917,7 +3922,7 @@
       "У місцях дороги, де можливі сильний вітер або раптові його пориви.",
       "У місцях напрямку повороту дороги."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 318,
@@ -3936,7 +3941,7 @@
       "У місцях об’їзду центра перехрестя з круговим рухом.",
       "Відповіді 3 і 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 318,
@@ -3954,7 +3959,7 @@
       "Про наявність в'їзду з прилеглої території.",
       "Про наявність двох поворотів, що йдуть один за одним."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 318,
@@ -3972,7 +3977,7 @@
       "Про наявність в'їзду з прилеглої території.",
       "Про наявність двох поворотів, що йдуть один за одним."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 318,
@@ -3990,7 +3995,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 318,
@@ -4008,7 +4013,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 319,
@@ -4026,7 +4031,7 @@
       "Про наближення до ділянки дороги з двома небезпечними поворотами – з першим праворуч.",
       "Про наближення до ділянки дороги з двома небезпечними поворотами – з першим ліворуч."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 319,
@@ -4043,7 +4048,7 @@
       "Про наближення до слизької ділянки дороги.",
       "Про наближення до небезпечного повороту дороги."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 319,
@@ -4061,7 +4066,7 @@
       "Про наближення до ділянки дороги з дев'ятьма небезпечними поворотами – з першим ліворуч.",
       "Про наближення до ділянки дороги з дев'ятьма небезпечними поворотами – з першим праворуч."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 319,
@@ -4079,7 +4084,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 320,
@@ -4096,7 +4101,7 @@
       "Про те, що дорога виходить на поромну переправу.",
       "Про те, що дорога проходить через розвідний міст."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 320,
@@ -4113,7 +4118,7 @@
       "Про те, що дорога виходить на берег водойми або набережну.",
       "Про те, що дорога виходить на поромну переправу."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 320,
@@ -4131,7 +4136,7 @@
       "Про наближення до шляхопроводу.",
       "Про наближення до залізничного переїзду."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 320,
@@ -4149,7 +4154,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 320,
@@ -4167,7 +4172,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 321,
@@ -4185,7 +4190,7 @@
       "Про наближення до перехрестя, на якому водій має перевагу в русі.",
       "Про наближення до перехрестя рівнозначних доріг."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 321,
@@ -4203,7 +4208,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 321,
@@ -4221,7 +4226,7 @@
       "Про наближення до місця перетину з прилеглою територією.",
       "Про наближення до залізничного переїзду."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 321,
@@ -4239,7 +4244,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 321,
@@ -4256,7 +4261,7 @@
       "Маєте, тільки якщо встановлено знак «Головна дорога».",
       "Маєте в будь-якому разі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 322,
@@ -4273,7 +4278,7 @@
       "Про наближення до перехрестя рівнозначних доріг.",
       "Про наближення до перехрестя, на якому другорядна дорога прилягає з правого боку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 322,
@@ -4290,7 +4295,7 @@
       "Які проходять поблизу аеродромів.",
       "Які проходять поблизу аеродромів або над якими літаки чи вертольоти пролітають на невеликій висоті."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 322,
@@ -4307,7 +4312,7 @@
       "Попереду ділянка дороги, на якій можливі сильний боковий вітер або його раптові пориви.",
       "Попереду ділянка дороги, яка проходить поблизу набережної."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 322,
@@ -4325,7 +4330,7 @@
       "Перед ділянкою дороги з нерівністю проїзної частини – хвилястості, напливи, спучування.",
       "Перед ділянкою дороги, на якій узбіччя підвищене, занижене, зруйноване, а також якщо на узбіччі виконують ремонтні роботи."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 322,
@@ -4344,7 +4349,7 @@
       "Ділянкою дороги з буграми, напливами чи неплавним стикуванням конструкцій мостів.",
       "Відповіді 3 і 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 323,
@@ -4362,7 +4367,7 @@
       "Ділянками доріг з буграми, напливами чи неплавним стикуванням конструкцій мостів.",
       "Ділянками доріг, на яких можливе викидання гравію, щебеню і т. д. з-під коліс транспортних засобів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 323,
@@ -4380,7 +4385,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 323,
@@ -4398,7 +4403,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 323,
@@ -4416,7 +4421,7 @@
       "Про те, що попереду ділянка дороги, що має нерівності проїзної частини.",
       "Попереду ділянка дороги, на якій можливе викидання гравію, щебеню тощо з- під коліс транспортних засобів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 324,
@@ -4434,7 +4439,7 @@
       "Виконуються дорожні роботи.",
       "Є нерівності проїзної частини – хвилястості, напливи, спучування."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 324,
@@ -4452,7 +4457,7 @@
       "Можливе викидання гравію, щебеню тощо з-під коліс транспортних засобів.",
       "Крутий підйом."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 324,
@@ -4470,7 +4475,7 @@
       "Про наближення до прилягання другорядної дороги з лівого боку.",
       "Про наближення до місця, де дорога звужується зліва."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 324,
@@ -4487,7 +4492,7 @@
       "Знак 2.",
       "Знак 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 324,
@@ -4506,7 +4511,7 @@
       "Відповіді 1, 2 і 3.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 325,
@@ -4524,7 +4529,7 @@
       "У напрямках А і Б.",
       "У напрямках А і В."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 325,
@@ -4541,7 +4546,7 @@
       "У напрямку Б.",
       "У будь-якому із зазначених напрямків."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 325,
@@ -4557,7 +4562,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 326,
@@ -4574,7 +4579,7 @@
       "По траєкторії Б.",
       "По траєкторіях А і Б."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 326,
@@ -4592,7 +4597,7 @@
       "По траєкторіях Б і В.",
       "По траєкторіях А і В."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 326,
@@ -4608,7 +4613,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 327,
@@ -4625,7 +4630,7 @@
       "По траєкторії Б.",
       "По будь-якій траєкторії."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 327,
@@ -4643,7 +4648,7 @@
       "Знак 3.",
       "Знаки 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 327,
@@ -4662,7 +4667,7 @@
       "З метою запобігання в'їзду на окрему смугу руху.",
       "Відповіді 1, 2, 3 і 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 327,
@@ -4680,7 +4685,7 @@
       "У напрямках А і В.",
       "У напрямках А, Б і В."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 329,
@@ -4699,7 +4704,7 @@
       "Знак 4.",
       "Знаки 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 329,
@@ -4717,7 +4722,7 @@
       "Транспортних засобів, що перевозять небезпечні вантажі.",
       "Транспортних засобів, що перевозять вибухові та легкозаймисті вантажі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 329,
@@ -4735,7 +4740,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 329,
@@ -4751,7 +4756,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 330,
@@ -4769,7 +4774,7 @@
       "Тракторів і самохідних машин та механізмів, габаритна ширина яких (з вантажем чи без нього) більша від зазначеної на знакові.",
       "Усіх транспортних засобів, габаритна ширина яких (з вантажем чи без нього) більша від зазначеної на знакові."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 330,
@@ -4787,7 +4792,7 @@
       "Заборонено.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 330,
@@ -4803,7 +4808,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 331,
@@ -4821,7 +4826,7 @@
       "У напрямках А і В.",
       "У напрямках А, Б і В."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 331,
@@ -4839,7 +4844,7 @@
       "У населених пунктах, де немає перехресть, – до кінця населеного пункту.",
       "Відповіді 1 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 331,
@@ -4857,7 +4862,7 @@
       "Обгін усіх транспортних засобів, крім велосипедів і гужових возів.",
       "Обгін усіх вантажних автомобілів і тракторів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 331,
@@ -4873,7 +4878,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 332,
@@ -4892,7 +4897,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 332,
@@ -4910,7 +4915,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 332,
@@ -4928,7 +4933,7 @@
       "Заборонено рух транспортних засобів, загальна фактична маса яких перевищує зазначену на знакові.",
       "Заборонено рух транспортних засобів, довжина яких (з вантажем чи без нього) перевищує зазначену на знакові."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 332,
@@ -4946,7 +4951,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 333,
@@ -4964,7 +4969,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 333,
@@ -4980,7 +4985,7 @@
       "На ділянці дороги, перед якою встановлений, забороняє рух зі швидкістю, що перевищує зазначену на знакові.",
       "У зоні, на в'їзді в яку встановлений, забороняє рух зі швидкістю, що перевищує зазначену на знакові."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 333,
@@ -4999,7 +5004,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 333,
@@ -5016,7 +5021,7 @@
       "Дозволено тільки для привернення уваги водія під час обгону транспортного засобу.",
       "Дозволено тільки в тому разі, коли без цього неможливо запобігти дорожньо- транспортній пригоді."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 334,
@@ -5032,7 +5037,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 334,
@@ -5050,7 +5055,7 @@
       "На всі транспортні засоби.",
       "На трактори."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 334,
@@ -5066,7 +5071,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 334,
@@ -5083,7 +5088,7 @@
       "Обгін у зображеній ситуації суворо заборонений.",
       "Якщо вантажний автомобіль рухається зі швидкістю менш ніж 30 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 335,
@@ -5100,7 +5105,7 @@
       "Якщо обгін закінчиться не більш ніж через 500 м після проїзду даних дорожніх знаків.",
       "Обидві відповіді правильні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 335,
@@ -5117,7 +5122,7 @@
       "Обгін у зображеній ситуації заборонено.",
       "Дозволено, якщо швидкість транспорту, який обганяють, менш ніж 30 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 335,
@@ -5134,7 +5139,7 @@
       "Обгін усіх транспортних засобів, крім поодиноких, що рухаються із швидкістю менше 30 км/год.",
       "Випередження усіх транспортних засобів, крім поодиноких, що рухаються із швидкістю менше 30 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 335,
@@ -5151,7 +5156,7 @@
       "На немеханічні транспортні засоби.",
       "Дія зображеного дорожнього знака поширюється на всі без винятку транспортні засоби."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 336,
@@ -5170,7 +5175,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 336,
@@ -5187,7 +5192,7 @@
       "Кінець дії всіх заборон і обмежень, запроваджених заборонними дорожніми знаками.",
       "Кінець зони дії знака «Обгін заборонено»."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 336,
@@ -5206,7 +5211,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 336,
@@ -5225,7 +5230,7 @@
       "Усі зображені дорожні знаки.",
       "Знаки 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 337,
@@ -5244,7 +5249,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 337,
@@ -5262,7 +5267,7 @@
       "На вузьких ділянках дороги, в місцях, де обмежено зустрічний роз'їзд транспортних засобів.",
       "На підйомах і спусках."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 337,
@@ -5278,7 +5283,7 @@
       "Проїдете першим, маючи перевагу.",
       "Проїдете другим, не маючи переваги."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 337,
@@ -5294,7 +5299,7 @@
       "Водій легкового автомобіля.",
       "Водій вантажного автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 338,
@@ -5313,7 +5318,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 338,
@@ -5332,7 +5337,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 338,
@@ -5351,7 +5356,7 @@
       "На підйомах і спусках.",
       "У місцях, де закінчується односторонній рух."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 338,
@@ -5367,7 +5372,7 @@
       "Дати дорогу зустрічному автомобілю, проїхати другим.",
       "Маючи перевагу, проїхати першим."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 339,
@@ -5383,7 +5388,7 @@
       "Перед перехрестями, на яких скасовується право першочергового проїзду нерегульованих перехресть.",
       "Перед перехрестями, на яких водієві транспортного засобу надається право першочергового проїзду нерегульованих перехресть."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 339,
@@ -5401,7 +5406,7 @@
       "Знак 3.",
       "Знак 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 339,
@@ -5418,7 +5423,7 @@
       "Знак 2.",
       "Знак 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 339,
@@ -5434,7 +5439,7 @@
       "Так.",
       "Ні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 339,
@@ -5451,7 +5456,7 @@
       "Водій зупинився перед знаком «Проїзд без зупинки заборонено» і дав дорогу транспортним засобам, що рухаються по головній дорозі.",
       "Водій зупинився перед знаком «Проїзд без зупинки заборонено» і не дав нікому дорогу."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 340,
@@ -5467,7 +5472,7 @@
       "Не повинен.",
       "Повинен."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 340,
@@ -5484,7 +5489,7 @@
       "У другій ситуації.",
       "В обох ситуаціях."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 340,
@@ -5501,7 +5506,7 @@
       "Знак 2.",
       "Обидва знаки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 340,
@@ -5520,7 +5525,7 @@
       "Знак 4.",
       "Знаки 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 341,
@@ -5537,7 +5542,7 @@
       "Зобов'язує водія дати дорогу транспортним засобам, які під'їжджають до нерегульованого перехрестя по дорозі, що перетинається, з обов'язковою зупинкою перед розміткою «Стоп-лінія».",
       "Надає водієві право на першочерговий проїзд перехрестя."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 341,
@@ -5553,7 +5558,7 @@
       "Проїхати першим.",
       "Дати дорогу зустрічному автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 341,
@@ -5572,7 +5577,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 342,
@@ -5588,7 +5593,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 342,
@@ -5607,7 +5612,7 @@
       "Відповіді 1 і 3.",
       "Відповіді 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 342,
@@ -5623,7 +5628,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 343,
@@ -5639,7 +5644,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 343,
@@ -5658,7 +5663,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 343,
@@ -5677,7 +5682,7 @@
       "Мопеди і велосипеди з підвісними двигунами.",
       "Мопеди і велосипеди."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 343,
@@ -5694,7 +5699,7 @@
       "Велосипедів і мопедів.",
       "Велосипедів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 343,
@@ -5710,7 +5715,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 344,
@@ -5729,7 +5734,7 @@
       "Знак 4.",
       "Знаки 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 344,
@@ -5748,7 +5753,7 @@
       "А, В і Г.",
       "У всіх напрямках."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 344,
@@ -5767,7 +5772,7 @@
       "В і Г.",
       "У всіх напрямках."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 345,
@@ -5783,7 +5788,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 345,
@@ -5799,7 +5804,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 345,
@@ -5815,7 +5820,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 346,
@@ -5831,7 +5836,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 346,
@@ -5850,7 +5855,7 @@
       "На квадроцикли.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 346,
@@ -5869,7 +5874,7 @@
       "На автобуси.",
       "Відповіді 1, 2, 3 і 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 346,
@@ -5888,7 +5893,7 @@
       "Водій таксі, що везе пасажира, який проживає в цій зоні.",
       "Ніхто не порушує."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 347,
@@ -5907,7 +5912,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 347,
@@ -5926,7 +5931,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 347,
@@ -5944,7 +5949,7 @@
       "З білою переривчастою лінією розмітки, яка наноситься біля краю проїзної частини або по верху бордюру.",
       "З білою суцільною лінією розмітки, яка наноситься біля краю проїзної частини або по верху бордюру."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 347,
@@ -5962,7 +5967,7 @@
       "150 – 300 м.",
       "50 – 100 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 348,
@@ -5980,7 +5985,7 @@
       "150 – 300 м.",
       "20 – 50 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 348,
@@ -5997,7 +6002,7 @@
       "Велосипедну доріжку.",
       "Велосипедний переїзд."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 348,
@@ -6014,7 +6019,7 @@
       "Підземний пішохідний перехід.",
       "Пішохідну доріжку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 348,
@@ -6031,7 +6036,7 @@
       "Початок ділянки дороги, що проходить через тунель довжиною 1000 м і більше.",
       "Початок населеного пункту, де відсутня забудова."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 348,
@@ -6048,7 +6053,7 @@
       "Залізничного переїзду.",
       "Ділянки, де можливе падіння каміння."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 348,
@@ -6065,7 +6070,7 @@
       "Забороняє обгін зазначених на ньому транспортних засобів.",
       "Забороняє рух усіх транспортних засобів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 349,
@@ -6082,7 +6087,7 @@
       "Доріжку для пішоходів та велосипедистів.",
       "Суміжну пішохідну та велосипедну доріжки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 349,
@@ -6099,7 +6104,7 @@
       "Рух лише вантажних автомобілів із застосуванням ланцюгів проти ковзання.",
       "Місця розташування шиномонтажу."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 349,
@@ -6116,7 +6121,7 @@
       "Для суміщеного руху легкових автомобілів та велосипедистів.",
       "Де велосипедна доріжка перетинає проїзну частину."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 349,
@@ -6132,7 +6137,7 @@
       "Попутно загальному потоку.",
       "Назустріч загальному потоку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 349,
@@ -6149,7 +6154,7 @@
       "Обмеження максимальної швидкості на різних смугах руху.",
       "Початок додаткової смуги руху."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 349,
@@ -6166,7 +6171,7 @@
       "Обмеження максимальної швидкості на різних смугах руху.",
       "Початок додаткової смуги руху."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 350,
@@ -6183,7 +6188,7 @@
       "Місця, призначені для стоянки виключно вантажних транспортних засобів.",
       "Місця для стоянки транспортних засобів, що здійснюють міжнародні автомобільні перевезення вантажів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 350,
@@ -6199,7 +6204,7 @@
       "Місце розташування автовокзалу чи автостанції.",
       "Місце розташування морського (річкового) порту чи вокзалу."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 350,
@@ -6216,7 +6221,7 @@
       "Номер і напрямок дороги.",
       "Загальні обмеження швидкості."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 350,
@@ -6233,7 +6238,7 @@
       "Зону для велосипедистів.",
       "Зону для пішоходів і велосипедистів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 350,
@@ -6250,7 +6255,7 @@
       "Велосипедну смугу.",
       "Місця, де велосипедна доріжка перетинає проїзну частину."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 350,
@@ -6267,7 +6272,7 @@
       "Позначення смуги руху, на яку поширюється дія знака або світлофора.",
       "Зазначення розташування майданчиків для стоянки відносно дороги."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 351,
@@ -6284,7 +6289,7 @@
       "Попередження про можливу евакуацію автомобіля без відома власника.",
       "Позначення місць розташування шиномонтажу."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 351,
@@ -6301,7 +6306,7 @@
       "Велосипедний переїзд.",
       "Велосипедну смугу."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 351,
@@ -6318,7 +6323,7 @@
       "Вантажні автомобілі з дозволеною максимальною масою більше 3,5 т.",
       "Транспортні засоби, що перевозять небезпечні вантажі.»."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 351,

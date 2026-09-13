@@ -7,7 +7,7 @@
     "parse:questions": "node parse-questions.mjs",
     "parse": "tsx src/parser.ts",
     "import:answers": "tsx src/import-answers.ts",
-    "apply:manual-answers": "tsx src/apply-manual-answers.ts"
+    "apply:answer-key": "tsx src/apply-answer-key.ts"
   },
   "dependencies": {
     "@napi-rs/canvas": "^0.1.68",

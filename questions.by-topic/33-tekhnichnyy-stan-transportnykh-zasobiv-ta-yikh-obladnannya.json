@@ -11,7 +11,7 @@
       "Денні ходові вогні.",
       "Відповіді 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 263,
@@ -28,7 +28,7 @@
       "Дозволяється лише на задню вісь.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 263,
@@ -45,7 +45,7 @@
       "Забороняється.",
       "Дозволяється."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 263,
@@ -62,7 +62,7 @@
       "Припинити подальший рух.",
       "Спробувати усунути несправність на місці, а якщо це неможливо, то слідувати до місця стоянки або ремонту, ввімкнувши аварійну світлову сигналізацію або встановивши ззаду на транспортному засобі знак аварійної зупинки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 263,
@@ -79,7 +79,7 @@
       "На світлових приладах використовуються розсіювачі, що не відповідають типу конкретного світлового приладу.",
       "Відсутні протитуманні фари."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 263,
@@ -97,7 +97,7 @@
       "Знака аварійної зупинки.",
       "Противідкатних упорів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 264,
@@ -114,7 +114,7 @@
       "Дозволяється лише на задню вісь.",
       "Не дозволяється."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 264,
@@ -132,7 +132,7 @@
       "Не працює пристрій для обігрівання і обдування скла.",
       "Не працює склопідйомник."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 264,
@@ -149,7 +149,7 @@
       "Тільки в темний час доби.",
       "В обох випадках."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 264,
@@ -166,7 +166,7 @@
       "Не працюють склообмивачі.",
       "Не працює склопідйомник."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 264,
@@ -183,7 +183,7 @@
       "Несправний склоочисник з боку розміщення керма.",
       "Не працюють передбачені конструкцією транспортного засобу склообмивачі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 264,
@@ -201,7 +201,7 @@
       "Не працює покажчик температури охолоджуючої рідини.",
       "Несправна система випускання відпрацьованих газів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 264,
@@ -218,7 +218,7 @@
       "Несправна система випуску відпрацьованих газів.",
       "Не працює склоочисник."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 265,
@@ -235,7 +235,7 @@
       "Несправне рульове керування не дає можливості здійснити маневр під час руху з мінімальною швидкістю.",
       "Несправний глушник."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 265,
@@ -252,7 +252,7 @@
       "Двигун не розвиває максимальну потужність.",
       "Несправна система випускання відпрацьованих газів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 265,
@@ -269,7 +269,7 @@
       "Не працює покажчик температури охолоджуючої рідини.",
       "Не працюють передбачені конструкцією замки дверей кузова або кабіни."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 265,
@@ -287,7 +287,7 @@
       "Ускладнений запуск двигуна.",
       "Не працює звуковий сигнал."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 265,
@@ -304,7 +304,7 @@
       "Під час дощу або снігопаду.",
       "Непрацюючий склоочисник не є перешкодою для руху у будь-якому випадку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 265,
