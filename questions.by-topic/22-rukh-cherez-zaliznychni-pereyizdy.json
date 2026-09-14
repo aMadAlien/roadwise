@@ -8,7 +8,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 234,
@@ -25,7 +25,7 @@
       "Об'їхати транспортні засоби, які стоять.",
       "Зупинитися перед залізничним переїздом (в'їзд на нього заборонений)."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 234,
@@ -42,7 +42,7 @@
       "Дозволено в будь-якому випадку.",
       "Дозволено, якщо це не створює перешкоди для зустрічних транспортних засобів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 234,
@@ -59,7 +59,7 @@
       "Заборонено.",
       "Дозволено на короткий час для пропуску легкового автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 235,
@@ -78,7 +78,7 @@
       "Дорожньої розміткою.",
       "Усім переліченим вище."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 235,
@@ -97,7 +97,7 @@
       "Усім переліченим вище.",
       "Тільки дорожніми знаками і дорожньою розміткою."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 235,
@@ -113,7 +113,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 236,
@@ -129,7 +129,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 236,
@@ -147,7 +147,7 @@
       "Зупинитися, тільки якщо шлагбауми почали опускатися.",
       "Проїхати залізничний переїзд, переконавшись, що до нього не наближається поїзд."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 236,
@@ -164,7 +164,7 @@
       "Вжити заходів для звільнення переїзду.",
       "Виконати обидві дії."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 237,
@@ -182,7 +182,7 @@
       "У разі появи поїзда бігти йому назустріч, подаючи сигнал зупинки.",
       "Виконати все перераховане."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 237,
@@ -199,7 +199,7 @@
       "Жести руками із шматком яскравої тканини або будь-яким добре помітним предметом у світлий час доби, у темну пору доби і в умовах недостатньої видимості - з факелом або ліхтарем.",
       "Обидві відповіді правильні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 237,
@@ -215,7 +215,7 @@
       "Продовжити рух через переїзд.",
       "Зупинитися в передбаченому місці, так як проїзд через переїзд заборонений."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 237,
@@ -232,7 +232,7 @@
       "Продовжити рух через переїзд, тільки переконавшись у відсутності поїзда, що наближається.",
       "Дочекатися виключення заборонного сигналу світлофора та звукової сигналізації, а також переконатися у відсутності поїзда, що наближається, після чого продовжити рух."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 238,
@@ -248,7 +248,7 @@
       "Проїхати залізничний переїзд.",
       "Зупинитися в передбаченому місці, так як проїзд через переїзд заборонений."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 238,
@@ -265,7 +265,7 @@
       "Зупинитися в передбаченому місці, так як проїзд через переїзд заборонений.",
       "Зупинитися, тільки якщо увімкнений заборонний сигнал світлофора або увімкнена звукова сигналізація."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 238,
@@ -283,7 +283,7 @@
       "Перехрещення дороги із залізничними коліями на різних рівнях.",
       "Відповіді, зазначені в пунктах 1 та 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 238,
@@ -301,7 +301,7 @@
       "За 15 м до найближчої рейки.",
       "За 20 м до найближчої рейки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 238,
@@ -318,7 +318,7 @@
       "У тому, що перед переїздом є дорожній знак «Проїзд без зупинки заборонено».",
       "У тому, що не наближається поїзд (локомотив, дрезина)."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 238,
@@ -337,7 +337,7 @@
       "Дорожніми знаками і дорожньою розміткою.",
       "Усім переліченим вище."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 239,
@@ -353,7 +353,7 @@
       "Тільки на залізничних переїздах.",
       "Тільки на залізничних переїздах, а якщо їх немає, то в місцях, де дорога добре проглядається в обидва боки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 239,
@@ -372,7 +372,7 @@
       "На будь-якому залізничному переїзді.",
       "Відповіді 3 і 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 239,
@@ -389,7 +389,7 @@
       "Серія сигналів, що складається з трьох довгих і одного короткого сигналу.",
       "Серія сигналів, що складається з двох довгих і трьох коротких сигналів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 239,
@@ -406,7 +406,7 @@
       "Якщо Ви встигнете проїхати, не пошкодивши цей шлагбаум.",
       "У жодному. Рух за цих умов заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 239,
@@ -424,7 +424,7 @@
       "Перед світлофором так, щоб бачити сигнали.",
       "В будь-якій із перерахованих вище ситуацій."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 239,
@@ -441,7 +441,7 @@
       "Якщо шлагбаум піднятий.",
       "Обгін на залізничному переїзді заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 239,
@@ -459,7 +459,7 @@
       "У випадках 1 і 2.",
       "Обгін на залізничному переїзді заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 240,
@@ -475,7 +475,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 240,
@@ -491,7 +491,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 240,
@@ -507,7 +507,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 240,
@@ -523,7 +523,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 240,

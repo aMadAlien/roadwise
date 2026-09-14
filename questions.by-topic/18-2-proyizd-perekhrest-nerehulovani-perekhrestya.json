@@ -9,7 +9,7 @@
       "Дати дорогу всім транспортним засобам.",
       "Дати дорогу тільки сірому автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 184,
@@ -25,7 +25,7 @@
       "Першим.",
       "Давши дорогу синьому автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 184,
@@ -41,7 +41,7 @@
       "Проїхати перехрестя першим.",
       "Дати дорогу червоному автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 184,
@@ -57,7 +57,7 @@
       "Ви, а потім білий автомобіль.",
       "Білий автомобіль, а потім Ви."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 185,
@@ -73,7 +73,7 @@
       "Проїхати перехрестя першим.",
       "Дати дорогу синьому автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 185,
@@ -89,7 +89,7 @@
       "Зелений автомобіль, а потім Ви.",
       "Ви, а потім зелений автомобіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 185,
@@ -105,7 +105,7 @@
       "Проїхати перехрестя першим.",
       "Дати дорогу жовтому автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 186,
@@ -121,7 +121,7 @@
       "Проїхати перехрестя першим.",
       "Дати дорогу білому автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 186,
@@ -137,7 +137,7 @@
       "Проїхати перехрестя першим.",
       "Дати дорогу сірому автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 186,
@@ -153,7 +153,7 @@
       "Проїхати першим.",
       "Дати дорогу фіолетовому автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 187,
@@ -169,7 +169,7 @@
       "Ви, а потім білий автомобіль.",
       "Білий автомобіль, а потім Ви."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 187,
@@ -185,7 +185,7 @@
       "Синій автомобіль, а потім Ви.",
       "Ви, а потім синій автомобіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 187,
@@ -201,7 +201,7 @@
       "Давши дорогу чорному автомобілю.",
       "Першим."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 188,
@@ -217,7 +217,7 @@
       "Сірий автомобіль, а потім Ви.",
       "Ви, а потім сірий автомобіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 188,
@@ -234,7 +234,7 @@
       "Дати дорогу тільки транспортному засобу з увімкненим проблисковим маячком синього кольору і червоному автомобілю.",
       "Дати дорогу всім транспортним засобам."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 188,
@@ -251,7 +251,7 @@
       "Дати дорогу тільки білому автомобілю.",
       "Дати дорогу білому і жовтому автомобілям."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 189,
@@ -268,7 +268,7 @@
       "Проїхати перехрестя першим.",
       "Проїхати перехрестя після трамвая і синього автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 189,
@@ -285,7 +285,7 @@
       "Трамвай 2, жовтий, червоний автомобілі, трамвай 1, синій автомобіль.",
       "Трамвай 2 одночасно з червоним автомобілем, жовтий автомобіль, трамвай 1, синій автомобіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 189,
@@ -302,7 +302,7 @@
       "Після чорного і білого автомобілів.",
       "Після чорного, білого і синього автомобілів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 189,
@@ -319,7 +319,7 @@
       "Після жовтого і фіолетового автомобілів, трамвая.",
       "Першим."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 190,
@@ -336,7 +336,7 @@
       "Після трамвая, білого і чорного автомобілів.",
       "Першим."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 190,
@@ -352,7 +352,7 @@
       "Ви, а потім сірий автомобіль.",
       "Сірий автомобіль, а потім Ви."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 191,
@@ -368,7 +368,7 @@
       "Першим.",
       "Давши дорогу білому автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 191,
@@ -384,7 +384,7 @@
       "Першим.",
       "Давши дорогу велосипедистові."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 191,
@@ -400,7 +400,7 @@
       "Проїхати, не даючи дорогу велосипедистові.",
       "Проїхати, давши дорогу велосипедистові."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 192,
@@ -416,7 +416,7 @@
       "Виїхати на перехрестя, де організовано круговий рух, водій фіолетового автомобіля повинен дати Вам дорогу.",
       "Надати перевагу у русі фіолетову автомобілю, який вже рухається по колу і після цього виїхати на перехрестя."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 192,
@@ -432,7 +432,7 @@
       "Проїхати першим, не даючи дорогу.",
       "Дати дорогу велосипедистові."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 192,
@@ -448,7 +448,7 @@
       "Проїхати перехрестя першим, не даючи дорогу.",
       "Дати дорогу білому автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 193,
@@ -465,7 +465,7 @@
       "Проїхати перехрестя другим, давши дорогу тільки мотоциклу.",
       "Проїхати перехрестя останнім – після мотоцикла й автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 193,
@@ -482,7 +482,7 @@
       "Проїхати перехрестя другим, давши дорогу тільки білому автомобілю.",
       "Проїхати перехрестя останнім – після трамвая і білого автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 193,
@@ -499,7 +499,7 @@
       "Дати дорогу тільки трамваю.",
       "Проїхати перехрестя після трамвая і сірого автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 194,
@@ -516,7 +516,7 @@
       "Другим.",
       "Третім."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 194,
@@ -533,7 +533,7 @@
       "Ваш, білий, синій автомобілі.",
       "Білий, ваш, синій автомобілі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 194,
@@ -550,7 +550,7 @@
       "Після зеленого автомобіля.",
       "Після сірого автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 195,
@@ -567,7 +567,7 @@
       "Вважати, що він перебуває на другорядній дорозі.",
       "Давати дорогу, тільки повертаючи ліворуч."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 195,
@@ -583,7 +583,7 @@
       "Проїхати перехрестя першим, оскільки він їде прямо.",
       "Вважати, що він перебуває на другорядній дорозі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 195,
@@ -599,7 +599,7 @@
       "Проїхати першим, не даючи дорогу.",
       "Дати дорогу синьому автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 196,
@@ -616,7 +616,7 @@
       "Після червоного автомобіля.",
       "Останнім."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 196,
@@ -632,7 +632,7 @@
       "Повинен проїхати першим, оскільки має перевагу в русі, тому що перебуває на перехресті з круговим рухом.",
       "Повинен дати Вам дорогу."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 196,
@@ -648,7 +648,7 @@
       "Синій, ваш автомобілі.",
       "Ваш, синій автомобілі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 197,
@@ -665,7 +665,7 @@
       "Синій, білий, ваш автомобілі.",
       "Білий, синій, ваш автомобілі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 197,
@@ -683,7 +683,7 @@
       "Проїхати, давши дорогу обом автомобілям.",
       "Проїхати, давши дорогу тільки червоному автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 197,
@@ -701,7 +701,7 @@
       "Проїхати, давши дорогу синьому автомобілю і велосипедистові.",
       "Проїхати, давши дорогу тільки велосипедистові."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 198,
@@ -719,7 +719,7 @@
       "Третім, давши дорогу тільки трамваю і жовтому автомобілю.",
       "Останнім – після трамвая, білого і жовтого автомобілів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 198,
@@ -736,7 +736,7 @@
       "Чорний, червоний, ваш автомобілі.",
       "Ваш, червоний, чорний автомобілі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 198,
@@ -753,7 +753,7 @@
       "Другим – після проїзду трамвая.",
       "Останнім – після трамвая і велосипедиста."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 199,
@@ -770,7 +770,7 @@
       "Після трамвая.",
       "Після трамвая і білого автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 199,
@@ -787,7 +787,7 @@
       "Жовтий, ваш автомобіль, трамвай, синій автомобілі.",
       "Трамвай одночасно з жовтим, ваш, синій автомобілі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 199,
@@ -804,7 +804,7 @@
       "Дати дорогу тільки трамваю.",
       "Проїхати перехрестя після трамвая і синього автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 200,
@@ -820,7 +820,7 @@
       "Проїхати перехрестя першим.",
       "Дати дорогу червоному автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 200,
@@ -838,7 +838,7 @@
       "Зелений, фіолетовий, чорний, білий автомобілі.",
       "Білий, зелений, фіолетовий, чорний автомобілі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 200,
@@ -856,7 +856,7 @@
       "Чорний автомобіль.",
       "Білий автомобіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 201,
@@ -872,7 +872,7 @@
       "Червоний автомобіль.",
       "Білий автомобіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 201,
@@ -888,7 +888,7 @@
       "Дати дорогу фіолетовому автомобілю.",
       "Проїхати першим, не даючи дорогу фіолетовому автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 201,
@@ -905,7 +905,7 @@
       "Другим.",
       "Третім."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 202,
@@ -921,7 +921,7 @@
       "Проїхати перехрестя першим.",
       "Дати дорогу всім транспортним засобам, що рухаються по дорозі, на яку він в'їжджає."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 202,
@@ -937,7 +937,7 @@
       "Не даючи дорогу трактору, проїхати першим.",
       "Дати дорогу трактору і проїхати другим."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 202,
@@ -953,7 +953,7 @@
       "Проїхати перехрестя першим, не даючи дорогу трамваю.",
       "Проїхати другим, давши дорогу трамваю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 202,
@@ -969,7 +969,7 @@
       "Дати дорогу трамваю.",
       "Проїхати першим, оскільки маєте перевагу в русі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 203,
@@ -988,7 +988,7 @@
       "Чорний автомобіль.",
       "Білий автомобіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 203,
@@ -1006,7 +1006,7 @@
       "Трамвай 2, трамвай 1, фіолетовий, червоний, зелений автомобілі.",
       "Трамвай 2, червоний автомобіль, трамвай 1, фіолетовий, зелений автомобілі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 203,
@@ -1024,7 +1024,7 @@
       "Зелений автомобіль.",
       "Білий автомобіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 204,
@@ -1040,7 +1040,7 @@
       "Зелений, сірий автомобіль.",
       "Сірий, зелений автомобіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 204,
@@ -1057,7 +1057,7 @@
       "Другим.",
       "Третім."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 204,
@@ -1075,7 +1075,7 @@
       "На третьому.",
       "На всіх малюнках."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 205,
@@ -1092,7 +1092,7 @@
       "Зупинитися перед дорожньою розміткою «Стоп-лінія», виконавши вимогу знака «Проїзд без зупинки заборонено».",
       "Проїхати перехрестя без зупинки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 205,
@@ -1109,7 +1109,7 @@
       "Не повинен, тому що велосипедист рухається по велосипедній доріжці.",
       "Повинен дати дорогу."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 206,
@@ -1125,7 +1125,7 @@
       "Не повинен.",
       "Повинен завжди."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 206,
@@ -1142,7 +1142,7 @@
       "Тільки водій білого автомобіля.",
       "Тільки водій синього автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 206,
@@ -1158,7 +1158,7 @@
       "Не повинен.",
       "Повинен завжди."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 207,
@@ -1175,7 +1175,7 @@
       "На місці Б.",
       "На місці А чи Б."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 207,
@@ -1192,7 +1192,7 @@
       "Не може, тому що, зупинившись, створить перешкоду для руху іншим транспортним засобам.",
       "Може, тому що рухається прямо."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 207,
@@ -1208,7 +1208,7 @@
       "Трамвай, автомобіль.",
       "Автомобіль, трамвай."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 208,
@@ -1225,7 +1225,7 @@
       "Трамвай, велосипедист.",
       "Залежить від швидкості транспортних засобів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 208,
@@ -1243,7 +1243,7 @@
       "Трамвай і зелений автомобіль, синій автомобіль.",
       "Синій автомобіль, трамвай, зелений автомобіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 208,
@@ -1261,7 +1261,7 @@
       "Білий, синій, жовтий, зелений.",
       "Білий, зелений, синій, жовтий."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 209,
@@ -1278,7 +1278,7 @@
       "Дати дорогу тільки зустрічному автомобілю.",
       "Проїхати перехрестя першим."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 209,
@@ -1294,7 +1294,7 @@
       "Маючи перевагу, проїхати перехрестя першим.",
       "Давши дорогу, проїхати перехрестя другим."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 209,
@@ -1310,7 +1310,7 @@
       "Дати дорогу велосипедистові.",
       "Не давати дорогу велосипедистові."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 210,
@@ -1327,7 +1327,7 @@
       "Дати дорогу тільки червоному автомобілю.",
       "Проїхати перехрестя першим."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 210,
@@ -1344,7 +1344,7 @@
       "Автомобіль, трамвай.",
       "Залежить від швидкості руху транспортних засобів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 210,
@@ -1360,7 +1360,7 @@
       "Дати дорогу трамваю.",
       "Проїхати перехрестя першим."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 211,
@@ -1376,7 +1376,7 @@
       "Дати дорогу тільки транспортному засобу з увімкненим проблисковим маячком синього кольору.",
       "Дати дорогу транспортному засобу з увімкненим проблисковим маячком синього кольору та сірому автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 211,
@@ -1393,7 +1393,7 @@
       "Дати дорогу тільки зеленому автомобілю.",
       "Проїхати перехрестя першим."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 211,
@@ -1410,7 +1410,7 @@
       "Червоний, сірий, зелений автомобілі.",
       "Сірий, червоний, зелений автомобілі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 212,
@@ -1427,7 +1427,7 @@
       "Проїхати перехрестя останнім, давши дорогу обом автомобілям.",
       "Проїхати перехрестя другим, давши дорогу тільки чорному автомобілю.»."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 212,
@@ -1443,7 +1443,7 @@
       "Дати дорогу автомобілю з увімкненими проблисковими маячками.",
       "Дати дорогу обом транспортним засобам."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 212,
@@ -1460,7 +1460,7 @@
       "Червоний, зелений, синій автомобілі.",
       "Синій, зелений, червоний автомобілі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 212,
@@ -1477,7 +1477,7 @@
       "Білий, червоний, синій автомобілі.",
       "Червоний, білий, синій автомобілі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 213,
@@ -1496,7 +1496,7 @@
       "Четвертим.",
       "Останнім."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 213,
@@ -1513,7 +1513,7 @@
       "Дати дорогу тільки велосипедистові і проїхати перехрестя другим.",
       "Проїхати перехрестя останнім."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 214,
@@ -1530,7 +1530,7 @@
       "Білий, червоний автомобілі, велосипед, синій автомобілі.",
       "Білий, червоний, синій автомобілі, велосипед."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 214,
@@ -1548,7 +1548,7 @@
       "Трамвай, мотоцикл, легковий автомобіль.",
       "Трамвай, легковий автомобіль, мотоцикл."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 214,
@@ -1565,7 +1565,7 @@
       "Останнім, давши дорогу червоному і синьому автомобілям.",
       "Другим, давши дорогу тільки червоному автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 215,
@@ -1583,7 +1583,7 @@
       "Жовтий, фіолетовий, синій.",
       "Фіолетовий, жовтий, синій."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 215,
@@ -1600,7 +1600,7 @@
       "Проїде, давши дорогу автомобілю.",
       "Велосипедисту заборонено повертати наліво в даній ситуації."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 215,
@@ -1617,7 +1617,7 @@
       "Дати дорогу трамваю і після нього повернути ліворуч.",
       "Дати дорогу трамваю і червоному автомобілю, а після цього повернути ліворуч."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 215,
@@ -1634,7 +1634,7 @@
       "Дати дорогу тільки трамваю.",
       "Дати дорогу трамваю й автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 216,
@@ -1651,7 +1651,7 @@
       "Проїхати після транспортного засобу з увімкненим проблисковим маячком синього кольору та сірого автомобіля.",
       "Проїхати перехрестя останнім."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 216,
@@ -1668,7 +1668,7 @@
       "Проїхати перехрестя після велосипедиста.",
       "Проїхати після велосипедиста і червоного автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 216,
@@ -1687,7 +1687,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 217,
@@ -1703,7 +1703,7 @@
       "Так.",
       "Ні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 217,
@@ -1720,7 +1720,7 @@
       "Синій автомобіль .",
       "Ваш автомобіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 217,
@@ -1737,7 +1737,7 @@
       "Синій автомобіль.",
       "Ваш автомобіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 218,
@@ -1753,7 +1753,7 @@
       "Так.",
       "Ні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 218,
@@ -1770,7 +1770,7 @@
       "Дозволено, пропустивши пішохода.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 218,
@@ -1786,7 +1786,7 @@
       "Дозволено",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 219,
@@ -1802,7 +1802,7 @@
       "Так.",
       "Ні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 219,
@@ -1818,7 +1818,7 @@
       "Повинні.",
       "Не повинні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 219,

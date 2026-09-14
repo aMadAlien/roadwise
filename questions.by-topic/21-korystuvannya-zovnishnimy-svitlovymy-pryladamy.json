@@ -8,7 +8,7 @@
       "Частина доби від закінчення вечірніх (30 хв. після заходу сонця) до початку ранкових сутінків (30 хв. до сходу сонця).",
       "Частина доби від заходу до сходу сонця."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 228,
@@ -24,7 +24,7 @@
       "Збільшити швидкість, щоб швидше роз'їхатися із зустрічними транспортними засобами.",
       "Зменшити швидкість до безпечної."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 228,
@@ -41,7 +41,7 @@
       "Протитуманні фари.",
       "Габаритні або стоянкові ліхтарі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 229,
@@ -59,7 +59,7 @@
       "Габаритні або стоянкові ліхтарі.",
       "Габаритні або стоянкові ліхтарі спільно з аварійною сигналізацією."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 229,
@@ -77,7 +77,7 @@
       "Габаритні або стоянкові ліхтарі, додатково дозволяється увімкнути ближнє світло або протитуманні фари й задні протитуманні ліхтарі.",
       "Габаритні або стоянкові ліхтарі одночасно з аварійною сигналізацією."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 229,
@@ -94,7 +94,7 @@
       "Увімкнути протитуманні фари.",
       "Транспортний засіб слід прибрати за межі дороги. Якщо це неможливо, його необхідно позначити відповідно до вимог Правил дорожнього руху."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 229,
@@ -111,7 +111,7 @@
       "Тільки окремо від ближнього світла фар.",
       "Як окремо, так і разом з ближнім або дальнім світлом фар."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 229,
@@ -128,7 +128,7 @@
       "Тільки окремо від ближнього світла фар.",
       "Як окремо, так і разом з ближнім або дальнім світлом фар."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 229,
@@ -144,7 +144,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 229,
@@ -160,7 +160,7 @@
       "Під час виконання службових завдань, вживши заходів для того, щоб не засліплювати інших учасників дорожнього руху.",
       "Завжди в темний час доби або в умовах недостатньої видимості."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 230,
@@ -176,7 +176,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 230,
@@ -193,7 +193,7 @@
       "В умовах недостатньої видимості.",
       "У будь-яких умовах."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 230,
@@ -210,7 +210,7 @@
       "Зупинитися на узбіччі.",
       "Зупинитися, не змінюючи смуги руху, і увімкнути аварійну сигналізацію."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 230,
@@ -227,7 +227,7 @@
       "Негайно переключитися на протитуманні фари.",
       "Переключитися на ближнє світло тільки на відстані 250 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 230,
@@ -245,7 +245,7 @@
       "Фари ближнього (дальнього) світла. Дозволяється увімкнути протитуманні фари як окремо, так і разом з ближнім або дальнім світлом фар.",
       "Габаритні ліхтарі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 230,
@@ -262,7 +262,7 @@
       "Габаритні ліхтарі та аварійна світлова сигналізація.",
       "Аварійна світлова сигналізація."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 230,
@@ -279,7 +279,7 @@
       "Фари ближнього або дальнього світла.",
       "Фари ближнього світла."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 231,
@@ -297,7 +297,7 @@
       "Габаритні вогні.",
       "Ближнє або дальнє світло фар."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 231,
@@ -314,7 +314,7 @@
       "Протитуманні фари.",
       "Ближнє або дальнє світло фар."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 231,
@@ -332,7 +332,7 @@
       "Ближнє або дальнє світло фар.",
       "Ближнє світло фар."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 231,
@@ -348,7 +348,7 @@
       "Досить наявності встановлених світлоповертачів.",
       "Фари або ліхтарі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 231,
@@ -365,7 +365,7 @@
       "За умови, що водій не може засліпити інших водіїв, зокрема тих, які рухаються в попутному напрямку.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 231,
@@ -381,7 +381,7 @@
       "У режимі ближнього світла.",
       "У режимі дальнього світла."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 231,
@@ -399,7 +399,7 @@
       "На відстані не менше 250 м.",
       "На відстані не менше 350 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 232,
@@ -416,7 +416,7 @@
       "У режимі ближнього світла.",
       "У режимі протитуманних фар."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 232,
@@ -434,7 +434,7 @@
       "Фари ближнього або дальнього світла.",
       "Тільки протитуманні фари."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 232,
@@ -450,7 +450,7 @@
       "Так.",
       "Ні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 232,
@@ -466,7 +466,7 @@
       "Так.",
       "Ні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 232,
@@ -484,7 +484,7 @@
       "Протитуманні фари та задній протитуманний ліхтар.",
       "Відповідь 1 та 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 233,
@@ -500,7 +500,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 233,
@@ -516,7 +516,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 233,
@@ -532,7 +532,7 @@
       "Ні.",
       "Так."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 233,
@@ -548,7 +548,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 234,

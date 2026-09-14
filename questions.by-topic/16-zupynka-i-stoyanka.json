@@ -10,7 +10,7 @@
       "У місцях А, Б і В.",
       "У місцях А і В."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 144,
@@ -27,7 +27,7 @@
       "Не має права.",
       "Має право тільки для посадки (висадки) пасажирів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 145,
@@ -46,7 +46,7 @@
       "На місцях А та В.",
       "На місцях Б і В."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 145,
@@ -64,7 +64,7 @@
       "Водії синього автомобіля і мотоцикла.",
       "Водії фіолетового автомобіля і мотоцикла."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 146,
@@ -82,7 +82,7 @@
       "На місцях А і Б.",
       "На місцях А, В і Д."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 146,
@@ -101,7 +101,7 @@
       "Водії зеленого, синього автомобілів і мотоцикла.",
       "Ніхто не порушує."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 147,
@@ -120,7 +120,7 @@
       "Синій, білий і зелений.",
       "Усі транспортні засоби порушують."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 147,
@@ -138,7 +138,7 @@
       "Обидва порушують.",
       "Ніхто не порушує."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 148,
@@ -155,7 +155,7 @@
       "У місці Б.",
       "У місцях А і Б."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 148,
@@ -172,7 +172,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 148,
@@ -189,7 +189,7 @@
       "Заборонено.",
       "Дозволено тільки в світлий час доби."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 149,
@@ -206,7 +206,7 @@
       "Дозволено.",
       "Дозволено тільки для посадки (висадки) пасажирів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 149,
@@ -223,7 +223,7 @@
       "Дозволено на час до 5 хвилин.",
       "Дозволено в будь-якому випадку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 149,
@@ -240,7 +240,7 @@
       "Тільки водії автобуса і сірого автомобіля.",
       "Водії всіх транспортних засобів порушують."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 150,
@@ -259,7 +259,7 @@
       "У місцях Г і Д.",
       "У всіх місцях."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 150,
@@ -276,7 +276,7 @@
       "Якщо відстань між транспортним засобом і суцільною розміткою становить не менше 3 м.",
       "Зупинка в цьому місці дозволена в будь-якому випадку"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 150,
@@ -292,7 +292,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 151,
@@ -311,7 +311,7 @@
       "3 м.",
       "4 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 151,
@@ -329,7 +329,7 @@
       "У разі обмеження або заборони руху транспортних засобів та пішоходів у випадках, передбачених законодавством.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 152,
@@ -345,7 +345,7 @@
       "Дозволена.",
       "Заборонена."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 152,
@@ -362,7 +362,7 @@
       "Дозволена.",
       "Заборонена, якщо транспортний засіб унеможливить рух інших транспортних засобів або створить перешкоду для руху пішоходів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 152,
@@ -379,7 +379,7 @@
       "Дозволено в будь-якому випадку.",
       "Дозволено, якщо включені денні ходові вогні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 153,
@@ -397,7 +397,7 @@
       "У місцях А та Г.",
       "У місцях А, В і Г."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 153,
@@ -416,7 +416,7 @@
       "Водії білого і синього автомобілів.",
       "Водії фіолетового і білого автомобілів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 154,
@@ -435,7 +435,7 @@
       "Усім переліченим вище.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 154,
@@ -454,7 +454,7 @@
       "Водії синього і жовтого автомобілів.",
       "Водії сірого і жовтого автомобілів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 154,
@@ -470,7 +470,7 @@
       "Заборонено в будь-якому випадку.",
       "Дозволено, якщо буде можливий зустрічний роз'їзд або об'їзд транспортних засобів, що зупинилися."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 155,
@@ -486,7 +486,7 @@
       "Може.",
       "Не може."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 155,
@@ -503,7 +503,7 @@
       "Ближче 15 м.",
       "Ближче 30 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 155,
@@ -519,7 +519,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 156,
@@ -536,7 +536,7 @@
       "Водій жовтого автомобіля.",
       "Водій червоного автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 156,
@@ -552,7 +552,7 @@
       "Має право в будь-якому випадку.",
       "Не має права."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 156,
@@ -568,7 +568,7 @@
       "Дозволяється.",
       "Забороняється."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 157,
@@ -585,7 +585,7 @@
       "Вантажний автомобіль.",
       "Мотоцикл із боковим причепом."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 157,
@@ -601,7 +601,7 @@
       "Правильно.",
       "Неправильно."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 157,
@@ -620,7 +620,7 @@
       "У місцях А, Б, В і Г.",
       "У місці В."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 158,
@@ -637,7 +637,7 @@
       "Водій синього автомобіля.",
       "Обидва водії."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 158,
@@ -654,7 +654,7 @@
       "На другому.",
       "На обох."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 158,
@@ -672,7 +672,7 @@
       "На малюнку 2.",
       "На малюнку 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 159,
@@ -689,7 +689,7 @@
       "Водієві зеленого автомобіля.",
       "Обом водіям."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 159,
@@ -706,7 +706,7 @@
       "У місці Б.",
       "У місці А чи Б."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 159,
@@ -723,7 +723,7 @@
       "Біля лівого краю проїзної частини.",
       "Біля правого або лівого краю проїзної частини."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 160,
@@ -741,7 +741,7 @@
       "Біля правого краю проїзної частини, якомога правіше.",
       "Відповіді 1 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 160,
@@ -758,7 +758,7 @@
       "Водій червоного автомобіля.",
       "Обидва водії."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 160,
@@ -776,7 +776,7 @@
       "Зелений мотоцикл із боковим причепом.",
       "Коричневий мотоцикл із боковим причепом."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 161,
@@ -793,7 +793,7 @@
       "Біля правого краю проїзної частини, як можна правіше, щоб не перешкоджати іншим учасникам дорожнього руху.",
       "На тротуарах або на пішохідних доріжках, щоб не перешкоджати іншим учасникам дорожнього руху."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 161,
@@ -812,7 +812,7 @@
       "У місці А, Б і В.",
       "У місці А і В."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 161,
@@ -828,7 +828,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 162,
@@ -847,7 +847,7 @@
       "Тільки мікроавтобус.",
       "Вантажний автомобіль, мікроавтобус і мотоцикл."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 162,
@@ -866,7 +866,7 @@
       "Тільки мотоцикли.",
       "Транспортні засоби, зазначені у відповідях 3 і 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 162,
@@ -883,7 +883,7 @@
       "У місці Б.",
       "У місцях А чи Б."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 163,
@@ -900,7 +900,7 @@
       "Неправильно.",
       "Правильно в будь-якому випадку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 163,
@@ -917,7 +917,7 @@
       "Неправильно.",
       "Правильно."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 163,
@@ -934,7 +934,7 @@
       "Білий автомобіль.",
       "Обидва автомобілі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 164,
@@ -953,7 +953,7 @@
       "Відповіді 1, 2 і 3.",
       "Відповіді 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 164,
@@ -970,7 +970,7 @@
       "100 м.",
       "150 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 164,
@@ -988,7 +988,7 @@
       "Тільки виходити з транспортного засобу, якщо це загрожує безпеці і створює перешкоди іншим учасникам дорожнього руху.",
       "Відчиняти двері транспортного засобу, залишати їх відчиненими і виходити з транспортного засобу, якщо це загрожує безпеці і створює перешкоди іншим учасникам дорожнього руху."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 164,
@@ -1005,7 +1005,7 @@
       "Ставити на будь-якій відстані від краю проїзної частини.",
       "Так, щоб не перешкоджати лише транспортним засобам."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 165,
@@ -1024,7 +1024,7 @@
       "Відповіді 1, 2 і 3.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 165,
@@ -1040,7 +1040,7 @@
       "Біля правого краю проїзної частини чи на узбіччі.",
       "Тільки на узбіччі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 165,
@@ -1059,7 +1059,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 165,
@@ -1076,7 +1076,7 @@
       "Тільки мотоциклам.",
       "Легковим автомобілям та мотоциклам."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 165,
@@ -1093,7 +1093,7 @@
       "Ближче 10 м.",
       "Ближче 15 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 165,
@@ -1109,7 +1109,7 @@
       "Дозволена.",
       "Заборонена."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 165,
@@ -1128,7 +1128,7 @@
       "Відповіді 1, 2 і 3.",
       "Відповіді 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 166,
@@ -1145,7 +1145,7 @@
       "Тільки встановити знак аварійної зупинки або миготливий червоний ліхтар.",
       "Виконати дію з відповіді 1 або 2, а в установлених Правилами дорожнього руху випадках - й обидва дії одночасно."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 166,
@@ -1163,7 +1163,7 @@
       "Виконати стоянку тільки на майданчиках для стоянки або за межами дороги.",
       "Виконати стоянку на узбіччі, включивши тільки стоянкові ліхтарі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 166,
@@ -1182,7 +1182,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 166,
@@ -1201,7 +1201,7 @@
       "Відповіді 1, 2 і 3.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 166,
@@ -1219,7 +1219,7 @@
       "У тому, що це не створює перешкод іншим учасникам дорожнього руху.",
       "Відповіді 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 166,
@@ -1236,7 +1236,7 @@
       "На відстані не ближче 100 м від переїзду.",
       "У всіх перерахованих випадках."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 168,
@@ -1253,7 +1253,7 @@
       "Обов'язково скористатися противідкатними упорами.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 168,
@@ -1272,7 +1272,7 @@
       "Відповіді 1, 2 і 3.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 168,
@@ -1289,7 +1289,7 @@
       "Біля тротуарів або інших місць із пішохідним рухом лише передньою частиною, а на підйомах – тільки задньою частиною.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 168,
@@ -1307,7 +1307,7 @@
       "На відстані не менше 20 м з обох боків від переходу.",
       "На відстані не менше 30 м з обох боків від переходу."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 168,
@@ -1323,7 +1323,7 @@
       "При відсутності тротуарів або інших місць із пішохідним рухом.",
       "Якщо це не буде перешкоджати руху інших транспортних засобів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 168,
@@ -1340,7 +1340,7 @@
       "Заборонено ставити всі транспортні засоби.",
       "Дозволено ставити тільки велосипеди, мопеди і мотоцикли без бокового причепа."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 168,
@@ -1359,7 +1359,7 @@
       "Відповіді 1 і 3.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 169,
@@ -1376,7 +1376,7 @@
       "Заборонені.",
       "Дозволені для посадки або висадки людей."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 169,
@@ -1395,7 +1395,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 169,
@@ -1411,7 +1411,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 169,
@@ -1430,7 +1430,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 169,
@@ -1449,7 +1449,7 @@
       "Відповіді 1 і 2.",
       "Відповіді 1, 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 170,
@@ -1466,7 +1466,7 @@
       "Не ближче 15 м.",
       "Не ближче 20 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 170,
@@ -1483,7 +1483,7 @@
       "Дозволено на час до 20 хвилин.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 170,
@@ -1502,7 +1502,7 @@
       "Більше 100 м від залізничного переїзду.",
       "Відповіді 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 170,
@@ -1521,7 +1521,7 @@
       "Відповіді 1, 2 і 3.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 170,
@@ -1539,7 +1539,7 @@
       "Не менше 2 м.",
       "Не менше 3 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 170,
@@ -1558,7 +1558,7 @@
       "Відповіді 1, 2 і 3.",
       "Відповіді 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 171,
@@ -1574,7 +1574,7 @@
       "Дозволена.",
       "Заборонена."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 171,
@@ -1590,7 +1590,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 171,
@@ -1607,7 +1607,7 @@
       "Тільки водій жовтого автомобіля.",
       "Водій білого автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 171,
@@ -1623,7 +1623,7 @@
       "Так.",
       "Ні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 172,
@@ -1639,7 +1639,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 172,
@@ -1655,7 +1655,7 @@
       "Так.",
       "Ні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 172,
@@ -1672,7 +1672,7 @@
       "Дозволена, за умови, що є 2 метри для руху пішоходів.",
       "Дозволена, за умови, що поруч немає інших місць для паркування."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 173,
@@ -1688,7 +1688,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 173,
