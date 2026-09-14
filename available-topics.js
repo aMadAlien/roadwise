@@ -15,6 +15,7 @@ export const AVAILABLE_TOPICS = [
   "12-roztashuvannya-transportnykh-zasobiv-na-dorozi",
   "13-shvydkist-rukhu",
   "14-dystantsiya-interval-zustrichnyy-roz-yizd",
+  "15-obhin",
 
   "17-1-proyizd-perekhrest-rehulovani-perekhrestya",
 

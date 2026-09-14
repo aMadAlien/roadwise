@@ -1,7 +1,7 @@
 import fs from 'fs';
 
-const jsonPath = 'questions.by-topic/35-dorozhni-znaky.json';
-const imgDir = 'images/33';
+const jsonPath = 'questions.by-topic/15-obhin.json';
+const imgDir = 'images/15';
 
 const files = fs.readdirSync(imgDir);
 const map = {};
@@ -28,7 +28,7 @@ for (const item of data) {
     const num = item.source && item.source.number;
     const files = map[num];
     if (files && files.length > 0) {
-      item.image = `/images/33/${files[0]}`;
+      item.image = `/${imgDir}/${files[0]}`;
       filled++;
     } else {
       missing.push(num);
