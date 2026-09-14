@@ -33,7 +33,7 @@ export const AVAILABLE_TOPICS = [
   "31-mizhnarodnyy-rukh",
   "32-nomerni-rozpiznavalni-znaky-napysy-i-poznachennya",
   "33-tekhnichnyy-stan-transportnykh-zasobiv-ta-yikh-obladnannya",
-  "34-okremi-pytannya-dorozhnoho-rukhu-shcho-potrebuyut-uzhodzhennya",
+  // "34-okremi-pytannya-dorozhnoho-rukhu-shcho-potrebuyut-uzhodzhennya",
   "35-dorozhni-znaky",
   "36-dorozhnya-rozmitka",
 ];

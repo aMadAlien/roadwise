@@ -143,6 +143,9 @@ function updateNavBadge() {
   const badge = $("#saved-nav-count");
   badge.textContent = state.savedQuestions.length;
   badge.classList.toggle("hidden", !state.savedQuestions.length);
+  const errorsBadge = $("#errors-nav-count");
+  errorsBadge.textContent = state.errors.length;
+  errorsBadge.classList.toggle("hidden", !state.errors.length);
 }
 
 function renderSavedView() {
@@ -158,6 +161,18 @@ function renderSavedView() {
     item.querySelector(".saved-item-body").classList.toggle("hidden");
   }));
   list.querySelectorAll("[data-remove-id]").forEach((button) => button.addEventListener("click", (event) => { event.stopPropagation(); removeSavedQuestion(button.dataset.removeId); }));
+}
+
+async function renderErrorsView() {
+  const list = $("#errors-list");
+  const hasErrors = state.errors.length > 0;
+  $("#errors-count").textContent = `${state.errors.length} питань`;
+  $("#errors-empty-state").classList.toggle("hidden", hasErrors);
+  $("#errors-actions").classList.toggle("hidden", !hasErrors);
+  if (!hasErrors) { list.innerHTML = ""; return; }
+  const questions = await loadQuestionsForTopics(availableTopicCatalog());
+  const errorQuestions = state.errors.map((id) => questions.find((question) => question.id === id)).filter(Boolean);
+  list.innerHTML = errorQuestions.map((question) => `<div class="error-item"><div class="error-item-topic">${question.topic} · ${question.id}</div><strong>${question.question}</strong>${question.image ? `<img src="${question.image}" alt="Ілюстрація до питання ${question.id}" loading="lazy" />` : ""}<ul>${question.answers.map((answer, index) => `<li class="${index === question.correctAnswer ? "is-correct" : ""}">${answer}</li>`).join("")}</ul></div>`).join("");
 }
 
 function markTopicStarted(topic) {
@@ -209,6 +224,7 @@ function showView(viewName) {
   if (viewName === "home" && state.topicCatalog.length) renderHome();
   if (viewName === "results") renderResultsView();
   if (viewName === "saved") renderSavedView();
+  if (viewName === "errors") renderErrorsView().catch((error) => { reportClientError(error); showAppError("Не вдалося завантажити список помилок."); });
 }
 
 function formatTimerDuration(ms) {
@@ -493,6 +509,8 @@ function finishTest() {
   const answers = state.currentTest.map((question) => question.userAnswer);
   const correct = answers.filter((answer, index) => answer === state.currentTest[index].correctAnswer).length;
   const wrongQuestions = state.currentTest.filter((question) => question.userAnswer !== question.correctAnswer);
+  const correctQuestionIds = new Set(state.currentTest.filter((question) => question.userAnswer === question.correctAnswer).map((question) => question.id));
+  state.errors = state.errors.filter((id) => !correctQuestionIds.has(id));
   wrongQuestions.forEach((question) => { if (!state.errors.includes(question.id)) state.errors.push(question.id); });
   const percent = Math.round((correct / state.currentTest.length) * 100);
   const passed = wrongQuestions.length < EXAM_FAIL_MISTAKES;
@@ -502,6 +520,7 @@ function finishTest() {
   trackAnalyticsEvent("test_completed", { mode: state.mode, topic: state.topic || "all", total: state.currentTest.length, correct });
   stopExamTimer();
   saveProgress();
+  updateNavBadge();
   renderHome();
   showView("results");
 }
