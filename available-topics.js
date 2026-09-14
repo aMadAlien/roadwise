@@ -16,8 +16,7 @@ export const AVAILABLE_TOPICS = [
   "13-shvydkist-rukhu",
   "14-dystantsiya-interval-zustrichnyy-roz-yizd",
 
-  // додати фото в тему 17-1
-  // "17-1-proyizd-perekhrest-rehulovani-perekhrestya",
+  "17-1-proyizd-perekhrest-rehulovani-perekhrestya",
 
   "19-perevahy-marshrutnykh-transportnykh-zasobiv",
   "20-proyizd-pishokhidnykh-perekhodiv-i-zupynok-transportnykh-zasobiv",
@@ -27,8 +26,13 @@ export const AVAILABLE_TOPICS = [
   "25-buksyruvannya-ta-ekspluatatsiya-transportnykh-sostaviv",
   "26-navchalna-yizda",
   "27-rukh-transportnykh-zasobiv-u-kolonakh",
-
+  "28-rukh-u-zhytloviy-ta-pishokhidniy-zoni",
   "29-rukh-po-avtomahistralyakh",
   "30-rukh-po-hirskykh-dorohakh-i-na-krutykh-spuskakh",
   "31-mizhnarodnyy-rukh",
+  "32-nomerni-rozpiznavalni-znaky-napysy-i-poznachennya",
+  "33-tekhnichnyy-stan-transportnykh-zasobiv-ta-yikh-obladnannya",
+  "34-okremi-pytannya-dorozhnoho-rukhu-shcho-potrebuyut-uzhodzhennya",
+  "35-dorozhni-znaky",
+  "36-dorozhnya-rozmitka",
 ];
