@@ -25,8 +25,6 @@ const mimeTypes = { ".css": "text/css; charset=utf-8", ".html": "text/html; char
 let analytics = loadAnalytics();
 let analyticsWrite = Promise.resolve();
 let lastCriticalAlert = new Map();
-let topicIndexCache = null;
-const topicFileCache = new Map();
 const reportRateLimit = new Map();
 const telegramRateLimit = new Map();
 const analyticsRateLimit = new Map();
@@ -132,7 +130,13 @@ function corsHeaders(request) {
 }
 
 function sendJson(response, status, payload) {
-  response.writeHead(status, { "Content-Type": "application/json; charset=utf-8", ...response.corsHeaders });
+  response.writeHead(status, {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store, no-cache, must-revalidate",
+    Pragma: "no-cache",
+    Expires: "0",
+    ...response.corsHeaders
+  });
   response.end(JSON.stringify(payload));
 }
 
@@ -218,17 +222,15 @@ function requestIp(request) {
 }
 
 function loadTopicIndex() {
-  if (!topicIndexCache) {
-    topicIndexCache = JSON.parse(fs.readFileSync(path.join(questionsDir, "index.json"), "utf8"));
-  }
-  return topicIndexCache;
+  const indexFile = fs.existsSync(path.join(questionsDir, "index.json"))
+    ? "index.json"
+    : "index.json";
+  return JSON.parse(fs.readFileSync(path.join(questionsDir, indexFile), "utf8"));
 }
 
 function loadTopicFile(file) {
-  if (!topicFileCache.has(file)) {
-    topicFileCache.set(file, JSON.parse(fs.readFileSync(path.join(questionsDir, file), "utf8")));
-  }
-  return topicFileCache.get(file);
+  const filePath = path.join(questionsDir, file);
+  return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
 function shuffleArray(items) {
@@ -480,11 +482,22 @@ function serveStatic(request, response) {
     response.writeHead(400); response.end("Bad request"); return;
   }
   const relativePath = requestedPath === "/" ? "index.html" : requestedPath.replace(/^\//, "");
-  const filePath = path.resolve(root, relativePath);
+  let filePath = path.resolve(root, relativePath);
+  if (
+    relativePath === "questions.by-topic/index.json" &&
+    !fs.existsSync(filePath)
+  ) {
+    filePath = path.join(questionsDir, "index.json");
+  }
   if (!filePath.startsWith(root) || !fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
     response.writeHead(404); response.end("Not found"); return;
   }
-  response.writeHead(200, { "Content-Type": mimeTypes[path.extname(filePath)] || "application/octet-stream" });
+  response.writeHead(200, {
+    "Content-Type": mimeTypes[path.extname(filePath)] || "application/octet-stream",
+    "Cache-Control": "no-store, no-cache, must-revalidate",
+    Pragma: "no-cache",
+    Expires: "0"
+  });
   const stream = fs.createReadStream(filePath);
   stream.on("error", (error) => {
     reportCriticalError(error, `static-file:${relativePath}`);

@@ -3,6 +3,7 @@ import { AVAILABLE_TOPICS } from "./available-topics.js";
 const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null, timerInterval: null, timerStartedAt: null, savedQuestions: JSON.parse(localStorage.getItem("roadwise-saved") || "[]") };
 const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
+const dataRequestVersion = Date.now().toString(36);
 let lastClientErrorAt = 0;
 
 function showAppError(message, retry = null) {
@@ -71,7 +72,7 @@ trackAnalyticsEvent("page_view", { mode: "none", topic: "all", total: 0 });
 
 async function loadQuestions() {
   clearAppError();
-  const indexResponse = await fetch("questions.by-topic/index.json");
+  const indexResponse = await fetch(`questions.by-topic/index.json?v=${dataRequestVersion}`, { cache: "no-store" });
   if (!indexResponse.ok) throw new Error(`Не вдалося завантажити індекс тем: ${indexResponse.status}`);
 
   state.topicCatalog = await indexResponse.json();
@@ -88,7 +89,7 @@ function topicEntry(topic) { return state.topicCatalog.find((item) => item.topic
 
 async function loadTopicQuestions(topicEntry) {
   if (state.topicCache.has(topicEntry.file)) return state.topicCache.get(topicEntry.file);
-  const response = await fetch(`questions.by-topic/${encodeURIComponent(topicEntry.file)}`);
+  const response = await fetch(`questions.by-topic/${encodeURIComponent(topicEntry.file)}?v=${dataRequestVersion}`, { cache: "no-store" });
   if (!response.ok) throw new Error(`Не вдалося завантажити файл теми: ${response.status}`);
   const questions = await response.json();
   state.topicCache.set(topicEntry.file, questions);
@@ -101,7 +102,7 @@ async function loadQuestionsForTopics(topicEntries) {
 }
 
 async function loadRandomQuestions(count) {
-  const response = await fetch(`api/questions/random?count=${count}`);
+  const response = await fetch(`api/questions/random?count=${count}&v=${dataRequestVersion}`, { cache: "no-store" });
   if (!response.ok) throw new Error(`Не вдалося завантажити питання: ${response.status}`);
   const data = await response.json();
   return Array.isArray(data.questions) ? data.questions : [];
