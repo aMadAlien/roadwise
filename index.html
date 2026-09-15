@@ -242,6 +242,24 @@
         <button class="next-button" type="button" id="exam-failed-continue">Продовжити тест <span>→</span></button>
       </div>
     </div>
+    <div class="rating-modal hidden" id="rating-modal" role="dialog" aria-modal="true" aria-labelledby="rating-title">
+      <div class="rating-dialog">
+        <button class="rating-close" type="button" id="rating-close" aria-label="Закрити">×</button>
+        <!-- <span class="rating-spark" aria-hidden="true">✦</span> -->
+        <p class="eyebrow">Roadwise розвивається</p>
+        <h2 id="rating-title">Як тобі тут?</h2>
+        <p>Ми наповнюємо базу, розширюємо функціонал і швидко виправляємо помилки. Твоя оцінка допоможе зрозуміти, чи рухаємось у правильному напрямку.</p>
+        <div class="rating-stars" role="radiogroup" aria-label="Оцінка від 1 до 5">
+          <button type="button" class="rating-star" data-rating="1" role="radio" aria-checked="false" aria-label="1 з 5">★</button>
+          <button type="button" class="rating-star" data-rating="2" role="radio" aria-checked="false" aria-label="2 з 5">★</button>
+          <button type="button" class="rating-star" data-rating="3" role="radio" aria-checked="false" aria-label="3 з 5">★</button>
+          <button type="button" class="rating-star" data-rating="4" role="radio" aria-checked="false" aria-label="4 з 5">★</button>
+          <button type="button" class="rating-star" data-rating="5" role="radio" aria-checked="false" aria-label="5 з 5">★</button>
+        </div>
+        <p class="rating-hint" id="rating-hint">Обери оцінку від 1 до 5</p>
+        <button type="button" class="rating-confirm" id="rating-confirm" disabled>Підтвердити</button>
+      </div>
+    </div>
     <script type="module" src="app.js?v=20260913-1"></script>
   </body>
 </html>

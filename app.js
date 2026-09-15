@@ -1,6 +1,9 @@
 import { AVAILABLE_TOPICS } from "./available-topics.js";
 
 const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null, timerInterval: null, timerStartedAt: null, savedQuestions: JSON.parse(localStorage.getItem("roadwise-saved") || "[]") };
+const isReturningVisitor = localStorage.getItem("roadwise-visited") === "1";
+localStorage.setItem("roadwise-visited", "1");
+let pendingRating = null;
 const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
 const dataRequestVersion = Date.now().toString(36);
@@ -215,6 +218,39 @@ function renderHome() {
   $("#mistakes-description").textContent = state.errors.length ? `${state.errors.length} питань для повторення` : "Поки що помилок немає";
   $("#streak-count").textContent = calculateStreak();
   topicList.innerHTML = topics().map((topic) => `<div class="topic-row"><span class="topic-bullet"></span><span class="topic-name">${topic}</span><span class="topic-questions">${counts[topic]} питань</span></div>`).join("");
+}
+
+function showRatingPrompt() {
+  if (!isReturningVisitor || localStorage.getItem("roadwise-rating")) return;
+  window.setTimeout(() => $("#rating-modal").classList.remove("hidden"), 650);
+}
+
+function closeRatingPrompt() { $("#rating-modal").classList.add("hidden"); }
+
+function updateRatingStars(rating) {
+  document.querySelectorAll(".rating-star").forEach((star) => {
+    const starRating = Number(star.dataset.rating);
+    star.classList.toggle("is-selected", starRating <= rating);
+    star.setAttribute("aria-checked", starRating === rating ? "true" : "false");
+  });
+}
+
+function setRating(rating) {
+  pendingRating = rating;
+  updateRatingStars(rating);
+  $("#rating-confirm").disabled = false;
+  $("#rating-hint").textContent = `Обрано: ${rating} з 5`;
+  $("#rating-hint").classList.remove("is-success");
+}
+
+function confirmRating() {
+  if (!pendingRating) return;
+  localStorage.setItem("roadwise-rating", String(pendingRating));
+  trackAnalyticsEvent("site_rating", { rating: pendingRating });
+  $("#rating-hint").textContent = "Дякуємо за оцінку!";
+  $("#rating-hint").classList.add("is-success");
+  $("#rating-confirm").disabled = true;
+  window.setTimeout(closeRatingPrompt, 700);
 }
 
 function showView(viewName) {
@@ -587,10 +623,18 @@ function init() {
     else loadQuestions().catch(handleInitialLoadError);
   });
   $("#report-modal").addEventListener("click", (event) => { if (event.target.id === "report-modal") closeReportModal(); });
+  $("#rating-close").addEventListener("click", closeRatingPrompt);
+  $("#rating-modal").addEventListener("click", (event) => { if (event.target.id === "rating-modal") closeRatingPrompt(); });
+  $("#rating-confirm").addEventListener("click", confirmRating);
+  document.querySelectorAll(".rating-star").forEach((star) => {
+    star.addEventListener("mouseenter", () => updateRatingStars(Number(star.dataset.rating)));
+    star.addEventListener("mouseleave", () => updateRatingStars(pendingRating || 0));
+    star.addEventListener("click", () => setRating(Number(star.dataset.rating)));
+  });
   document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeReportModal(); });
   window.addEventListener("error", (event) => reportClientError(event.error || new Error(event.message)));
   window.addEventListener("unhandledrejection", (event) => reportClientError(event.reason || new Error("Unhandled promise rejection")));
-  loadQuestions().catch(handleInitialLoadError);
+  loadQuestions().then(showRatingPrompt).catch(handleInitialLoadError);
 }
 
 function handleInitialLoadError(error) {

@@ -39,11 +39,13 @@ function loadAnalytics() {
       totalTestStarts: saved.totalTestStarts || 0,
       totalTestsCompleted: saved.totalTestsCompleted || 0,
       totalQuestionsAnswered: saved.totalQuestionsAnswered || 0,
+      totalRatings: saved.totalRatings || 0,
+      ratings: saved.ratings || { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
       daily: saved.daily || {},
       visitors: saved.visitors || {}
     };
   } catch {
-    return { totalPageViews: 0, totalUniqueVisitors: 0, totalReturningVisitors: 0, totalTestStarts: 0, totalTestsCompleted: 0, totalQuestionsAnswered: 0, daily: {}, visitors: {} };
+    return { totalPageViews: 0, totalUniqueVisitors: 0, totalReturningVisitors: 0, totalTestStarts: 0, totalTestsCompleted: 0, totalQuestionsAnswered: 0, totalRatings: 0, ratings: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, daily: {}, visitors: {} };
   }
 }
 
@@ -117,6 +119,8 @@ function publicAnalytics() {
     totalTestStarts: analytics.totalTestStarts,
     totalTestsCompleted: analytics.totalTestsCompleted,
     totalQuestionsAnswered: analytics.totalQuestionsAnswered,
+    totalRatings: analytics.totalRatings,
+    ratings: analytics.ratings,
     completionRate: analytics.totalTestStarts ? Math.round((analytics.totalTestsCompleted / analytics.totalTestStarts) * 100) : 0,
     daily
   };
@@ -152,14 +156,48 @@ function allowAnalyticsEvent(request, response) {
 
 function analyticsEventPayload(payload) {
   if (!payload || typeof payload !== "object") return null;
-  const allowedEvents = new Set(["page_view", "test_started", "test_completed"]);
+  const allowedEvents = new Set(["page_view", "test_started", "test_completed", "site_rating"]);
   const event = typeof payload.event === "string" ? payload.event : "";
   if (!allowedEvents.has(event)) return null;
   const mode = typeof payload.mode === "string" ? payload.mode.slice(0, 40) : "unknown";
   const topic = typeof payload.topic === "string" ? payload.topic.slice(0, 200) : "all";
   const total = Number.isInteger(payload.total) ? Math.max(0, Math.min(payload.total, 1000)) : 0;
   const correct = Number.isInteger(payload.correct) ? Math.max(0, Math.min(payload.correct, total)) : 0;
-  return { event, mode, topic, total, correct };
+  const rating = Number.isInteger(payload.rating) && payload.rating >= 1 && payload.rating <= 5 ? payload.rating : null;
+  if (event === "site_rating" && rating === null) return null;
+  return { event, mode, topic, total, correct, rating };
+}
+
+function ratingText(payload) {
+  return [
+    "⭐ Нова оцінка Roadwise",
+    `Оцінка: ${payload.rating}/5`,
+    `Відвідувач: ${payload.visitorId}`,
+    `Час: ${new Date().toISOString()}`
+  ].join("\n\n");
+}
+
+async function sendRatingToTelegram(payload) {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    console.error("Rating notification skipped: Telegram is not configured");
+    return;
+  }
+  pruneRateLimitStore(telegramRateLimit, telegramRateLimitWindowMs);
+  const telegramLimit = consumeRateLimit(telegramRateLimit, "global", telegramRateLimitMax, telegramRateLimitWindowMs);
+  if (!telegramLimit.allowed) {
+    console.error(`Rating notification skipped: Telegram rate limit exceeded, retry in ${telegramLimit.retryAfter}s`);
+    return;
+  }
+  try {
+    const telegramResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: ratingText(payload).slice(0, 4000) })
+    });
+    if (!telegramResponse.ok) console.error("Telegram rating notification failed:", await telegramResponse.text());
+  } catch (error) {
+    console.error("Telegram rating notification request failed:", errorDetails(error));
+  }
 }
 
 async function trackAnalyticsEvent(request, response) {
@@ -178,7 +216,12 @@ async function trackAnalyticsEvent(request, response) {
     const topicKey = payload.topic || "all";
     day.modes[modeKey] = day.modes[modeKey] || { starts: 0, completed: 0 };
     day.topics[topicKey] = day.topics[topicKey] || { starts: 0, completed: 0 };
-    if (payload.event === "page_view") {
+    if (payload.event === "site_rating") {
+      analytics.totalRatings += 1;
+      analytics.ratings[payload.rating] = (analytics.ratings[payload.rating] || 0) + 1;
+      visitor.lastRating = payload.rating;
+      await sendRatingToTelegram({ rating: payload.rating, visitorId });
+    } else if (payload.event === "page_view") {
       const isReturning = visitor.visits > 0;
       day.views += 1;
       if (!day.visitors.includes(visitorId)) day.visitors.push(visitorId);
