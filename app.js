@@ -180,6 +180,7 @@ function resumeSavedTest() {
   if (!state.currentTest.length) return;
   state.examFailed = false;
   $("#test-empty-state").classList.add("hidden");
+  $("#test-result").classList.add("hidden");
   $("#test-mode-label").textContent = testModeLabel(state.mode, state.topic);
   updateBackButtonLabel("До тем");
   $(".question-nav").classList.remove("hidden");
@@ -414,6 +415,7 @@ async function startTest(mode = "random", topic = null, options = {}) {
   clearCurrentTestProgress();
   state.mode = mode; state.topic = topic; state.currentIndex = 0; state.selectedAnswer = null; state.examFailed = false;
   $("#test-empty-state").classList.add("hidden");
+  $("#test-result").classList.add("hidden");
   if (mode === "topic" && topic && !isTopicAvailable(topic)) return;
   let testSize;
   if (mode === "random") {
@@ -453,6 +455,20 @@ async function startTest(mode = "random", topic = null, options = {}) {
   trackAnalyticsEvent("test_started", { mode, topic: topic || "all", total: testSize });
   if (mode === "random") startExamTimer();
   showView("test"); renderQuestion();
+}
+
+function showTestResult() {
+  $("#test-empty-state").classList.add("hidden");
+  $("#topic-picker").classList.add("hidden");
+  $("#question-layout").classList.add("hidden");
+  $("#question-nav").classList.add("hidden");
+  $(".progress-track").classList.add("hidden");
+  $(".test-progress-label").classList.add("hidden");
+  $("#test-result").classList.remove("hidden");
+  $("#test-mode-label").textContent = "Результат тесту";
+  updateBackButtonLabel("До меню");
+  renderResults();
+  showView("test");
 }
 
 function renderTopicPicker() {
@@ -681,7 +697,7 @@ function finishTest() {
   saveProgress();
   updateNavBadge();
   renderHome();
-  showView("results");
+  showTestResult();
 }
 
 function renderResults() {
@@ -702,15 +718,10 @@ function pluralizeUk(count, one, few, many) {
 
 function renderResultsView() {
   const hasHistory = state.history.length > 0;
-  const showEmpty = !state.lastResult && !hasHistory;
+  const showEmpty = !hasHistory;
   $("#results-empty-state").classList.toggle("hidden", !showEmpty);
-  $("#results-hero").classList.toggle("hidden", showEmpty);
-  $("#results-actions").classList.toggle("hidden", showEmpty);
-  $("#mistakes-preview").classList.toggle("hidden", showEmpty);
-  if (showEmpty) { $("#result-score").classList.add("hidden"); $("#results-stats").classList.add("hidden"); return; }
-  if (state.lastResult) { $("#results-stats").classList.add("hidden"); $("#result-score").classList.remove("hidden"); $("#results-actions").classList.remove("hidden"); renderResults(); return; }
-  $("#result-score").classList.add("hidden");
-  $("#results-stats").classList.remove("hidden");
+  $("#results-stats").classList.toggle("hidden", showEmpty);
+  if (showEmpty) return;
   $("#results-actions").classList.add("hidden");
   const totalTests = state.history.length;
   const totalQuestions = state.history.reduce((sum, item) => sum + (item.total || 0), 0);

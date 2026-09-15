@@ -267,32 +267,30 @@
               </svg> Помилка в питанні?</button>
           </div>
         </div>
+        <div class="test-result hidden" id="test-result">
+          <div class="results-hero" id="results-hero">
+            <p class="eyebrow">Тест завершено</p>
+            <h1 id="results-title">Гарний старт.</h1>
+            <p id="results-subtitle">Твій результат збережено локально.</p>
+          </div>
+          <div class="result-score" id="result-score">
+            <div class="score-ring"><strong id="result-percent">0%</strong><span id="result-percent-label">результат</span></div>
+            <div class="result-breakdown" id="result-breakdown">
+              <div><span class="result-dot correct"></span><strong id="correct-count">0</strong><span>правильних</span></div>
+              <div><span class="result-dot wrong"></span><strong id="wrong-count">0</strong><span>помилок</span></div>
+              <div><span class="result-dot neutral"></span><strong id="result-total">20</strong><span>усього</span></div>
+            </div>
+          </div>
+          <div class="results-actions" id="results-actions">
+            <button class="primary-button" type="button" id="retry-button"><span></span><span>Пройти ще раз</span><span></span></button>
+            <button class="secondary-button" type="button" data-view="home"><span></span>До меню<span></span></button>
+          </div>
+          <div class="mistakes-preview" id="mistakes-preview"></div>
+        </div>
       </section>
 
       <section id="results-view" class="view">
-        <div class="results-hero" id="results-hero">
-          <p class="eyebrow">Тест завершено</p>
-          <h1 id="results-title">Гарний старт.</h1>
-          <p id="results-subtitle">Твій результат збережено локально.</p>
-        </div>
-        <div class="result-score" id="result-score">
-          <div class="score-ring"><strong id="result-percent">0%</strong><span
-              id="result-percent-label">результат</span></div>
-          <div class="result-breakdown" id="result-breakdown">
-            <div><span class="result-dot correct"></span><strong id="correct-count">0</strong><span>правильних</span>
-            </div>
-            <div><span class="result-dot wrong"></span><strong id="wrong-count">0</strong><span>помилок</span></div>
-            <div><span class="result-dot neutral"></span><strong id="result-total">20</strong><span>усього</span></div>
-          </div>
-        </div>
-        <div class="results-actions" id="results-actions"><button class="primary-button" type="button"
-            id="retry-button"><span></span><span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                viewBox="0 0 24 24">
-                <title>redo</title>
-                <path fill="currentColor"
-                  d="m13.146 11.05l-.174-1.992l2.374-.208a5 5 0 1 0 .82 6.173l2.002.5a7 7 0 1 1-1.315-7.996l-.245-2.803L18.6 4.55l.523 5.977z" />
-              </svg> Пройти ще раз</span><span></span></button><button class="secondary-button" type="button"
-            data-view="home"><span></span>До меню<span></span></button></div>
+        <div class="section-heading"><div><p class="eyebrow">Аналітика</p><h2>Твоя статистика</h2></div></div>
         <div class="results-stats-list hidden" id="results-stats">
           <div><span>Всього тестів</span><strong id="stat-total-tests">0</strong></div>
           <div><span>Всього питань</span><strong id="stat-total-questions">0</strong></div>
@@ -301,7 +299,6 @@
           <div><span>Помилок</span><strong id="stat-total-errors">0</strong></div>
           <div><span>Помилки на повторенні</span><strong id="stat-errors-review">0</strong></div>
         </div>
-        <div class="mistakes-preview" id="mistakes-preview"></div>
         <div class="empty-state hidden" id="results-empty-state">
           <p class="eyebrow">Ще немає завершених тестів</p>
           <h2>Пройди перший тест, щоб побачити статистику</h2>
