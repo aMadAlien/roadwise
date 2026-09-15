@@ -287,10 +287,11 @@ function markTopicStarted(topic) {
   saveProgress();
 }
 
-function markTopicCompleted(topic, mistakes) {
+function markTopicCompleted(topic, mistakes, percent) {
   const id = topicId(topic);
   if (!id) return;
-  state.topicProgress[id] = { status: "completed", mistakes, lastOpenedAt: new Date().toISOString() };
+  const completedAt = new Date().toISOString();
+  state.topicProgress[id] = { status: "completed", mistakes, percent, completedAt, lastOpenedAt: completedAt };
   saveProgress();
 }
 
@@ -481,7 +482,8 @@ function renderTopicPicker() {
     const isPerfect = progress === "completed" && !topicProgress.mistakes;
     const progressClass = progress === "completed" ? (isPerfect ? "is-completed-perfect" : "is-completed") : progress === "started" ? "is-started" : "";
     const isLastOpened = available && topic === state.lastOpenedTopic;
-    const progressBadge = progress === "completed" ? (isPerfect ? '<span class="topic-progress-badge perfect">Відмінно</span>' : `<span class="topic-progress-badge completed">Завершено · ${topicProgress.mistakes} помилок</span>`) : progress === "started" ? '<span class="topic-progress-badge started">Почато</span>' : "";
+    const completedPercent = Number.isFinite(topicProgress?.percent) ? ` · ${topicProgress.percent}%` : "";
+    const progressBadge = progress === "completed" ? `<span class="topic-progress-badge ${isPerfect ? "perfect" : "completed"}">${isPerfect ? "Відмінно" : `Завершено · ${topicProgress.mistakes} помилок${completedPercent}`}</span>` : progress === "started" ? '<span class="topic-progress-badge started">Почато</span>' : "";
     return `<button type="button" class="${topic === state.topic ? "is-selected" : ""} ${available ? "" : "is-unavailable"} ${progressClass} ${isLastOpened ? "is-last-opened" : ""}" data-topic="${topic}" ${available ? "" : "disabled"}><span class="topic-picker-name">${topic}${developmentNote}${progressBadge}</span><span class="locked-dev" style="flex-shrink: 0;">${topicMeta}</span></button>`;
   }).join("")}`;
   $("#topic-picker").querySelectorAll("button:not(:disabled)").forEach((button) => button.addEventListener("click", () => requestTestStart("topic", button.dataset.topic)));
@@ -585,7 +587,11 @@ function renderQuestion() {
   };
 }
 
-const EXAM_FAIL_MISTAKES = 3;
+const EXAM_PASS_PERCENT = 90;
+
+function isExamPassed(correct, total) {
+  return total > 0 && (correct / total) * 100 >= EXAM_PASS_PERCENT;
+}
 
 function countWrongAnswers() {
   return state.currentTest.filter((question) => question.userAnswer !== undefined && question.userAnswer !== question.correctAnswer).length;
@@ -593,7 +599,12 @@ function countWrongAnswers() {
 
 function maybeShowExamFailedNotice() {
   if (state.mode !== "random" || state.examFailed) return;
-  if (countWrongAnswers() >= EXAM_FAIL_MISTAKES) { state.examFailed = true; $("#exam-failed-modal").classList.remove("hidden"); }
+  const wrongAnswers = countWrongAnswers();
+  if (!isExamPassed(state.currentTest.length - wrongAnswers, state.currentTest.length)) {
+    state.examFailed = true;
+    $("#exam-failed-description").textContent = `Ви припустилися ${wrongAnswers} ${pluralizeUk(wrongAnswers, "помилки", "помилок", "помилок")} — це понад 10% питань, тому за правилами реального іспиту він вважається не складеним. Бажаєте продовжити тест? Усі ${state.currentTest.length} питань буде зараховано.`;
+    $("#exam-failed-modal").classList.remove("hidden");
+  }
 }
 
 function openReportModal() {
@@ -687,10 +698,10 @@ function finishTest() {
   state.errors = state.errors.filter((id) => !correctQuestionIds.has(id));
   wrongQuestions.forEach((question) => { if (!state.errors.includes(question.id)) state.errors.push(question.id); });
   const percent = Math.round((correct / state.currentTest.length) * 100);
-  const passed = wrongQuestions.length < EXAM_FAIL_MISTAKES;
+  const passed = isExamPassed(correct, state.currentTest.length);
   state.lastResult = { correct, total: state.currentTest.length, percent, wrongQuestions, passed };
   state.history.push({ percent, correct, total: state.currentTest.length, passed, date: new Date().toISOString() });
-  if (state.mode === "topic" && state.topic) markTopicCompleted(state.topic, wrongQuestions.length);
+  if (state.mode === "topic" && state.topic) markTopicCompleted(state.topic, wrongQuestions.length, percent);
   trackAnalyticsEvent("test_completed", { mode: state.mode, topic: state.topic || "all", total: state.currentTest.length, correct });
   stopExamTimer();
   clearCurrentTestProgress();
@@ -705,7 +716,7 @@ function renderResults() {
   $("#result-percent-label").textContent = "результат";
   $("#result-breakdown").classList.remove("hidden");
   $("#results-title").textContent = !result.passed ? "Іспит не складено." : result.percent >= 80 ? "Відмінний результат." : result.percent >= 50 ? "Гарний старт." : "Є над чим попрацювати.";
-  $("#results-subtitle").textContent = result.passed ? `Правильних відповідей: ${result.correct} з ${result.total}. Результат збережено локально.` : `Правильних відповідей: ${result.correct} з ${result.total}. Допущено ${result.total - result.correct} помилок (3 і більше — іспит не складено). Результат збережено локально.`;
+  $("#results-subtitle").textContent = result.passed ? `Правильних відповідей: ${result.correct} з ${result.total}. Результат збережено локально.` : `Правильних відповідей: ${result.correct} з ${result.total}. Допущено ${result.total - result.correct} помилок (для складання іспиту потрібно щонайменше ${EXAM_PASS_PERCENT}% правильних відповідей). Результат збережено локально.`;
   $("#mistakes-preview").innerHTML = result.wrongQuestions.length ? `<p class="eyebrow">Питання для повторення</p>${result.wrongQuestions.map((question) => `<div class="mistake-item"><strong>${question.question}</strong><span>${question.topic}</span></div>`).join("")}` : `<p class="eyebrow">Без помилок</p><p>Усі відповіді правильні. Так тримати.</p>`;
 }
 
