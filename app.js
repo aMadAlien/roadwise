@@ -4,6 +4,7 @@ const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new M
 const isReturningVisitor = localStorage.getItem("roadwise-visited") === "1";
 localStorage.setItem("roadwise-visited", "1");
 let pendingRating = null;
+let pendingTestStart = null;
 const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
 const dataRequestVersion = Date.now().toString(36);
@@ -116,6 +117,100 @@ function saveProgress() {
   localStorage.setItem("roadwise-topic-progress", JSON.stringify(state.topicProgress));
   localStorage.setItem("roadwise-last-topic", state.lastOpenedTopic || "");
   localStorage.setItem("roadwise-saved", JSON.stringify(state.savedQuestions));
+}
+
+function saveCurrentTestProgress() {
+  if (state.mode !== "topic" || !state.currentTest.length) return;
+  const hasAnsweredQuestion = state.currentTest.some((question) => question.userAnswer !== undefined);
+  if (!hasAnsweredQuestion) {
+    clearCurrentTestProgress();
+    return;
+  }
+  localStorage.setItem("roadwise-test-progress", JSON.stringify({
+    mode: state.mode,
+    topic: state.topic,
+    currentIndex: state.currentIndex,
+    questions: state.currentTest
+  }));
+}
+
+function clearCurrentTestProgress() {
+  localStorage.removeItem("roadwise-test-progress");
+}
+
+function loadCurrentTestProgress() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("roadwise-test-progress") || "null");
+    if (!saved || saved.mode !== "topic" || !Array.isArray(saved.questions) || !saved.questions.length) {
+      clearCurrentTestProgress();
+      return false;
+    }
+    state.currentTest = saved.questions;
+    state.mode = saved.mode || "random";
+    state.topic = saved.topic || null;
+    state.currentIndex = Math.min(Math.max(Number(saved.currentIndex) || 0, 0), state.currentTest.length - 1);
+    return true;
+  } catch {
+    clearCurrentTestProgress();
+    return false;
+  }
+}
+
+function testModeLabel(mode, topic) {
+  return mode === "mistakes" ? "Мої помилки" : mode === "saved" ? "Збережені питання" : topic ? topic : "Випадковий тест";
+}
+
+function updateRestartTestInfo() {
+  $("#restart-test-info").textContent = `Тема: ${testModeLabel(state.mode, state.topic)} · питання ${state.currentIndex + 1}/${state.currentTest.length}`;
+}
+
+function showResumeToast() {
+  if (!loadCurrentTestProgress()) return;
+  $("#resume-toast-details").textContent = `${testModeLabel(state.mode, state.topic)} · питання ${state.currentIndex + 1} з ${state.currentTest.length}`;
+  $("#resume-toast").classList.remove("hidden");
+}
+
+function resumeSavedTest() {
+  $("#resume-toast").classList.add("hidden");
+  $("#restart-modal").classList.add("hidden");
+  pendingTestStart = null;
+  if (!state.currentTest.length) return;
+  state.examFailed = false;
+  $("#test-empty-state").classList.add("hidden");
+  $("#test-mode-label").textContent = testModeLabel(state.mode, state.topic);
+  $(".question-nav").classList.remove("hidden");
+  $(".progress-track").classList.remove("hidden");
+  $(".test-progress-label").classList.remove("hidden");
+  $("#topic-picker").classList.add("hidden");
+  $("#question-layout").classList.remove("hidden");
+  if (state.mode === "random") startExamTimer();
+  showView("test");
+  renderQuestion();
+}
+
+function requestTestStart(mode, topic) {
+  if (localStorage.getItem("roadwise-test-progress") && loadCurrentTestProgress()) {
+    if (!state.currentTest.length) loadCurrentTestProgress();
+    showView("test");
+    pendingTestStart = { mode, topic };
+    updateRestartTestInfo();
+    $("#restart-modal").classList.remove("hidden");
+    return;
+  }
+  startTest(mode, topic, { skipPrompt: true });
+}
+
+function closeRestartModal() {
+  pendingTestStart = null;
+  $("#restart-modal").classList.add("hidden");
+}
+
+function startPendingTest(restart) {
+  const nextTest = pendingTestStart;
+  if (!nextTest) return;
+  closeRestartModal();
+  clearCurrentTestProgress();
+  startTest(nextTest.mode, nextTest.topic, { skipPrompt: true, restart });
 }
 
 function isQuestionSaved(id) { return state.savedQuestions.some((item) => item.id === id); }
@@ -293,11 +388,14 @@ function toggleExamTimerVisibility() {
   localStorage.setItem("roadwise-timer-hidden", nowHidden ? "1" : "0");
 }
 
-async function startTest(mode = "random", topic = null) {
-  state.mode = mode; state.topic = topic; state.currentIndex = 0; state.selectedAnswer = null; state.examFailed = false;
-  $("#test-empty-state").classList.add("hidden");
-  if (mode === "topic" && topic && !isTopicAvailable(topic)) return;
+async function startTest(mode = "random", topic = null, options = {}) {
+  if (!options.skipPrompt && localStorage.getItem("roadwise-test-progress") && loadCurrentTestProgress()) {
+    requestTestStart(mode, topic);
+    return;
+  }
   if (mode === "topic" && !topic) {
+    state.mode = mode; state.topic = null; state.currentIndex = 0; state.selectedAnswer = null; state.examFailed = false;
+    $("#test-empty-state").classList.add("hidden");
     $("#test-mode-label").textContent = "Обери тему";
     $("#question-nav").classList.add("hidden");
     $(".progress-track").classList.add("hidden");
@@ -308,7 +406,10 @@ async function startTest(mode = "random", topic = null) {
     showView("test");
     return;
   }
-  if (mode === "topic" && topic) markTopicStarted(topic);
+  clearCurrentTestProgress();
+  state.mode = mode; state.topic = topic; state.currentIndex = 0; state.selectedAnswer = null; state.examFailed = false;
+  $("#test-empty-state").classList.add("hidden");
+  if (mode === "topic" && topic && !isTopicAvailable(topic)) return;
   let testSize;
   if (mode === "random") {
     try {
@@ -361,7 +462,7 @@ function renderTopicPicker() {
     const progressBadge = progress === "completed" ? (isPerfect ? '<span class="topic-progress-badge perfect">Відмінно</span>' : `<span class="topic-progress-badge completed">Завершено · ${topicProgress.mistakes} помилок</span>`) : progress === "started" ? '<span class="topic-progress-badge started">Почато</span>' : "";
     return `<button type="button" class="${topic === state.topic ? "is-selected" : ""} ${available ? "" : "is-unavailable"} ${progressClass} ${isLastOpened ? "is-last-opened" : ""}" data-topic="${topic}" ${available ? "" : "disabled"}><span class="topic-picker-name">${topic}${developmentNote}${progressBadge}</span><span class="locked-dev" style="flex-shrink: 0;">${topicMeta}</span></button>`;
   }).join("")}`;
-  $("#topic-picker").querySelectorAll("button:not(:disabled)").forEach((button) => button.addEventListener("click", () => startTest("topic", button.dataset.topic)));
+  $("#topic-picker").querySelectorAll("button:not(:disabled)").forEach((button) => button.addEventListener("click", () => requestTestStart("topic", button.dataset.topic)));
 }
 
 function renderQuestion() {
@@ -427,7 +528,7 @@ function renderQuestion() {
   elements.showCorrectButton.classList.toggle("hidden", !answeredIncorrectly || question.showCorrectAnswer);
   elements.nextButton.disabled = question.userAnswer === undefined;
   elements.nextButton.innerHTML = state.currentIndex === state.currentTest.length - 1 ? "<span></span> Завершити тест <span>✓</span>" : `<span></span> Наступне питання <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><title>arrow-next-ltr</title><path fill="currentColor" d="M18 9.804v1.392l-5.688 5.883l-1.436-1.39L14.93 11.5H1v-2h13.923l-4.047-4.165l1.434-1.394z"/></svg>`;
-  elements.questionNav.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => { state.currentIndex = Number(button.dataset.questionIndex); renderQuestion(); }));
+  elements.questionNav.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => { state.currentIndex = Number(button.dataset.questionIndex); saveCurrentTestProgress(); renderQuestion(); }));
   elements.answersList.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => {
     if (question.userAnswer !== undefined) return;
     const answer = Number(button.dataset.answer);
@@ -436,6 +537,8 @@ function renderQuestion() {
     elements.answersList.querySelectorAll("button").forEach((item) => item.classList.remove("selected", "answer-correct", "answer-wrong"));
     button.classList.add("selected", answer === question.correctAnswer ? "answer-correct" : "answer-wrong");
     elements.nextButton.disabled = false;
+    if (state.mode === "topic" && state.topic) markTopicStarted(state.topic);
+    saveCurrentTestProgress();
     elements.showCorrectButton.classList.toggle("hidden", answer === question.correctAnswer);
     renderQuestionNav();
     maybeShowExamFailedNotice();
@@ -555,6 +658,7 @@ function finishTest() {
   if (state.mode === "topic" && state.topic) markTopicCompleted(state.topic, wrongQuestions.length);
   trackAnalyticsEvent("test_completed", { mode: state.mode, topic: state.topic || "all", total: state.currentTest.length, correct });
   stopExamTimer();
+  clearCurrentTestProgress();
   saveProgress();
   updateNavBadge();
   renderHome();
@@ -608,8 +712,8 @@ function renderResultsView() {
 }
 
 function init() {
-  document.addEventListener("click", (event) => { const modeButton = event.target.closest("[data-mode]"); if (modeButton) startTest(modeButton.dataset.mode); const viewLink = event.target.closest("[data-view]"); if (viewLink && !viewLink.dataset.mode) showView(viewLink.dataset.view); });
-  $("#next-button").addEventListener("click", () => { if (state.currentIndex === state.currentTest.length - 1) finishTest(); else { state.currentIndex += 1; renderQuestion(); } });
+  document.addEventListener("click", (event) => { const modeButton = event.target.closest("[data-mode]"); if (modeButton) { if (modeButton.dataset.mode === "topic") startTest("topic", null, { skipPrompt: true }); else requestTestStart(modeButton.dataset.mode); } const viewLink = event.target.closest("[data-view]"); if (viewLink && !viewLink.dataset.mode) showView(viewLink.dataset.view); });
+  $("#next-button").addEventListener("click", () => { if (state.currentIndex === state.currentTest.length - 1) finishTest(); else { state.currentIndex += 1; saveCurrentTestProgress(); renderQuestion(); } });
   $("#retry-button").addEventListener("click", () => startTest(state.mode, state.topic));
   $("#test-timer").addEventListener("click", toggleExamTimerVisibility);
   $("#report-button").addEventListener("click", openReportModal);
@@ -623,6 +727,13 @@ function init() {
     else loadQuestions().catch(handleInitialLoadError);
   });
   $("#report-modal").addEventListener("click", (event) => { if (event.target.id === "report-modal") closeReportModal(); });
+  $("#resume-toast-button").addEventListener("click", resumeSavedTest);
+  $("#resume-toast-close").addEventListener("click", () => $("#resume-toast").classList.add("hidden"));
+  $("#restart-close").addEventListener("click", closeRestartModal);
+  $("#restart-cancel").addEventListener("click", closeRestartModal);
+  $("#restart-new").addEventListener("click", () => startPendingTest(true));
+  $("#restart-continue").addEventListener("click", resumeSavedTest);
+  $("#restart-modal").addEventListener("click", (event) => { if (event.target.id === "restart-modal") closeRestartModal(); });
   $("#rating-close").addEventListener("click", closeRatingPrompt);
   $("#rating-modal").addEventListener("click", (event) => { if (event.target.id === "rating-modal") closeRatingPrompt(); });
   $("#rating-confirm").addEventListener("click", confirmRating);
@@ -634,7 +745,7 @@ function init() {
   document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeReportModal(); });
   window.addEventListener("error", (event) => reportClientError(event.error || new Error(event.message)));
   window.addEventListener("unhandledrejection", (event) => reportClientError(event.reason || new Error("Unhandled promise rejection")));
-  loadQuestions().then(showRatingPrompt).catch(handleInitialLoadError);
+  loadQuestions().then(() => { showRatingPrompt(); showResumeToast(); }).catch(handleInitialLoadError);
 }
 
 function handleInitialLoadError(error) {
