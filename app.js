@@ -159,6 +159,9 @@ function loadCurrentTestProgress() {
 function testModeLabel(mode, topic) {
   return mode === "mistakes" ? "Мої помилки" : mode === "saved" ? "Збережені питання" : topic ? topic : "Випадковий тест";
 }
+function updateBackButtonLabel(label) {
+  $(".back-button span").textContent = label;
+}
 
 function updateRestartTestInfo() {
   $("#restart-test-info").textContent = `Тема: ${testModeLabel(state.mode, state.topic)} · питання ${state.currentIndex + 1}/${state.currentTest.length}`;
@@ -178,6 +181,7 @@ function resumeSavedTest() {
   state.examFailed = false;
   $("#test-empty-state").classList.add("hidden");
   $("#test-mode-label").textContent = testModeLabel(state.mode, state.topic);
+  updateBackButtonLabel("До тем");
   $(".question-nav").classList.remove("hidden");
   $(".progress-track").classList.remove("hidden");
   $(".test-progress-label").classList.remove("hidden");
@@ -402,6 +406,7 @@ async function startTest(mode = "random", topic = null, options = {}) {
     $(".test-progress-label").classList.add("hidden");
     $("#topic-picker").classList.remove("hidden");
     $("#question-layout").classList.add("hidden");
+    updateBackButtonLabel("До меню");
     renderTopicPicker();
     showView("test");
     return;
@@ -439,6 +444,7 @@ async function startTest(mode = "random", topic = null, options = {}) {
   state.currentTest.forEach((question) => { delete question.userAnswer; delete question.showCorrectAnswer; });
   if (!state.currentTest.length) { showAppError("Тут поки немає питань для цього режиму."); return; }
   $("#test-mode-label").textContent = mode === "mistakes" ? "Мої помилки" : mode === "saved" ? "Збережені питання" : topic ? '' : "Випадковий тест";
+  updateBackButtonLabel(mode === "topic" && topic ? "До тем" : "До меню");
   $(".question-nav").classList.remove("hidden");
   $(".progress-track").classList.remove("hidden");
   $(".test-progress-label").classList.remove("hidden");
@@ -463,6 +469,19 @@ function renderTopicPicker() {
     return `<button type="button" class="${topic === state.topic ? "is-selected" : ""} ${available ? "" : "is-unavailable"} ${progressClass} ${isLastOpened ? "is-last-opened" : ""}" data-topic="${topic}" ${available ? "" : "disabled"}><span class="topic-picker-name">${topic}${developmentNote}${progressBadge}</span><span class="locked-dev" style="flex-shrink: 0;">${topicMeta}</span></button>`;
   }).join("")}`;
   $("#topic-picker").querySelectorAll("button:not(:disabled)").forEach((button) => button.addEventListener("click", () => requestTestStart("topic", button.dataset.topic)));
+}
+
+function returnToTopicPicker() {
+  $("#question-layout").classList.add("hidden");
+  $("#topic-picker").classList.remove("hidden");
+  $(".question-nav").classList.add("hidden");
+  $(".progress-track").classList.add("hidden");
+  $(".test-progress-label").classList.add("hidden");
+  $("#test-empty-state").classList.add("hidden");
+  $("#test-mode-label").textContent = "Обери тему";
+  renderTopicPicker();
+  showView("test");
+  updateBackButtonLabel("До меню");
 }
 
 function renderQuestion() {
@@ -712,7 +731,18 @@ function renderResultsView() {
 }
 
 function init() {
-  document.addEventListener("click", (event) => { const modeButton = event.target.closest("[data-mode]"); if (modeButton) { if (modeButton.dataset.mode === "topic") startTest("topic", null, { skipPrompt: true }); else requestTestStart(modeButton.dataset.mode); } const viewLink = event.target.closest("[data-view]"); if (viewLink && !viewLink.dataset.mode) showView(viewLink.dataset.view); });
+  document.addEventListener("click", (event) => {
+    const backButton = event.target.closest(".back-button");
+    if (backButton) {
+      if (state.mode === "topic" && state.topic && $("#topic-picker").classList.contains("hidden")) returnToTopicPicker();
+      else showView("home");
+      return;
+    }
+    const modeButton = event.target.closest("[data-mode]");
+    if (modeButton) { if (modeButton.dataset.mode === "topic") startTest("topic", null, { skipPrompt: true }); else requestTestStart(modeButton.dataset.mode); }
+    const viewLink = event.target.closest("[data-view]");
+    if (viewLink && !viewLink.dataset.mode) showView(viewLink.dataset.view);
+  });
   $("#next-button").addEventListener("click", () => { if (state.currentIndex === state.currentTest.length - 1) finishTest(); else { state.currentIndex += 1; saveCurrentTestProgress(); renderQuestion(); } });
   $("#retry-button").addEventListener("click", () => startTest(state.mode, state.topic));
   $("#test-timer").addEventListener("click", toggleExamTimerVisibility);
