@@ -281,8 +281,7 @@ async function renderErrorsView() {
 function markTopicStarted(topic) {
   const id = topicId(topic);
   if (!id) return;
-  const existing = state.topicProgress[id];
-  state.topicProgress[id] = { status: existing?.status === "completed" ? "completed" : "started", lastOpenedAt: new Date().toISOString() };
+  state.topicProgress[id] = { status: "started", lastOpenedAt: new Date().toISOString() };
   state.lastOpenedTopic = topic;
   saveProgress();
 }
