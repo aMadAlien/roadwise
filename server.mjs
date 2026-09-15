@@ -20,6 +20,10 @@ const telegramRateLimitWindowMs = Number(process.env.TELEGRAM_RATE_LIMIT_WINDOW_
 const analyticsRateLimitMax = Number(process.env.ANALYTICS_RATE_LIMIT_MAX || 120);
 const analyticsRateLimitWindowMs = Number(process.env.ANALYTICS_RATE_LIMIT_WINDOW_MS || 60 * 1000);
 const visitorCookieName = "roadwise_visitor";
+const excludedAnalyticsVisitors = new Set([
+  "b23667de6c213192205a3b9f3f1fdf3f",
+  "530821532936155f5aabe36598f3f105"
+]);
 const mimeTypes = { ".css": "text/css; charset=utf-8", ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".mjs": "text/javascript; charset=utf-8", ".json": "application/json; charset=utf-8", ".txt": "text/plain; charset=utf-8", ".xml": "application/xml; charset=utf-8", ".jpg": "image/jpeg", ".png": "image/png" };
 
 let analytics = loadAnalytics();
@@ -80,6 +84,8 @@ function visitorRecord(visitorId, now) {
 
 function trackPageView(request, response) {
   const visitorId = getVisitorId(request);
+  setVisitorCookie(response, visitorId);
+  if (excludedAnalyticsVisitors.has(visitorId)) return;
   const now = new Date().toISOString();
   const day = new Date().toISOString().slice(0, 10);
   const daily = analyticsDay(day);
@@ -96,7 +102,6 @@ function trackPageView(request, response) {
   if (!isReturning) analytics.totalUniqueVisitors += 1;
   else analytics.totalReturningVisitors += 1;
   analytics.daily[day] = daily;
-  setVisitorCookie(response, visitorId);
   saveAnalytics().catch((error) => console.error("Analytics write error:", error.message));
 }
 
@@ -209,6 +214,10 @@ async function trackAnalyticsEvent(request, response) {
     }
     const visitorId = getVisitorId(request);
     setVisitorCookie(response, visitorId);
+    if (excludedAnalyticsVisitors.has(visitorId)) {
+      sendJson(response, 204, null);
+      return;
+    }
     const now = new Date().toISOString();
     const day = analyticsDay();
     const visitor = visitorRecord(visitorId, now);
@@ -379,6 +388,111 @@ function feedbackText(payload) {
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+const telegramWebhookUrl = process.env.TELEGRAM_WEBHOOK_URL;
+const telegramWebhookSecret = process.env.TELEGRAM_WEBHOOK_SECRET;
+
+function isValidTelegramWebhookSecret(request) {
+  if (!telegramWebhookSecret) return false;
+  const received = request.headers["x-telegram-bot-api-secret-token"];
+  if (typeof received !== "string" || received.length !== telegramWebhookSecret.length) return false;
+  return crypto.timingSafeEqual(Buffer.from(received), Buffer.from(telegramWebhookSecret));
+}
+
+function analyticsPeriodSummary(days) {
+  const dates = Array.from({ length: days }, (_, index) => {
+    const date = new Date();
+    date.setUTCDate(date.getUTCDate() - index);
+    return date.toISOString().slice(0, 10);
+  });
+  const visitors = new Set();
+  const summary = { views: 0, newVisitors: 0, returningVisitors: 0, testStarts: 0, testsCompleted: 0, questionsAnswered: 0 };
+  for (const date of dates) {
+    const daily = analyticsDay(date);
+    summary.views += daily.views || 0;
+    summary.newVisitors += daily.newVisitors || 0;
+    summary.returningVisitors += daily.returningVisitors || 0;
+    summary.testStarts += daily.testStarts || 0;
+    summary.testsCompleted += daily.testsCompleted || 0;
+    summary.questionsAnswered += daily.questionsAnswered || 0;
+    for (const visitorId of daily.visitors || []) visitors.add(visitorId);
+  }
+  return { ...summary, uniqueVisitors: visitors.size };
+}
+
+function formatAnalyticsSummary(title, summary) {
+  return [
+    `Статистика Roadwise: ${title}`,
+    `Відвідування: ${summary.views}`,
+    `Унікальні відвідувачі: ${summary.uniqueVisitors}`,
+    `Нові користувачі: ${summary.newVisitors}`,
+    `Повторні відвідування: ${summary.returningVisitors}`,
+    `Почато тестів: ${summary.testStarts}`,
+    `Завершено тестів: ${summary.testsCompleted}`,
+    `Відповідей у завершених тестах: ${summary.questionsAnswered}`
+  ].join("\n");
+}
+
+function telegramCommandReply(command) {
+  if (command === "/today") return formatAnalyticsSummary("сьогодні (UTC)", analyticsPeriodSummary(1));
+  if (command === "/week") return formatAnalyticsSummary("останні 7 днів (UTC)", analyticsPeriodSummary(7));
+  if (command === "/visits") {
+    return formatAnalyticsSummary("за весь час", {
+      views: analytics.totalPageViews,
+      uniqueVisitors: analytics.totalUniqueVisitors,
+      newVisitors: analytics.totalUniqueVisitors,
+      returningVisitors: analytics.totalReturningVisitors,
+      testStarts: analytics.totalTestStarts,
+      testsCompleted: analytics.totalTestsCompleted,
+      questionsAnswered: analytics.totalQuestionsAnswered
+    });
+  }
+  return "Команди статистики:\n/today - сьогодні\n/week - останні 7 днів\n/visits - за весь час";
+}
+
+async function sendTelegramMessage(chatId, text) {
+  const telegramResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: chatId, text: text.slice(0, 4000) })
+  });
+  if (!telegramResponse.ok) throw new Error(`Telegram API: ${await telegramResponse.text()}`);
+}
+
+async function handleTelegramWebhook(request, response) {
+  if (!isValidTelegramWebhookSecret(request)) {
+    response.writeHead(401);
+    response.end();
+    return;
+  }
+  try {
+    const update = JSON.parse(await readBody(request));
+    const message = update?.message;
+    const chatId = message?.chat?.id;
+    const command = message?.text?.trim().split(/\s+/, 1)[0]?.replace(/@[^\s]+$/, "").toLowerCase();
+    if (chatId !== undefined && String(chatId) === String(TELEGRAM_CHAT_ID) && command?.startsWith("/")) {
+      await sendTelegramMessage(chatId, telegramCommandReply(command));
+    }
+    sendJson(response, 200, { ok: true });
+  } catch (error) {
+    console.error("Telegram webhook error:", errorDetails(error));
+    sendJson(response, 400, { ok: false });
+  }
+}
+
+async function configureTelegramWebhook() {
+  if (!TELEGRAM_BOT_TOKEN || !telegramWebhookUrl || !telegramWebhookSecret) return;
+  try {
+    const telegramResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setWebhook`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url: telegramWebhookUrl, secret_token: telegramWebhookSecret, allowed_updates: ["message"] })
+    });
+    if (!telegramResponse.ok) throw new Error(await telegramResponse.text());
+    console.log("Telegram webhook configured");
+  } catch (error) {
+    console.error("Telegram webhook configuration failed:", errorDetails(error));
+  }
+}
 
 function errorDetails(error) {
   return error instanceof Error ? `${error.name}: ${error.message}\n${error.stack || ""}` : String(error);
@@ -577,7 +691,9 @@ const server = http.createServer((request, response) => {
     sendJson(response, 200, publicAnalytics());
     return;
   }
-  if (request.method === "POST" && requestPath === "/api/report-question") {
+  if (request.method === "POST" && requestPath === "/api/telegram/webhook") {
+    handleTelegramWebhook(request, response);
+  } else if (request.method === "POST" && requestPath === "/api/report-question") {
     if (allowReport(request, response)) reportQuestion(request, response);
   } else if (request.method === "POST" && requestPath === "/api/feedback") {
     if (allowReport(request, response)) submitFeedback(request, response);
@@ -613,4 +729,7 @@ process.on("unhandledRejection", (error) => {
   reportCriticalError(error, "unhandled-rejection");
 });
 
-server.listen(port, () => console.log(`Roadwise server: http://localhost:${port}; analytics: ${analyticsPath}`));
+server.listen(port, () => {
+  console.log(`Roadwise server: http://localhost:${port}; analytics: ${analyticsPath}`);
+  configureTelegramWebhook();
+});
