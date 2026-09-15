@@ -1,7 +1,7 @@
 import fs from 'fs';
 
-const jsonPath = 'questions.by-topic/15-obhin.json';
-const imgDir = 'images/15';
+const jsonPath = 'questions.by-topic/16-zupynka-i-stoyanka.json';
+const imgDir = 'images/16';
 
 const files = fs.readdirSync(imgDir);
 const map = {};

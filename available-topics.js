@@ -16,7 +16,7 @@ export const AVAILABLE_TOPICS = [
   "13-shvydkist-rukhu",
   "14-dystantsiya-interval-zustrichnyy-roz-yizd",
   "15-obhin",
-
+  "16-zupynka-i-stoyanka",
   "17-1-proyizd-perekhrest-rehulovani-perekhrestya",
 
   "19-perevahy-marshrutnykh-transportnykh-zasobiv",
