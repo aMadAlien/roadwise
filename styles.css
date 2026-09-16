@@ -46,3 +46,6 @@ button { cursor: pointer; }
     align-items: center;
     gap: 7px;
 }
+.topic-progress-date.is-old {
+    color: var(--red);
+}

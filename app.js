@@ -471,6 +471,16 @@ function showTestResult() {
   showView("test");
 }
 
+function topicCompletionDate(progress) {
+  if (!progress?.completedAt) return "";
+  const completedAt = new Date(progress.completedAt);
+  const age = Date.now() - completedAt.getTime();
+  if (!Number.isFinite(completedAt.getTime()) || age <= 24 * 60 * 60 * 1000) return "сьогодні";
+  const date = completedAt.toLocaleDateString("uk-UA");
+  const dateClass = age > 3 * 24 * 60 * 60 * 1000 ? " is-old" : "";
+  return `<span class="topic-progress-date${dateClass}">${date}</span>`;
+}
+
 function renderTopicPicker() {
   $("#topic-picker").innerHTML = `<p class="topic-picker-title">Питання з якої теми тренуємо?</p>${topics().map((topic) => {
     const available = isTopicAvailable(topic);
@@ -478,12 +488,13 @@ function renderTopicPicker() {
     const developmentNote = available ? "" : "<small>Ми вже працюємо над цією темою.</small>";
     const topicProgress = state.topicProgress[topicId(topic)];
     const progress = topicProgress?.status;
-    const isPerfect = progress === "completed" && !topicProgress.mistakes;
+    const completionPercent = Number(topicProgress?.percent);
+    const isPerfect = progress === "completed" && completionPercent >= 90;
     const progressClass = progress === "completed" ? (isPerfect ? "is-completed-perfect" : "is-completed") : progress === "started" ? "is-started" : "";
     const isLastOpened = available && topic === state.lastOpenedTopic;
-    const completedPercent = Number.isFinite(topicProgress?.percent) ? ` · ${topicProgress.percent}%` : "";
-    const progressBadge = progress === "completed" ? `<span class="topic-progress-badge ${isPerfect ? "perfect" : "completed"}">${isPerfect ? "Відмінно" : `Завершено · ${topicProgress.mistakes} помилок${completedPercent}`}</span>` : progress === "started" ? '<span class="topic-progress-badge started">Почато</span>' : "";
-    return `<button type="button" class="${topic === state.topic ? "is-selected" : ""} ${available ? "" : "is-unavailable"} ${progressClass} ${isLastOpened ? "is-last-opened" : ""}" data-topic="${topic}" ${available ? "" : "disabled"}><span class="topic-picker-name">${topic}${developmentNote}${progressBadge}</span><span class="locked-dev" style="flex-shrink: 0;">${topicMeta}</span></button>`;
+    const progressBadge = progress === "completed" ? `<span class="topic-progress-badge ${isPerfect ? "perfect" : "completed"}">Завершено ${topicCompletionDate(topicProgress)} ${topicProgress.percent}%</span>` : progress === "started" ? '<span class="topic-progress-badge started">Почато</span>' : "";
+    const completedTopicMeta = isPerfect ? topicMeta : progress === "completed" ? `<span><span style="color: var(--red);">${topicProgress.mistakes}</span>/${topicMeta}</span>` : topicMeta;
+    return `<button type="button" class="${topic === state.topic ? "is-selected" : ""} ${available ? "" : "is-unavailable"} ${progressClass} ${isLastOpened ? "is-last-opened" : ""}" data-topic="${topic}" ${available ? "" : "disabled"}><span class="topic-picker-name">${topic}${developmentNote}${progressBadge}</span><span class="locked-dev" style="flex-shrink: 0;">${completedTopicMeta}</span></button>`;
   }).join("")}`;
   $("#topic-picker").querySelectorAll("button:not(:disabled)").forEach((button) => button.addEventListener("click", () => requestTestStart("topic", button.dataset.topic)));
 }
