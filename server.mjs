@@ -20,6 +20,8 @@ const telegramRateLimitWindowMs = Number(process.env.TELEGRAM_RATE_LIMIT_WINDOW_
 const analyticsRateLimitMax = Number(process.env.ANALYTICS_RATE_LIMIT_MAX || 120);
 const analyticsRateLimitWindowMs = Number(process.env.ANALYTICS_RATE_LIMIT_WINDOW_MS || 60 * 1000);
 const visitorCookieName = "roadwise_visitor";
+const visitorThanksReactionCookieName = "roadwise_thanks_reacted";
+const thankedVisitorId = "abaeac5fee03cc2ef458040a296d4442";
 const excludedAnalyticsVisitors = new Set([
   "b23667de6c213192205a3b9f3f1fdf3f",
   "530821532936155f5aabe36598f3f105"
@@ -593,6 +595,37 @@ async function reportQuestion(request, response) {
   }
 }
 
+async function reportVisitorThanksReaction(request, response) {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    sendJson(response, 503, { error: "Telegram ще не налаштований на сервері" });
+    return;
+  }
+  const visitorId = getVisitorId(request);
+  if (visitorId !== thankedVisitorId) {
+    sendJson(response, 403, { error: "Недоступно" });
+    return;
+  }
+  try {
+    const payload = JSON.parse(await readBody(request));
+    const action = payload?.action === "please" ? "Будь ласка" : payload?.action === "close" ? "Закрито" : null;
+    if (!action) {
+      sendJson(response, 400, { error: "Некоректна реакція" });
+      return;
+    }
+    pruneRateLimitStore(telegramRateLimit, telegramRateLimitWindowMs);
+    const telegramLimit = consumeRateLimit(telegramRateLimit, "global", telegramRateLimitMax, telegramRateLimitWindowMs);
+    if (!telegramLimit.allowed) {
+      rejectRateLimitedRequest(response, telegramLimit.retryAfter);
+      return;
+    }
+    await sendTelegramMessage(TELEGRAM_CHAT_ID, `Реакція відвідувача на подяку: ${action}\nВідвідувач: ${visitorId}`);
+    response.setHeader("Set-Cookie", `${visitorThanksReactionCookieName}=1; Max-Age=31536000; Path=/; SameSite=Lax; HttpOnly`);
+    sendJson(response, 204, null);
+  } catch (error) {
+    sendJson(response, error.message === "Повідомлення завелике" ? 413 : 502, { error: "Не вдалося надіслати реакцію" });
+  }
+}
+
 async function submitFeedback(request, response) {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
     sendJson(response, 503, { error: "Telegram ще не налаштований на сервері" });
@@ -649,12 +682,23 @@ function serveStatic(request, response) {
   if (!filePath.startsWith(root) || !fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
     response.writeHead(404); response.end("Not found"); return;
   }
+  const visitorId = getVisitorId(request);
+  setVisitorCookie(response, visitorId);
   response.writeHead(200, {
     "Content-Type": mimeTypes[path.extname(filePath)] || "application/octet-stream",
     "Cache-Control": "no-store, no-cache, must-revalidate",
     Pragma: "no-cache",
     Expires: "0"
   });
+  if (path.basename(filePath) === "index.html") {
+    const html = fs.readFileSync(filePath, "utf8");
+    const hasThanksReaction = parseCookies(request)[visitorThanksReactionCookieName] === "1";
+    const personalizedHtml = visitorId === thankedVisitorId && !hasThanksReaction
+      ? html.replace('class="visitor-thanks hidden"', 'class="visitor-thanks"')
+      : html;
+    response.end(personalizedHtml);
+    return;
+  }
   const stream = fs.createReadStream(filePath);
   stream.on("error", (error) => {
     reportCriticalError(error, `static-file:${relativePath}`);
@@ -674,7 +718,7 @@ const server = http.createServer((request, response) => {
     sendJson(response, 400, { error: "Некоректний запит" });
     return;
   }
-  if (request.method === "OPTIONS" && (requestPath === "/api/report-question" || requestPath === "/api/feedback" || requestPath === "/api/analytics/event")) {
+  if (request.method === "OPTIONS" && (requestPath === "/api/report-question" || requestPath === "/api/feedback" || requestPath === "/api/analytics/event" || requestPath === "/api/visitor-thanks")) {
     response.writeHead(204, response.corsHeaders);
     response.end();
     return;
@@ -699,6 +743,8 @@ const server = http.createServer((request, response) => {
     if (allowReport(request, response)) submitFeedback(request, response);
   } else if (request.method === "POST" && requestPath === "/api/client-error") {
     reportClientError(request, response);
+  } else if (request.method === "POST" && requestPath === "/api/visitor-thanks") {
+    reportVisitorThanksReaction(request, response);
   } else if (request.method === "POST" && requestPath === "/api/analytics/event") {
     if (allowAnalyticsEvent(request, response)) trackAnalyticsEvent(request, response);
   } else if (request.method === "GET") {

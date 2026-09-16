@@ -72,6 +72,17 @@ function trackAnalyticsEvent(event, details = {}) {
   }).catch(() => { });
 }
 
+function reportVisitorThanksReaction(action) {
+  console.log(`Visitor thanks reaction: ${action}`);
+  
+  fetch("api/visitor-thanks", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action }),
+    keepalive: true
+  }).catch(() => { });
+}
+
 trackAnalyticsEvent("page_view", { mode: "none", topic: "all", total: 0 });
 
 async function loadQuestions() {
@@ -763,6 +774,14 @@ function renderResultsView() {
 }
 
 function init() {
+  document.querySelectorAll("[data-thanks-action]").forEach((button) => {
+    console.log(`Initializing thanks button: ${button.dataset.thanksAction}`);
+    button.addEventListener("click", () => {
+      reportVisitorThanksReaction(button.dataset.thanksAction);
+      console.log(`Visitor thanks reaction: ${button.dataset.thanksAction}`);
+      $("#visitor-thanks").classList.add("hidden");
+    });
+  });
   document.addEventListener("click", (event) => {
     const backButton = event.target.closest(".back-button");
     if (backButton) {
