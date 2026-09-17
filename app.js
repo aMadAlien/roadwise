@@ -73,8 +73,6 @@ function trackAnalyticsEvent(event, details = {}) {
 }
 
 function reportVisitorThanksReaction(action) {
-  console.log(`Visitor thanks reaction: ${action}`);
-  
   fetch("api/visitor-thanks", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -775,10 +773,8 @@ function renderResultsView() {
 
 function init() {
   document.querySelectorAll("[data-thanks-action]").forEach((button) => {
-    console.log(`Initializing thanks button: ${button.dataset.thanksAction}`);
     button.addEventListener("click", () => {
       reportVisitorThanksReaction(button.dataset.thanksAction);
-      console.log(`Visitor thanks reaction: ${button.dataset.thanksAction}`);
       $("#visitor-thanks").classList.add("hidden");
     });
   });
