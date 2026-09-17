@@ -362,6 +362,40 @@ function confirmRating() {
   window.setTimeout(closeRatingPrompt, 700);
 }
 
+async function showTargetedFeedbackPrompt() {
+  try {
+    const response = await fetch("api/targeted-feedback-prompt", { cache: "no-store" });
+    const payload = await response.json();
+    if (response.ok && payload.show) $("#targeted-feedback-modal").classList.remove("hidden");
+  } catch { }
+}
+
+function closeTargetedFeedbackPrompt() {
+  $("#targeted-feedback-modal").classList.add("hidden");
+}
+
+async function submitTargetedFeedback(event) {
+  event.preventDefault();
+  const message = $("#targeted-feedback-message").value.trim();
+  const status = $("#targeted-feedback-status");
+  const submit = $("#targeted-feedback-submit");
+  if (!message) return;
+  submit.disabled = true;
+  status.classList.remove("is-success");
+  status.textContent = "Надсилаємо...";
+  try {
+    const response = await fetch("api/targeted-feedback", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message }) });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "Не вдалося надіслати пропозицію");
+    status.textContent = "Дякуємо. Ми обов'язково це прочитаємо.";
+    status.classList.add("is-success");
+    window.setTimeout(closeTargetedFeedbackPrompt, 1100);
+  } catch (error) {
+    status.textContent = error.message;
+    submit.disabled = false;
+  }
+}
+
 function showView(viewName) {
   document.querySelectorAll(".view").forEach((view) => view.classList.toggle("is-visible", view.id === `${viewName}-view`));
   document.querySelectorAll("[data-view]").forEach((link) => link.classList.toggle("is-active", link.dataset.view === viewName));
@@ -814,6 +848,9 @@ function init() {
   $("#rating-close").addEventListener("click", closeRatingPrompt);
   $("#rating-modal").addEventListener("click", (event) => { if (event.target.id === "rating-modal") closeRatingPrompt(); });
   $("#rating-confirm").addEventListener("click", confirmRating);
+  $("#targeted-feedback-close").addEventListener("click", closeTargetedFeedbackPrompt);
+  $("#targeted-feedback-modal").addEventListener("click", (event) => { if (event.target.id === "targeted-feedback-modal") closeTargetedFeedbackPrompt(); });
+  $("#targeted-feedback-form").addEventListener("submit", submitTargetedFeedback);
   document.querySelectorAll(".rating-star").forEach((star) => {
     star.addEventListener("mouseenter", () => updateRatingStars(Number(star.dataset.rating)));
     star.addEventListener("mouseleave", () => updateRatingStars(pendingRating || 0));
@@ -822,7 +859,7 @@ function init() {
   document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeReportModal(); });
   window.addEventListener("error", (event) => reportClientError(event.error || new Error(event.message)));
   window.addEventListener("unhandledrejection", (event) => reportClientError(event.reason || new Error("Unhandled promise rejection")));
-  loadQuestions().then(() => { showRatingPrompt(); showResumeToast(); }).catch(handleInitialLoadError);
+  loadQuestions().then(() => { showRatingPrompt(); showTargetedFeedbackPrompt(); showResumeToast(); }).catch(handleInitialLoadError);
 }
 
 function handleInitialLoadError(error) {

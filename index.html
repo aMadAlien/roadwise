@@ -431,6 +431,20 @@
       <button type="button" class="rating-confirm" id="rating-confirm" disabled>Підтвердити</button>
     </div>
   </div>
+  <div class="rating-modal hidden" id="targeted-feedback-modal" role="dialog" aria-modal="true" aria-labelledby="targeted-feedback-title">
+    <div class="rating-dialog targeted-feedback-dialog">
+      <button class="rating-close" type="button" id="targeted-feedback-close" aria-label="Закрити">×</button>
+      <p class="eyebrow">Дякуємо, що ти з нами</p>
+      <h2 id="targeted-feedback-title">Твоя думка справді важлива</h2>
+      <p>Ми бачимо твою активність на Roadwise і дуже вдячні за неї. Підкажи, будь ласка, що можна зробити краще, аби сайт був ще зручнішим і кориснішим для тебе.</p>
+      <form id="targeted-feedback-form">
+        <label for="targeted-feedback-message">Твоя пропозиція</label>
+        <textarea id="targeted-feedback-message" name="message" rows="5" maxlength="2000" placeholder="Напиши так, як відчуваєш" required></textarea>
+        <button type="submit" class="rating-confirm" id="targeted-feedback-submit">Надіслати</button>
+        <p class="rating-hint" id="targeted-feedback-status" role="status"></p>
+      </form>
+    </div>
+  </div>
   <div class="resume-toast hidden" id="resume-toast" role="status">
     <div><strong>Бажаєте продовжити?</strong><span id="resume-toast-details">У тебе залишився незавершений тест.</span>
     </div>

@@ -21,9 +21,15 @@ const analyticsRateLimitMax = Number(process.env.ANALYTICS_RATE_LIMIT_MAX || 120
 const analyticsRateLimitWindowMs = Number(process.env.ANALYTICS_RATE_LIMIT_WINDOW_MS || 60 * 1000);
 const visitorCookieName = "roadwise_visitor";
 const visitorThanksReactionCookieName = "roadwise_thanks_reacted";
+const targetedFeedbackPromptCookieName = "roadwise_targeted_feedback_prompt_seen";
 const thankedVisitorId = "abaeac5fee03cc2ef458040a296d4442";
+const targetedFeedbackVisitorIds = new Set([
+  "abaeac5fee03cc2ef458040a296d4442",
+  "7d3801ed74aabe4ce7d73c6921462981",
+]);
 const excludedAnalyticsVisitors = new Set([
   "b23667de6c213192205a3b9f3f1fdf3f",
+  "b23cfece3870fdc9affba62aad11d1af",
   "530821532936155f5aabe36598f3f105"
 ]);
 const mimeTypes = { ".css": "text/css; charset=utf-8", ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".mjs": "text/javascript; charset=utf-8", ".json": "application/json; charset=utf-8", ".txt": "text/plain; charset=utf-8", ".xml": "application/xml; charset=utf-8", ".jpg": "image/jpeg", ".png": "image/png" };
@@ -388,6 +394,14 @@ function feedbackText(payload) {
   ].join("\n\n");
 }
 
+function targetedFeedbackText(payload) {
+  return [
+    "💬 Пропозиція від запрошеного користувача Roadwise",
+    `Повідомлення: ${payload.message}`,
+    `Відвідувач: ${payload.visitorId}`
+  ].join("\n\n");
+}
+
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const telegramWebhookUrl = process.env.TELEGRAM_WEBHOOK_URL;
@@ -663,6 +677,61 @@ async function submitFeedback(request, response) {
   }
 }
 
+async function getTargetedFeedbackPrompt(request, response) {
+  const visitorId = getVisitorId(request);
+  setVisitorCookie(response, visitorId);
+  const hasSeenPrompt = parseCookies(request)[targetedFeedbackPromptCookieName] === "1";
+  if (!targetedFeedbackVisitorIds.has(visitorId) || hasSeenPrompt) {
+    sendJson(response, 200, { show: false });
+    return;
+  }
+  response.setHeader("Set-Cookie", [
+    `${visitorCookieName}=${visitorId}; Max-Age=31536000; Path=/; SameSite=Lax; HttpOnly`,
+    `${targetedFeedbackPromptCookieName}=1; Max-Age=31536000; Path=/; SameSite=Lax; HttpOnly`
+  ]);
+  try {
+    if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+      pruneRateLimitStore(telegramRateLimit, telegramRateLimitWindowMs);
+      const telegramLimit = consumeRateLimit(telegramRateLimit, "global", telegramRateLimitMax, telegramRateLimitWindowMs);
+      if (telegramLimit.allowed) await sendTelegramMessage(TELEGRAM_CHAT_ID, `Користувач побачив запрошення залишити пропозицію\nВідвідувач: ${visitorId}`);
+    }
+  } catch (error) {
+    console.error("Targeted feedback prompt notification failed:", errorDetails(error));
+  }
+  sendJson(response, 200, { show: true });
+}
+
+async function submitTargetedFeedback(request, response) {
+  const visitorId = getVisitorId(request);
+  if (!targetedFeedbackVisitorIds.has(visitorId)) {
+    sendJson(response, 403, { error: "Недоступно" });
+    return;
+  }
+  try {
+    const payload = JSON.parse(await readBody(request));
+    const message = typeof payload.message === "string" ? payload.message.trim().slice(0, 2000) : "";
+    if (!message) {
+      sendJson(response, 400, { error: "Напишіть вашу пропозицію" });
+      return;
+    }
+    if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+      sendJson(response, 503, { error: "Telegram ще не налаштований на сервері" });
+      return;
+    }
+    pruneRateLimitStore(telegramRateLimit, telegramRateLimitWindowMs);
+    const telegramLimit = consumeRateLimit(telegramRateLimit, "global", telegramRateLimitMax, telegramRateLimitWindowMs);
+    if (!telegramLimit.allowed) {
+      rejectRateLimitedRequest(response, telegramLimit.retryAfter);
+      return;
+    }
+    await sendTelegramMessage(TELEGRAM_CHAT_ID, targetedFeedbackText({ message, visitorId }));
+    sendJson(response, 200, { ok: true });
+  } catch (error) {
+    const status = error.message === "Повідомлення завелике" ? 413 : error instanceof SyntaxError ? 400 : 502;
+    sendJson(response, status, { error: error.message || "Не вдалося надіслати пропозицію" });
+  }
+}
+
 function serveStatic(request, response) {
   let requestedPath;
   try {
@@ -718,13 +787,17 @@ const server = http.createServer((request, response) => {
     sendJson(response, 400, { error: "Некоректний запит" });
     return;
   }
-  if (request.method === "OPTIONS" && (requestPath === "/api/report-question" || requestPath === "/api/feedback" || requestPath === "/api/analytics/event" || requestPath === "/api/visitor-thanks")) {
+  if (request.method === "OPTIONS" && (requestPath === "/api/report-question" || requestPath === "/api/feedback" || requestPath === "/api/analytics/event" || requestPath === "/api/visitor-thanks" || requestPath === "/api/targeted-feedback")) {
     response.writeHead(204, response.corsHeaders);
     response.end();
     return;
   }
   if (request.method === "GET" && requestPath === "/api/questions/random") {
     handleRandomQuestions(request, response);
+    return;
+  }
+  if (request.method === "GET" && requestPath === "/api/targeted-feedback-prompt") {
+    getTargetedFeedbackPrompt(request, response);
     return;
   }
   if (request.method === "GET" && requestPath === "/api/analytics") {
@@ -741,6 +814,8 @@ const server = http.createServer((request, response) => {
     if (allowReport(request, response)) reportQuestion(request, response);
   } else if (request.method === "POST" && requestPath === "/api/feedback") {
     if (allowReport(request, response)) submitFeedback(request, response);
+  } else if (request.method === "POST" && requestPath === "/api/targeted-feedback") {
+    if (allowReport(request, response)) submitTargetedFeedback(request, response);
   } else if (request.method === "POST" && requestPath === "/api/client-error") {
     reportClientError(request, response);
   } else if (request.method === "POST" && requestPath === "/api/visitor-thanks") {
