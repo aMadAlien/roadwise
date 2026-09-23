@@ -516,12 +516,31 @@ function showTestResult() {
 
 function topicCompletionDate(progress) {
   if (!progress?.completedAt) return "";
+
   const completedAt = new Date(progress.completedAt);
+
+  if (!Number.isFinite(completedAt.getTime())) return "";
+
   const age = Date.now() - completedAt.getTime();
-  if (!Number.isFinite(completedAt.getTime()) || age <= 24 * 60 * 60 * 1000) return "сьогодні";
-  const date = completedAt.toLocaleDateString("uk-UA");
-  const dateClass = age > 3 * 24 * 60 * 60 * 1000 ? " is-old" : "";
-  return `<span class="topic-progress-date${dateClass}">${date ||''}</span>`;
+  const days = Math.floor(age / (24 * 60 * 60 * 1000));
+
+  if (days === 0) return "сьогодні";
+  if (days === 1) return "вчора";
+
+  const lastTwo = days % 100;
+  const last = days % 10;
+
+  let word = "днів";
+
+  if (lastTwo < 11 || lastTwo > 14) {
+    if (last === 1) word = "день";
+    else if (last >= 2 && last <= 4) word = "дні";
+  }
+
+  // return `${days} ${word} тому`;
+  const daysAgo = 3;
+  const dateClass = age > daysAgo * 24 * 60 * 60 * 1000 ? " is-old" : "";
+  return `<span class="topic-progress-date${dateClass}">${days} ${word} тому</span>`;
 }
 
 function renderTopicPicker() {
