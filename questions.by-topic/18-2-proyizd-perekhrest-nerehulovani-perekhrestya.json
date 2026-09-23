@@ -1310,7 +1310,7 @@
       "Дати дорогу велосипедистові.",
       "Не давати дорогу велосипедистові."
     ],
-    "correctAnswer": 1,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 210,
