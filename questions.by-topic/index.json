@@ -170,9 +170,39 @@
     "count": 5
   },
   {
-    "topic": "33. ДОРОЖНІ ЗНАКИ",
-    "file": "35-dorozhni-znaky.json",
-    "count": 357
+    "topic": "33.1 ПОПЕРЕДЖУВАЛЬНІ ЗНАКИ",
+    "file": "35-1-poperedzhuvalni-znaky.json",
+    "count": 83
+  },
+  {
+    "topic": "33.2 ЗНАКИ ПРІОРИТЕТУ",
+    "file": "35-2-znaky-priorytetu.json",
+    "count": 26
+  },
+  {
+    "topic": "33.3 ЗАБОРОННІ ЗНАКИ",
+    "file": "35-3-zaboronni-znaky.json",
+    "count": 94
+  },
+  {
+    "topic": "33.4 НАКАЗОВІ ЗНАКИ",
+    "file": "35-4-nakazovi-znaky.json",
+    "count": 32
+  },
+  {
+    "topic": "33.5 ІНФОРМАЦІЙНО-ВКАЗІВНІ ЗНАКИ",
+    "file": "35-5-informatsiyno-vkazivni-znaky.json",
+    "count": 88
+  },
+  {
+    "topic": "33.6 ЗНАКИ СЕРВІСУ",
+    "file": "35-6-znaky-servisu.json",
+    "count": 5
+  },
+  {
+    "topic": "33.7 ТАБЛИЧКИ ДО ДОРОЖНІХ ЗНАКІВ",
+    "file": "35-7-tablychky-do-dorozhnikh-znakiv.json",
+    "count": 30
   },
   {
     "topic": "34. ДОРОЖНЯ РОЗМІТКА",

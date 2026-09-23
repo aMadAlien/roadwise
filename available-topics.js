@@ -35,6 +35,12 @@ export const AVAILABLE_TOPICS = [
   "32-nomerni-rozpiznavalni-znaky-napysy-i-poznachennya",
   "33-tekhnichnyy-stan-transportnykh-zasobiv-ta-yikh-obladnannya",
   "34-okremi-pytannya-dorozhnoho-rukhu-shcho-potrebuyut-uzhodzhennya",
-  "35-dorozhni-znaky",
+  "35-1-poperedzhuvalni-znaky",
+  "35-2-znaky-priorytetu",
+  "35-3-zaboronni-znaky",
+  "35-4-nakazovi-znaky",
+  "35-5-informatsiyno-vkazivni-znaky",
+  "35-6-znaky-servisu",
+  "35-7-tablychky-do-dorozhnikh-znakiv",
   "36-dorozhnya-rozmitka",
 ];
