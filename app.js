@@ -324,6 +324,14 @@ function renderHome() {
   $("#tests-count").textContent = state.history.length;
   const average = state.history.length ? Math.round(state.history.reduce((sum, item) => sum + item.percent, 0) / state.history.length) : null;
   $("#average-score").textContent = average === null ? "—" : `${average}%`;
+  const todayKey = new Date().toISOString().slice(0, 10);
+  const weekStart = new Date();
+  weekStart.setUTCHours(0, 0, 0, 0);
+  weekStart.setUTCDate(weekStart.getUTCDate() - 6);
+  const weekStartKey = weekStart.toISOString().slice(0, 10);
+  const averageFor = (history) => history.length ? `${Math.round(history.reduce((sum, item) => sum + item.percent, 0) / history.length)}%` : "—";
+  $("#average-score-week").textContent = averageFor(state.history.filter((item) => item.date.slice(0, 10) >= weekStartKey));
+  $("#average-score-today").textContent = averageFor(state.history.filter((item) => item.date.slice(0, 10) === todayKey));
   $("#mistakes-description").textContent = state.errors.length ? `${state.errors.length} питань для повторення` : "Поки що помилок немає";
   $("#streak-count").textContent = calculateStreak();
   topicList.innerHTML = topics().map((topic) => `<div class="topic-row"><span class="topic-bullet"></span><span class="topic-name">${topic}</span><span class="topic-questions">${counts[topic]} питань</span></div>`).join("");

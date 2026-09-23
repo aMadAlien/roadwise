@@ -481,6 +481,45 @@ button {
     margin: auto 0 1px;
     letter-spacing: -2px;
 }
+.stat-card-average {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--white);
+}
+.stat-card-average .stat-label,
+.stat-card-average .stat-foot,
+.stat-card-average .stat-submetrics small {
+    color: #b8c8bf;
+}
+.stat-card-average > strong {
+    margin: 12px 0 14px;
+    color: var(--white);
+    font-size: 42px;
+}
+.stat-submetrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    margin-bottom: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+.stat-submetrics span {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-top: 9px;
+}
+.stat-submetrics span + span {
+    padding-left: 16px;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+.stat-submetrics b {
+    color: var(--mint);
+    font: 700 19px Arsenal, sans-serif;
+}
+.stat-submetrics small {
+    font-size: 10px;
+}
 .stat-foot {
     font-size: 11px;
 }
