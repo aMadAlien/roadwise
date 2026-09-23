@@ -772,7 +772,7 @@ function finishTest() {
   const percent = Math.round((correct / state.currentTest.length) * 100);
   const passed = isExamPassed(correct, state.currentTest.length);
   state.lastResult = { correct, total: state.currentTest.length, percent, wrongQuestions, passed };
-  state.history.push({ percent, correct, total: state.currentTest.length, passed, date: new Date().toISOString() });
+  state.history.push({ percent, correct, total: state.currentTest.length, passed, mode: state.mode, date: new Date().toISOString() });
   if (state.mode === "topic" && state.topic) markTopicCompleted(state.topic, wrongQuestions.length, percent);
   trackAnalyticsEvent("test_completed", { mode: state.mode, topic: state.topic || "all", total: state.currentTest.length, correct });
   stopExamTimer();
@@ -804,13 +804,15 @@ function renderResultsView() {
   const showEmpty = !hasHistory;
   $("#results-empty-state").classList.toggle("hidden", !showEmpty);
   $("#results-stats").classList.toggle("hidden", showEmpty);
+  $("#weekly-stats").classList.toggle("hidden", showEmpty);
   if (showEmpty) return;
   $("#results-actions").classList.add("hidden");
   const totalTests = state.history.length;
   const totalQuestions = state.history.reduce((sum, item) => sum + (item.total || 0), 0);
   const totalCorrect = state.history.reduce((sum, item) => sum + (item.correct || 0), 0);
-  const passedExams = state.history.filter((item) => item.passed !== undefined ? item.passed : item.percent >= 90).length;
-  const failedExams = totalTests - passedExams;
+  const examHistory = state.history.filter((item) => item.mode === "random" || !item.mode);
+  const passedExams = examHistory.filter((item) => item.passed !== undefined ? item.passed : item.percent >= 90).length;
+  const failedExams = examHistory.length - passedExams;
   const totalErrors = totalQuestions - totalCorrect;
   const testsWord = pluralizeUk(totalTests, "тест", "тести", "тестів");
   $("#results-title").textContent = "Твоя статистика";
@@ -821,7 +823,38 @@ function renderResultsView() {
   $("#stat-exams-passed-failed").innerHTML = `<span style="color: #449E48;">${passedExams}</span> / <span style="color: #E64444;">${failedExams}</span>`;
   $("#stat-total-errors").textContent = totalErrors;
   $("#stat-errors-review").textContent = state.errors.length;
+  renderWeeklyStats();
   $("#mistakes-preview").innerHTML = state.errors.length ? `<p class="eyebrow">Незавершені помилки</p><p>У тебе ${state.errors.length} питань для повторення.</p>` : `<p class="eyebrow">Без помилок</p><p>Немає збережених помилок для повторення.</p>`;
+}
+
+function renderWeeklyStats() {
+  const chart = $("#weekly-stats-chart");
+  const today = new Date();
+  const days = Array.from({ length: 7 }, (_, index) => {
+    const date = new Date(today);
+    date.setHours(12, 0, 0, 0);
+    date.setDate(today.getDate() - (6 - index));
+    return date;
+  });
+  const dayFormatter = new Intl.DateTimeFormat("uk-UA", { weekday: "short" });
+  const dateFormatter = new Intl.DateTimeFormat("uk-UA", { day: "numeric", month: "short" });
+  const dailyStats = days.map((date) => {
+    const key = date.toISOString().slice(0, 10);
+    const tests = state.history.filter((item) => item.date.slice(0, 10) === key);
+    const topicTests = tests.filter((item) => item.mode === "topic");
+    const exams = tests.filter((item) => item.mode === "random" || !item.mode);
+    const failed = exams.filter((item) => (item.passed !== undefined ? item.passed : item.percent >= EXAM_PASS_PERCENT) === false);
+    return { date, topic: topicTests.length, exams: exams.length, total: tests.length, failed: failed.length };
+  });
+  const maximum = Math.max(1, ...dailyStats.map((item) => item.total));
+  chart.innerHTML = dailyStats.map((item) => {
+    const label = `${dayFormatter.format(item.date)}, ${dateFormatter.format(item.date)}`;
+    return `<div class="weekly-chart-day" aria-label="${label}: ${item.topic} тестів за темами, ${item.exams} іспитів, ${item.total} загалом, ${item.failed} іспитів не складено">
+      <div class="weekly-chart-bars"><span class="weekly-bar weekly-bar-topic" style="height: ${Math.max(item.topic ? 8 : 2, item.topic / maximum * 100)}%" title="За темами: ${item.topic}"></span><span class="weekly-bar weekly-bar-exams" style="height: ${Math.max(item.exams ? 8 : 2, item.exams / maximum * 100)}%" title="Іспити: ${item.exams}"></span><span class="weekly-bar weekly-bar-total" style="height: ${Math.max(item.total ? 8 : 2, item.total / maximum * 100)}%" title="Усього: ${item.total}"></span><span class="weekly-bar weekly-bar-failed" style="height: ${Math.max(item.failed ? 8 : 2, item.failed / maximum * 100)}%" title="Не складено: ${item.failed}"></span></div>
+      <div class="weekly-chart-counts" aria-hidden="true"><span>${item.topic}</span><span>${item.exams}</span><span>${item.total}</span><span>${item.failed}</span></div>
+      <span class="weekly-chart-label">${dayFormatter.format(item.date)} ${dateFormatter.format(item.date)}</span>
+    </div>`;
+  }).join("");
 }
 
 function init() {
