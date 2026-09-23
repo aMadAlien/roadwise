@@ -1397,6 +1397,9 @@ button {
 .resume-toast.hidden {
     display: none;
 }
+.topic-limit-toast {
+    border-left: 4px solid var(--yellow);
+}
 .resume-toast div {
     display: grid;
     gap: 4px;

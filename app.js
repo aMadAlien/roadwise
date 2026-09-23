@@ -100,6 +100,20 @@ function isTopicAvailable(topic) { return AVAILABLE_TOPICS.length === 0 || AVAIL
 function availableTopicCatalog() { return state.topicCatalog.filter((topic) => isTopicAvailable(topic.topic)); }
 function topicEntry(topic) { return state.topicCatalog.find((item) => item.topic === topic); }
 
+const DAILY_TOPIC_TEST_LIMIT = 3;
+
+function getLocalDateKey(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function countTopicTestsToday(topic) {
+  const today = getLocalDateKey();
+  return state.history.filter((item) => item.mode === "topic" && item.topic === topic && getLocalDateKey(new Date(item.date)) === today).length;
+}
+
 async function loadTopicQuestions(topicEntry) {
   if (state.topicCache.has(topicEntry.file)) return state.topicCache.get(topicEntry.file);
   const response = await fetch(`questions.by-topic/${encodeURIComponent(topicEntry.file)}?v=${dataRequestVersion}`, { cache: "no-store" });
@@ -180,6 +194,11 @@ function showResumeToast() {
   if (!loadCurrentTestProgress()) return;
   $("#resume-toast-details").textContent = `${testModeLabel(state.mode, state.topic)} · питання ${state.currentIndex + 1} з ${state.currentTest.length}`;
   $("#resume-toast").classList.remove("hidden");
+}
+
+function showTopicLimitToast(topic) {
+  $("#topic-limit-toast-details").textContent = `Тему «${topic}» вже пройдено 3 рази. Спробуй її завтра, а сьогодні обери іншу.`;
+  $("#topic-limit-toast").classList.remove("hidden");
 }
 
 function resumeSavedTest() {
@@ -461,6 +480,10 @@ async function startTest(mode = "random", topic = null, options = {}) {
     updateBackButtonLabel("До меню");
     renderTopicPicker();
     showView("test");
+    return;
+  }
+  if (mode === "topic" && topic && countTopicTestsToday(topic) >= DAILY_TOPIC_TEST_LIMIT) {
+    showTopicLimitToast(topic);
     return;
   }
   clearCurrentTestProgress();
@@ -780,7 +803,7 @@ function finishTest() {
   const percent = Math.round((correct / state.currentTest.length) * 100);
   const passed = isExamPassed(correct, state.currentTest.length);
   state.lastResult = { correct, total: state.currentTest.length, percent, wrongQuestions, passed };
-  state.history.push({ percent, correct, total: state.currentTest.length, passed, mode: state.mode, date: new Date().toISOString() });
+  state.history.push({ percent, correct, total: state.currentTest.length, passed, mode: state.mode, topic: state.topic, date: new Date().toISOString() });
   if (state.mode === "topic" && state.topic) markTopicCompleted(state.topic, wrongQuestions.length, percent);
   trackAnalyticsEvent("test_completed", { mode: state.mode, topic: state.topic || "all", total: state.currentTest.length, correct });
   stopExamTimer();
@@ -900,6 +923,7 @@ function init() {
   $("#report-modal").addEventListener("click", (event) => { if (event.target.id === "report-modal") closeReportModal(); });
   $("#resume-toast-button").addEventListener("click", resumeSavedTest);
   $("#resume-toast-close").addEventListener("click", () => $("#resume-toast").classList.add("hidden"));
+  $("#topic-limit-toast-close").addEventListener("click", () => $("#topic-limit-toast").classList.add("hidden"));
   $("#restart-close").addEventListener("click", closeRestartModal);
   $("#restart-cancel").addEventListener("click", closeRestartModal);
   $("#restart-new").addEventListener("click", () => startPendingTest(true));
