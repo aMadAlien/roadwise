@@ -1,8 +1,8 @@
 import { AVAILABLE_TOPICS } from "./available-topics.js";
 
 const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), ticketCache: null, currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, ticket: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), ticketProgress: JSON.parse(localStorage.getItem("roadwise-ticket-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null, timerInterval: null, timerStartedAt: null, savedQuestions: JSON.parse(localStorage.getItem("roadwise-saved") || "[]") };
-const isReturningVisitor = localStorage.getItem("roadwise-visited") === "1";
-localStorage.setItem("roadwise-visited", "1");
+const isReturningVisitor = localStorage.getItem("roadwise_visited") === "1";
+localStorage.setItem("roadwise_visited", "1");
 let pendingRating = null;
 let pendingTestStart = null;
 const $ = (selector) => document.querySelector(selector);
@@ -434,6 +434,21 @@ async function showTargetedFeedbackPrompt() {
 
 function closeTargetedFeedbackPrompt() {
   $("#targeted-feedback-modal").classList.add("hidden");
+}
+
+function showTicketsIntroPrompt() {
+  if (isReturningVisitor || localStorage.getItem("roadwise-tickets-intro-seen")) return;
+  window.setTimeout(() => $("#tickets-intro-modal").classList.remove("hidden"), 500);
+}
+
+function closeTicketsIntroPrompt() {
+  localStorage.setItem("roadwise-tickets-intro-seen", "1");
+  $("#tickets-intro-modal").classList.add("hidden");
+}
+
+function tryTicketsFromIntro() {
+  closeTicketsIntroPrompt();
+  showView("tickets");
 }
 
 async function submitTargetedFeedback(event) {
@@ -963,16 +978,17 @@ function renderWeeklyStats() {
     const key = date.toISOString().slice(0, 10);
     const tests = state.history.filter((item) => item.date.slice(0, 10) === key);
     const topicTests = tests.filter((item) => item.mode === "topic");
+    const ticketTests = tests.filter((item) => item.mode === "ticket");
     const exams = tests.filter((item) => item.mode === "random" || !item.mode);
     const failed = exams.filter((item) => (item.passed !== undefined ? item.passed : item.percent >= EXAM_PASS_PERCENT) === false);
-    return { date, topic: topicTests.length, exams: exams.length, total: tests.length, failed: failed.length };
+    return { date, topic: topicTests.length, tickets: ticketTests.length, exams: exams.length, total: tests.length, failed: failed.length };
   });
   const maximum = Math.max(1, ...dailyStats.map((item) => item.total));
   chart.innerHTML = dailyStats.map((item) => {
     const label = `${dayFormatter.format(item.date)}, ${dateFormatter.format(item.date)}`;
-    return `<div class="weekly-chart-day" aria-label="${label}: ${item.topic} тестів за темами, ${item.exams} іспитів, ${item.total} загалом, ${item.failed} іспитів не складено">
-      <div class="weekly-chart-bars"><span class="weekly-bar weekly-bar-topic" style="height: ${Math.max(item.topic ? 8 : 2, item.topic / maximum * 100)}%" title="За темами: ${item.topic}"></span><span class="weekly-bar weekly-bar-exams" style="height: ${Math.max(item.exams ? 8 : 2, item.exams / maximum * 100)}%" title="Іспити: ${item.exams}"></span><span class="weekly-bar weekly-bar-total" style="height: ${Math.max(item.total ? 8 : 2, item.total / maximum * 100)}%" title="Усього: ${item.total}"></span><span class="weekly-bar weekly-bar-failed" style="height: ${Math.max(item.failed ? 8 : 2, item.failed / maximum * 100)}%" title="Не складено: ${item.failed}"></span></div>
-      <div class="weekly-chart-counts" aria-hidden="true"><span>${item.topic}</span><span>${item.exams}</span><span>${item.total}</span><span>${item.failed}</span></div>
+    return `<div class="weekly-chart-day" aria-label="${label}: ${item.topic} тестів за темами, ${item.tickets} білетів, ${item.exams} іспитів, ${item.total} загалом, ${item.failed} іспитів не складено">
+      <div class="weekly-chart-bars"><span class="weekly-bar weekly-bar-topic" style="height: ${Math.max(item.topic ? 8 : 2, item.topic / maximum * 100)}%" title="За темами: ${item.topic}"></span><span class="weekly-bar weekly-bar-ticket" style="height: ${Math.max(item.tickets ? 8 : 2, item.tickets / maximum * 100)}%" title="Білети: ${item.tickets}"></span><span class="weekly-bar weekly-bar-exams" style="height: ${Math.max(item.exams ? 8 : 2, item.exams / maximum * 100)}%" title="Іспити: ${item.exams}"></span><span class="weekly-bar weekly-bar-total" style="height: ${Math.max(item.total ? 8 : 2, item.total / maximum * 100)}%" title="Усього: ${item.total}"></span><span class="weekly-bar weekly-bar-failed" style="height: ${Math.max(item.failed ? 8 : 2, item.failed / maximum * 100)}%" title="Не складено: ${item.failed}"></span></div>
+      <div class="weekly-chart-counts" aria-hidden="true"><span>${item.topic}</span><span>${item.tickets}</span><span>${item.exams}</span><span>${item.total}</span><span>${item.failed}</span></div>
       <span class="weekly-chart-label">${dayFormatter.format(item.date)} ${dateFormatter.format(item.date)}</span>
     </div>`;
   }).join("");
@@ -1033,6 +1049,8 @@ function init() {
   $("#targeted-feedback-close").addEventListener("click", closeTargetedFeedbackPrompt);
   $("#targeted-feedback-modal").addEventListener("click", (event) => { if (event.target.id === "targeted-feedback-modal") closeTargetedFeedbackPrompt(); });
   $("#targeted-feedback-form").addEventListener("submit", submitTargetedFeedback);
+  $("#tickets-intro-try").addEventListener("click", tryTicketsFromIntro);
+  $("#tickets-intro-later").addEventListener("click", closeTicketsIntroPrompt);
   document.querySelectorAll(".rating-star").forEach((star) => {
     star.addEventListener("mouseenter", () => updateRatingStars(Number(star.dataset.rating)));
     star.addEventListener("mouseleave", () => updateRatingStars(pendingRating || 0));
@@ -1041,7 +1059,7 @@ function init() {
   document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeReportModal(); });
   window.addEventListener("error", (event) => reportClientError(event.error || new Error(event.message)));
   window.addEventListener("unhandledrejection", (event) => reportClientError(event.reason || new Error("Unhandled promise rejection")));
-  loadQuestions().then(() => { showRatingPrompt(); showTargetedFeedbackPrompt(); showResumeToast(); }).catch(handleInitialLoadError);
+  loadQuestions().then(() => { showTicketsIntroPrompt(); showRatingPrompt(); showTargetedFeedbackPrompt(); showResumeToast(); }).catch(handleInitialLoadError);
 }
 
 function handleInitialLoadError(error) {

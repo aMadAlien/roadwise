@@ -326,7 +326,7 @@
         </div>
         <div class="weekly-stats" id="weekly-stats">
           <div class="weekly-stats-heading"><div><p class="eyebrow">Останні 7 днів</p><h3>Ритм підготовки</h3></div><span class="weekly-stats-note">кожен день окремою групою</span></div>
-          <div class="weekly-chart-legend"><span><i class="legend-topic"></i>За темами</span><span><i class="legend-exams"></i>Іспити</span><span><i class="legend-total"></i>Усього</span><span><i class="legend-failed"></i>Не складено</span></div>
+          <div class="weekly-chart-legend"><span><i class="legend-topic"></i>За темами</span><span><i class="legend-ticket"></i>Білети</span><span><i class="legend-exams"></i>Іспити</span><span><i class="legend-total"></i>Усього</span><span><i class="legend-failed"></i>Не складено</span></div>
           <div class="weekly-chart-scroll"><div class="weekly-chart" id="weekly-stats-chart" role="img" aria-label="Статистика тестів за останні 7 днів"></div></div>
         </div>
         <div class="empty-state hidden" id="results-empty-state">
@@ -469,6 +469,18 @@
         <button type="submit" class="rating-confirm" id="targeted-feedback-submit">Надіслати</button>
         <p class="rating-hint" id="targeted-feedback-status" role="status"></p>
       </form>
+    </div>
+  </div>
+  <div class="rating-modal hidden" id="tickets-intro-modal" role="dialog" aria-modal="true" aria-labelledby="tickets-intro-title">
+    <div class="rating-dialog feature-dialog">
+      <span class="feature-mark" aria-hidden="true">20</span>
+      <p class="eyebrow">Нове у Roadwise</p>
+      <h2 id="tickets-intro-title">Зустрічай тести за білетами</h2>
+      <p>Ми розподілили всі доступні питання на зручні білети по 20 питань. Проходь їх у будь-якому порядку, без обмежень і повторюй тоді, коли зручно.</p>
+      <div class="feature-dialog-actions">
+        <button type="button" class="rating-confirm" id="tickets-intro-try">Спробувати білети <span aria-hidden="true">→</span></button>
+        <button type="button" class="feature-later-button" id="tickets-intro-later">Можливо, пізніше</button>
+      </div>
     </div>
   </div>
   <div class="resume-toast hidden" id="resume-toast" role="status">
