@@ -1,6 +1,6 @@
 import { AVAILABLE_TOPICS } from "./available-topics.js";
 
-const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null, timerInterval: null, timerStartedAt: null, savedQuestions: JSON.parse(localStorage.getItem("roadwise-saved") || "[]") };
+const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), ticketCache: null, currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, ticket: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), ticketProgress: JSON.parse(localStorage.getItem("roadwise-ticket-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null, timerInterval: null, timerStartedAt: null, savedQuestions: JSON.parse(localStorage.getItem("roadwise-saved") || "[]") };
 const isReturningVisitor = localStorage.getItem("roadwise-visited") === "1";
 localStorage.setItem("roadwise-visited", "1");
 let pendingRating = null;
@@ -128,6 +128,25 @@ async function loadQuestionsForTopics(topicEntries) {
   return questionGroups.flat();
 }
 
+async function loadTickets() {
+  if (state.ticketCache) return state.ticketCache;
+  const questions = await loadQuestionsForTopics(availableTopicCatalog());
+  const questionsByTopic = new Map();
+  questions.forEach((question) => {
+    if (!questionsByTopic.has(question.topic)) questionsByTopic.set(question.topic, []);
+    questionsByTopic.get(question.topic).push(question);
+  });
+  const ticketCount = Math.ceil(questions.length / 20);
+  const tickets = Array.from({ length: ticketCount }, () => []);
+  let ticketIndex = 0;
+  questionsByTopic.forEach((topicQuestions) => topicQuestions.forEach((question) => {
+    tickets[ticketIndex].push(question);
+    ticketIndex = (ticketIndex + 1) % ticketCount;
+  }));
+  state.ticketCache = tickets;
+  return tickets;
+}
+
 async function loadRandomQuestions(count) {
   const response = await fetch(`api/questions/random?count=${count}&v=${dataRequestVersion}`, { cache: "no-store" });
   if (!response.ok) throw new Error(`Не вдалося завантажити питання: ${response.status}`);
@@ -138,12 +157,13 @@ function saveProgress() {
   localStorage.setItem("roadwise-errors", JSON.stringify(state.errors));
   localStorage.setItem("roadwise-history", JSON.stringify(state.history));
   localStorage.setItem("roadwise-topic-progress", JSON.stringify(state.topicProgress));
+  localStorage.setItem("roadwise-ticket-progress", JSON.stringify(state.ticketProgress));
   localStorage.setItem("roadwise-last-topic", state.lastOpenedTopic || "");
   localStorage.setItem("roadwise-saved", JSON.stringify(state.savedQuestions));
 }
 
 function saveCurrentTestProgress() {
-  if (state.mode !== "topic" || !state.currentTest.length) return;
+  if (!['topic', 'ticket'].includes(state.mode) || !state.currentTest.length) return;
   const hasAnsweredQuestion = state.currentTest.some((question) => question.userAnswer !== undefined);
   if (!hasAnsweredQuestion) {
     clearCurrentTestProgress();
@@ -152,6 +172,7 @@ function saveCurrentTestProgress() {
   localStorage.setItem("roadwise-test-progress", JSON.stringify({
     mode: state.mode,
     topic: state.topic,
+    ticket: state.ticket,
     currentIndex: state.currentIndex,
     questions: state.currentTest
   }));
@@ -164,13 +185,14 @@ function clearCurrentTestProgress() {
 function loadCurrentTestProgress() {
   try {
     const saved = JSON.parse(localStorage.getItem("roadwise-test-progress") || "null");
-    if (!saved || saved.mode !== "topic" || !Array.isArray(saved.questions) || !saved.questions.length) {
+    if (!saved || !['topic', 'ticket'].includes(saved.mode) || !Array.isArray(saved.questions) || !saved.questions.length) {
       clearCurrentTestProgress();
       return false;
     }
     state.currentTest = saved.questions;
     state.mode = saved.mode || "random";
     state.topic = saved.topic || null;
+    state.ticket = saved.ticket || null;
     state.currentIndex = Math.min(Math.max(Number(saved.currentIndex) || 0, 0), state.currentTest.length - 1);
     return true;
   } catch {
@@ -180,7 +202,14 @@ function loadCurrentTestProgress() {
 }
 
 function testModeLabel(mode, topic) {
-  return mode === "mistakes" ? "Мої помилки" : mode === "saved" ? "Збережені питання" : topic ? topic : "Випадковий тест";
+  return mode === "mistakes" ? "Мої помилки" : mode === "saved" ? "Збережені питання" : mode === "ticket" ? `Білет ${state.ticket}` : topic ? topic : "Випадковий тест";
+}
+
+function ticketProgressLabel(progress) {
+  if (!progress) return "";
+  const status = progress.passed ? "✓ Складено" : "Не складено";
+  const mistakes = progress.mistakes > 0 ? ` · ${progress.mistakes} ${pluralizeUk(progress.mistakes, "помилка", "помилки", "помилок")}` : "";
+  return `${status}${mistakes}`;
 }
 function updateBackButtonLabel(label) {
   $(".back-button span").textContent = label;
@@ -210,7 +239,7 @@ function resumeSavedTest() {
   $("#test-empty-state").classList.add("hidden");
   $("#test-result").classList.add("hidden");
   $("#test-mode-label").textContent = testModeLabel(state.mode, state.topic);
-  updateBackButtonLabel("До тем");
+  updateBackButtonLabel(state.mode === "ticket" ? "До білетів" : "До тем");
   $(".question-nav").classList.remove("hidden");
   $(".progress-track").classList.remove("hidden");
   $(".test-progress-label").classList.remove("hidden");
@@ -437,6 +466,7 @@ function showView(viewName) {
   if (viewName === "results") renderResultsView();
   if (viewName === "saved") renderSavedView();
   if (viewName === "errors") renderErrorsView().catch((error) => { reportClientError(error); showAppError("Не вдалося завантажити список помилок."); });
+  if (viewName === "tickets") renderTicketsView();
 }
 
 function formatTimerDuration(ms) {
@@ -493,7 +523,7 @@ async function startTest(mode = "random", topic = null, options = {}) {
     return;
   }
   clearCurrentTestProgress();
-  state.mode = mode; state.topic = topic; state.currentIndex = 0; state.selectedAnswer = null; state.examFailed = false;
+  state.mode = mode; state.topic = topic; state.ticket = mode === "ticket" ? Number(topic) : null; state.currentIndex = 0; state.selectedAnswer = null; state.examFailed = false;
   $("#test-empty-state").classList.add("hidden");
   $("#test-result").classList.add("hidden");
   if (mode === "topic" && topic && !isTopicAvailable(topic)) return;
@@ -510,6 +540,16 @@ async function startTest(mode = "random", topic = null, options = {}) {
   } else if (mode === "saved") {
     state.currentTest = shuffle(state.savedQuestions.map((question) => ({ ...question })));
     testSize = state.currentTest.length;
+  } else if (mode === "ticket") {
+    try {
+      const tickets = await loadTickets();
+      state.currentTest = tickets[state.ticket - 1]?.map((question) => ({ ...question })) || [];
+    } catch (error) {
+      reportClientError(error);
+      showAppError("Не вдалося завантажити білети. Перевір з'єднання та спробуй ще раз.", () => startTest(mode, topic));
+      return;
+    }
+    testSize = state.currentTest.length;
   } else {
     const topicEntries = topic ? [topicEntry(topic)] : availableTopicCatalog();
     try {
@@ -525,8 +565,8 @@ async function startTest(mode = "random", topic = null, options = {}) {
   }
   state.currentTest.forEach((question) => { delete question.userAnswer; delete question.showCorrectAnswer; });
   if (!state.currentTest.length) { showAppError("Тут поки немає питань для цього режиму."); return; }
-  $("#test-mode-label").textContent = mode === "mistakes" ? "Мої помилки" : mode === "saved" ? "Збережені питання" : topic ? '' : "Випадковий тест";
-  updateBackButtonLabel(mode === "topic" && topic ? "До тем" : "До меню");
+  $("#test-mode-label").textContent = testModeLabel(mode, topic);
+  updateBackButtonLabel(mode === "topic" && topic ? "До тем" : mode === "ticket" ? "До білетів" : "До меню");
   $(".question-nav").classList.remove("hidden");
   $(".progress-track").classList.remove("hidden");
   $(".test-progress-label").classList.remove("hidden");
@@ -598,6 +638,27 @@ function renderTopicPicker() {
   $("#topic-picker").querySelectorAll("button:not(:disabled)").forEach((button) => button.addEventListener("click", () => requestTestStart("topic", button.dataset.topic)));
 }
 
+function renderTicketsView() {
+  const list = $("#ticket-list");
+  if (!state.ticketCache) {
+    loadTickets().then(renderTicketsView).catch((error) => {
+      reportClientError(error);
+      $("#tickets-status").textContent = "Не вдалося завантажити білети. Спробуй оновити сторінку.";
+    });
+    return;
+  }
+  const tickets = state.ticketCache;
+  $("#tickets-count").textContent = tickets.length;
+  $("#tickets-status").textContent = `У базі ${tickets.reduce((total, ticket) => total + ticket.length, 0)} питань. У кожному білеті 19–20 питань.`;
+  list.innerHTML = tickets.map((ticket, index) => {
+    const progress = state.ticketProgress[index + 1];
+    const isPassed = progress?.passed === true;
+    const status = ticketProgressLabel(progress);
+    return `<button type="button" class="ticket-card ${isPassed ? "is-passed" : progress ? "is-attempted" : ""}" data-ticket="${index + 1}"><span class="ticket-number">${String(index + 1).padStart(2, "0")}</span><span class="ticket-title">Білет ${index + 1}</span><span class="ticket-meta">${ticket.length} питань</span>${status ? `<span class="ticket-status">${status}</span>` : ""}<span class="ticket-arrow">↗</span></button>`;
+  }).join("");
+  list.querySelectorAll("[data-ticket]").forEach((button) => button.addEventListener("click", () => requestTestStart("ticket", button.dataset.ticket)));
+}
+
 function returnToTopicPicker() {
   $("#question-layout").classList.add("hidden");
   $("#topic-picker").classList.remove("hidden");
@@ -609,6 +670,16 @@ function returnToTopicPicker() {
   renderTopicPicker();
   showView("test");
   updateBackButtonLabel("До меню");
+}
+
+function returnToTickets() {
+  $("#question-layout").classList.add("hidden");
+  $("#topic-picker").classList.add("hidden");
+  $(".question-nav").classList.add("hidden");
+  $(".progress-track").classList.add("hidden");
+  $(".test-progress-label").classList.add("hidden");
+  $("#test-empty-state").classList.add("hidden");
+  showView("tickets");
 }
 
 function renderQuestion() {
@@ -811,12 +882,21 @@ function finishTest() {
   state.lastResult = { correct, total: state.currentTest.length, percent, wrongQuestions, passed };
   state.history.push({ percent, correct, total: state.currentTest.length, passed, mode: state.mode, topic: state.topic, date: new Date().toISOString() });
   if (state.mode === "topic" && state.topic) markTopicCompleted(state.topic, wrongQuestions.length, percent);
+  if (state.mode === "ticket" && state.ticket) {
+    state.ticketProgress[state.ticket] = {
+      correct,
+      mistakes: wrongQuestions.length,
+      passed: correct >= 18,
+      completedAt: new Date().toISOString()
+    };
+  }
   trackAnalyticsEvent("test_completed", { mode: state.mode, topic: state.topic || "all", total: state.currentTest.length, correct });
   stopExamTimer();
   clearCurrentTestProgress();
   saveProgress();
   updateNavBadge();
   renderHome();
+  if (state.mode === "ticket") renderTicketsView();
   showTestResult();
 }
 
@@ -905,6 +985,7 @@ function init() {
     const backButton = event.target.closest(".back-button");
     if (backButton) {
       if (state.mode === "topic" && state.topic && $("#topic-picker").classList.contains("hidden")) returnToTopicPicker();
+      else if (state.mode === "ticket" && !$("#question-layout").classList.contains("hidden")) returnToTickets();
       else showView("home");
       return;
     }

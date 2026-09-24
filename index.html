@@ -74,6 +74,10 @@
               </g>
             </svg>
           </span>Мій тест</a>
+        <a href="#tickets" data-view="tickets" class="nav-link"><span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 19a2 2 0 0 0 2-2v-3a2 2 0 1 1 0-4V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3a2 2 0 1 1 0 4v3a2 2 0 0 0 2 2zm-7-7.25v.5M12 8v.5m0 7v.5"></path></svg>
+          </span>Білети</a>
         <a href="#results" data-view="results" class="nav-link"><span>
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
               <title>bar-chart-linear</title>
@@ -213,6 +217,19 @@
           </div>
           <div class="topic-list" id="topic-list"></div>
         </div>
+      </section>
+
+      <section id="tickets-view" class="view">
+        <div class="tickets-heading">
+          <div>
+            <p class="eyebrow">Підготовка до іспиту</p>
+            <h1>Тести за білетами.</h1>
+            <p class="tickets-description">Усі доступні питання розподілені між білетами. Обери білет і пройди його повністю.</p>
+          </div>
+          <div class="tickets-summary"><strong id="tickets-count">—</strong><span>білетів</span></div>
+        </div>
+        <div id="tickets-status" class="tickets-status">Завантажуємо питання...</div>
+        <div id="ticket-list" class="ticket-list"></div>
       </section>
 
       <section id="test-view" class="view">
