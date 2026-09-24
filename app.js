@@ -239,7 +239,7 @@ function resumeSavedTest() {
   $("#test-empty-state").classList.add("hidden");
   $("#test-result").classList.add("hidden");
   $("#test-mode-label").textContent = testModeLabel(state.mode, state.topic);
-  updateBackButtonLabel(state.mode === "ticket" ? "До білетів" : "До тем");
+  updateBackButtonLabel(state.mode === "ticket" ? "Список білетів" : "Список тем");
   $(".question-nav").classList.remove("hidden");
   $(".progress-track").classList.remove("hidden");
   $(".test-progress-label").classList.remove("hidden");
@@ -566,7 +566,7 @@ async function startTest(mode = "random", topic = null, options = {}) {
   state.currentTest.forEach((question) => { delete question.userAnswer; delete question.showCorrectAnswer; });
   if (!state.currentTest.length) { showAppError("Тут поки немає питань для цього режиму."); return; }
   $("#test-mode-label").textContent = testModeLabel(mode, topic);
-  updateBackButtonLabel(mode === "topic" && topic ? "До тем" : mode === "ticket" ? "До білетів" : "До меню");
+  updateBackButtonLabel(mode === "topic" && topic ? "Список тем" : mode === "ticket" ? "Список білетів" : "До меню");
   $(".question-nav").classList.remove("hidden");
   $(".progress-track").classList.remove("hidden");
   $(".test-progress-label").classList.remove("hidden");
@@ -586,7 +586,11 @@ function showTestResult() {
   $(".test-progress-label").classList.add("hidden");
   $("#test-result").classList.remove("hidden");
   $("#test-mode-label").textContent = "Результат тесту";
-  updateBackButtonLabel("До меню");
+  const resultBackButton = $("#result-back-button");
+  const resultBackLabel = state.mode === "ticket" ? "Список білетів" : state.mode === "topic" && state.topic ? "Список тем" : "До меню";
+  resultBackButton.innerHTML = `<span></span>${resultBackLabel}<span></span>`;
+  resultBackButton.dataset.returnTo = state.mode === "ticket" ? "tickets" : state.mode === "topic" && state.topic ? "topics" : "home";
+  updateBackButtonLabel(resultBackLabel);
   renderResults();
   showView("test");
 }
@@ -985,13 +989,20 @@ function init() {
     const backButton = event.target.closest(".back-button");
     if (backButton) {
       if (state.mode === "topic" && state.topic && $("#topic-picker").classList.contains("hidden")) returnToTopicPicker();
-      else if (state.mode === "ticket" && !$("#question-layout").classList.contains("hidden")) returnToTickets();
+      else if (state.mode === "ticket") returnToTickets();
       else showView("home");
       return;
     }
     const modeButton = event.target.closest("[data-mode]");
     if (modeButton) { if (modeButton.dataset.mode === "topic") startTest("topic", null, { skipPrompt: true }); else requestTestStart(modeButton.dataset.mode); }
     const viewLink = event.target.closest("[data-view]");
+    const resultBackButton = event.target.closest("[data-return-to]");
+    if (resultBackButton) {
+      if (resultBackButton.dataset.returnTo === "tickets") returnToTickets();
+      else if (resultBackButton.dataset.returnTo === "topics") returnToTopicPicker();
+      else showView("home");
+      return;
+    }
     if (viewLink && !viewLink.dataset.mode) showView(viewLink.dataset.view);
   });
   $("#next-button").addEventListener("click", () => { if (state.currentIndex === state.currentTest.length - 1) finishTest(); else { state.currentIndex += 1; saveCurrentTestProgress(); renderQuestion(); } });
