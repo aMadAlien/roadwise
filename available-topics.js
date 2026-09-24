@@ -43,4 +43,10 @@ export const AVAILABLE_TOPICS = [
   "35-6-znaky-servisu",
   "35-7-tablychky-do-dorozhnikh-znakiv",
   "36-dorozhnya-rozmitka",
+
+  "37-osnovy-bezpechnoho-vodinnya",
+  "41-osnovy-prava-v-oblasti-dorozhnoho-rukhu",
+  "42-nadannya-domedychnoyi-dopomohy",
+  "43-etyka-vodinnya-kultura-ta-vidpochynok-vodiya",
+  "44-yevroprotokol",
 ];

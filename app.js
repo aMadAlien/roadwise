@@ -346,7 +346,7 @@ function renderHome() {
     return progress?.status === "completed" && Number(progress.percent) >= 90;
   }).length;
   $("#tests-passed-count").textContent = topicsPassedAtNinety;
-  $("#topics-not-started-count").textContent = availableTopicCatalog().filter((topic) => !state.topicProgress[topicId(topic)]?.status).length;
+  $("#topics-not-started-count").textContent = availableTopicCatalog().filter((topic) => !state.topicProgress[topicId(topic.topic)]?.status).length;
   const average = state.history.length ? Math.round(state.history.reduce((sum, item) => sum + item.percent, 0) / state.history.length) : null;
   $("#average-score").textContent = average === null ? "—" : `${average}%`;
   const todayKey = new Date().toISOString().slice(0, 10);
