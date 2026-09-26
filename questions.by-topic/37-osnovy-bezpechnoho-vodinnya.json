@@ -1819,7 +1819,7 @@
       "Так.",
       "Ні, оскільки розмова ніяк не обмежує оглядовість водієві."
     ],
-    "correctAnswer": 1,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 387,
@@ -1836,7 +1836,7 @@
       "Перетнути перехрестя не зменшуючи швидкості.",
       "Збільшити швидкість для швидкого перетину перехрестя."
     ],
-    "correctAnswer": 1,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 387,
@@ -1935,9 +1935,7 @@
     "image": null,
     "answers": [
       "Так.",
-      "Ні.",
-      "Ні.",
-      "Так."
+      "Ні."
     ],
     "correctAnswer": 1,
     "source": {
