@@ -384,8 +384,12 @@ function renderHome() {
     const progress = state.topicProgress[topicId(topic.topic)];
     return progress?.status === "completed" && Number(progress.percent) >= 90;
   }).length;
-  $("#tests-passed-count").textContent = topicsPassedAtNinety;
-  $("#topics-not-started-count").textContent = availableTopicCatalog().filter((topic) => !state.topicProgress[topicId(topic.topic)]?.status).length;
+  if ($("#tests-passed-count")) {
+    $("#tests-passed-count").textContent = topicsPassedAtNinety;
+  }
+  if ($("#topics-not-started-count")) {
+    $("#topics-not-started-count").textContent = availableTopicCatalog().filter((topic) => !state.topicProgress[topicId(topic.topic)]?.status).length;
+  }
   const average = state.history.length ? Math.round(state.history.reduce((sum, item) => sum + item.percent, 0) / state.history.length) : null;
   $("#average-score").textContent = average === null ? "—" : `${average}%`;
   const todayKey = new Date().toISOString().slice(0, 10);
@@ -478,9 +482,9 @@ function renderTargetedSurveyQuestion(questionIndex) {
     ? `<div class="targeted-survey-choices" role="group" aria-label="${question.title}">${question.options.map((option, index) => `<button type="button" class="targeted-survey-choice" data-choice-index="${index}">${option}</button>`).join("")}${question.other ? `<button type="button" class="targeted-survey-choice" data-choice-index="${question.options.length}">Інше</button>` : ""}</div>${question.other ? '<label class="targeted-survey-label hidden" id="targeted-survey-other-label" for="targeted-survey-other">Уточни, будь ласка</label><textarea class="hidden" id="targeted-survey-other" rows="3" maxlength="1000" placeholder="Твій варіант"></textarea>' : ""}`
     : question.type === "stars"
       ? `<div class="targeted-survey-stars" role="radiogroup" aria-label="${question.title}">${question.options.map((option, index) => `<button type="button" class="targeted-survey-choice targeted-survey-star" data-choice-index="${index}" role="radio" aria-checked="false" aria-label="${option} з 5 зірок">★</button>`).join("")}</div><p class="targeted-survey-stars-labels"><span>⭐ 1 — зовсім незручно</span><span>⭐ 5 — дуже зручно</span></p><p class="targeted-survey-star-value" id="targeted-survey-star-value" aria-live="polite">Обери оцінку</p>`
-    : question.type === "slider"
-      ? '<div class="targeted-survey-scale"><output class="targeted-survey-score" id="targeted-survey-score" for="targeted-survey-slider" aria-live="polite">5</output><input class="targeted-survey-slider" id="targeted-survey-slider" type="range" min="0" max="10" step="1" value="5" aria-label="Оцінка від 0 до 10"><div class="targeted-survey-scale-labels"><span>Зовсім ні</span><span>Точно так</span></div></div>'
-      : '<label class="targeted-survey-label" for="targeted-survey-answer">Твоя відповідь</label><textarea id="targeted-survey-answer" name="answer" rows="4" maxlength="1000" required placeholder="Можна коротко, своїми словами"></textarea>';
+      : question.type === "slider"
+        ? '<div class="targeted-survey-scale"><output class="targeted-survey-score" id="targeted-survey-score" for="targeted-survey-slider" aria-live="polite">5</output><input class="targeted-survey-slider" id="targeted-survey-slider" type="range" min="0" max="10" step="1" value="5" aria-label="Оцінка від 0 до 10"><div class="targeted-survey-scale-labels"><span>Зовсім ні</span><span>Точно так</span></div></div>'
+        : '<label class="targeted-survey-label" for="targeted-survey-answer">Твоя відповідь</label><textarea id="targeted-survey-answer" name="answer" rows="4" maxlength="1000" required placeholder="Можна коротко, своїми словами"></textarea>';
   content.innerHTML = `<p class="eyebrow">Питання ${questionIndex + 1} з ${targetedSurveyQuestions.length}</p><h2 id="targeted-feedback-title">${question.title}</h2><form id="targeted-survey-form">${choices}<p class="rating-hint" id="targeted-survey-status" role="status"></p><button type="submit" class="rating-confirm" id="targeted-survey-submit" disabled>Надіслати відповідь</button></form>`;
   const form = $("#targeted-survey-form");
   const submit = $("#targeted-survey-submit");
