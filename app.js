@@ -5,10 +5,25 @@ const isReturningVisitor = localStorage.getItem("roadwise_visited") === "1";
 localStorage.setItem("roadwise_visited", "1");
 let pendingRating = null;
 let pendingTestStart = null;
+let answerAdvanceTimeout = null;
 const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
 const dataRequestVersion = Date.now().toString(36);
 let lastClientErrorAt = 0;
+const ANSWER_MODE_STORAGE_KEY = "roadwise-answer-mode";
+
+function getAnswerMode() {
+  const savedMode = localStorage.getItem(ANSWER_MODE_STORAGE_KEY);
+  if (savedMode === "auto") return "auto-correct";
+  return ["check", "instant", "auto-correct"].includes(savedMode) ? savedMode : "instant";
+}
+
+function clearAnswerAdvanceTimeout() {
+  if (answerAdvanceTimeout) {
+    window.clearTimeout(answerAdvanceTimeout);
+    answerAdvanceTimeout = null;
+  }
+}
 
 function showAppError(message, retry = null) {
   const status = $("#app-status");
@@ -584,7 +599,10 @@ function showView(viewName) {
   $(".app-shell").classList.toggle("is-test-view", viewName === "test");
   document.querySelectorAll(".view").forEach((view) => view.classList.toggle("is-visible", view.id === `${viewName}-view`));
   document.querySelectorAll("[data-view]").forEach((link) => link.classList.toggle("is-active", link.dataset.view === viewName));
-  if (viewName !== "test") stopExamTimer();
+  if (viewName !== "test") {
+    stopExamTimer();
+    clearAnswerAdvanceTimeout();
+  }
   if (viewName === "home" && state.topicCatalog.length) renderHome();
   if (viewName === "results") renderResultsView();
   if (viewName === "saved") renderSavedView();
@@ -686,7 +704,7 @@ async function startTest(mode = "random", topic = null, options = {}) {
     testSize = mode === "topic" ? pool.length : Math.min(20, pool.length);
     state.currentTest = shuffle(pool).slice(0, testSize);
   }
-  state.currentTest.forEach((question) => { delete question.userAnswer; delete question.showCorrectAnswer; });
+  state.currentTest.forEach((question) => { delete question.userAnswer; delete question.pendingAnswer; delete question.showCorrectAnswer; });
   if (!state.currentTest.length) { showAppError("Тут поки немає питань для цього режиму."); return; }
   $("#test-mode-label").textContent = testModeLabel(mode, topic);
   updateBackButtonLabel(mode === "topic" && topic ? "Список тем" : mode === "ticket" ? "Список білетів" : "До меню");
@@ -814,6 +832,7 @@ function returnToTickets() {
 
 function renderQuestion() {
   const question = state.currentTest[state.currentIndex];
+  const answerMode = getAnswerMode();
   state.selectedAnswer = null;
   const elements = {
     progressBar: $("#progress-bar"),
@@ -828,6 +847,7 @@ function renderQuestion() {
     questionImageFallbackText: $("#question-image-fallback-text"),
     questionImageRetryButton: $("#question-image-retry"),
     answersList: $("#answers-list"),
+    checkAnswerButton: $("#check-answer-button"),
     showCorrectButton: $("#show-correct-button"),
     nextButton: $("#next-button"),
     previousButton: $("#previous-button"),
@@ -866,33 +886,56 @@ function renderQuestion() {
     elements.saveButtonLabel.textContent = nowSaved ? "Збережено" : "Зберегти";
   };
   elements.answersList.innerHTML = question.answers.map((answer, index) => {
-    const isSelected = question.userAnswer === index;
-    const isCorrectAnswerRevealed = question.showCorrectAnswer && index === question.correctAnswer;
-    const answerState = isSelected ? question.userAnswer === question.correctAnswer ? "selected answer-correct" : "selected answer-wrong" : isCorrectAnswerRevealed ? "answer-correct answer-revealed" : "";
     const answered = question.userAnswer !== undefined;
+    const selectedAnswer = answered ? question.userAnswer : question.pendingAnswer;
+    const isSelected = selectedAnswer === index;
+    const isCorrectAnswerRevealed = answered && question.showCorrectAnswer && index === question.correctAnswer;
+    const answerState = answered
+      ? isSelected ? question.userAnswer === question.correctAnswer ? "selected answer-correct" : "selected answer-wrong" : isCorrectAnswerRevealed ? "answer-correct answer-revealed" : ""
+      : isSelected ? "selected is-pending" : "";
     return `<button class="answer-option ${answerState}" type="button" data-answer="${index}" ${answered ? "disabled" : ""} aria-pressed="${isSelected}"><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${answer}</span></button>`;
   }).join("");
+  const hasPendingAnswer = question.pendingAnswer !== undefined;
+  const hasAnswer = question.userAnswer !== undefined;
+  elements.checkAnswerButton.classList.toggle("is-active", answerMode === "check" && !hasAnswer && hasPendingAnswer);
+  elements.checkAnswerButton.disabled = !hasPendingAnswer;
   const answeredIncorrectly = question.userAnswer !== undefined && question.userAnswer !== question.correctAnswer;
   elements.showCorrectButton.classList.toggle("hidden", !answeredIncorrectly || question.showCorrectAnswer);
-  elements.nextButton.disabled = question.userAnswer === undefined;
+  elements.nextButton.classList.toggle("is-active", hasAnswer && (answerMode !== "auto-correct" || answeredIncorrectly));
+  elements.nextButton.disabled = !hasAnswer;
   elements.previousButton.disabled = state.currentIndex === 0;
-  setQuestionActionBarVisible(question.userAnswer !== undefined);
+  $("#question-action-bar").classList.toggle("is-checked", hasAnswer);
+  setQuestionActionBarVisible(answerMode === "auto-correct" ? answeredIncorrectly : hasAnswer || answerMode === "check" && hasPendingAnswer);
   elements.nextButton.innerHTML = state.currentIndex === state.currentTest.length - 1 ? "<span></span> Завершити тест <span>✓</span>" : `<span></span> Наступне питання <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><title>arrow-next-ltr</title><path fill="currentColor" d="M18 9.804v1.392l-5.688 5.883l-1.436-1.39L14.93 11.5H1v-2h13.923l-4.047-4.165l1.434-1.394z"/></svg>`;
-  elements.questionNav.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => { state.currentIndex = Number(button.dataset.questionIndex); saveCurrentTestProgress(); renderQuestion(); }));
+  elements.questionNav.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => { clearAnswerAdvanceTimeout(); state.currentIndex = Number(button.dataset.questionIndex); saveCurrentTestProgress(); renderQuestion(); }));
   elements.answersList.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => {
     if (question.userAnswer !== undefined) return;
     const answer = Number(button.dataset.answer);
+    if (answerMode === "check") {
+      question.pendingAnswer = answer;
+      renderQuestion();
+      return;
+    }
     question.userAnswer = answer;
     state.selectedAnswer = answer;
+    question.showCorrectAnswer = false;
     elements.answersList.querySelectorAll("button").forEach((item) => item.classList.remove("selected", "answer-correct", "answer-wrong"));
     button.classList.add("selected", answer === question.correctAnswer ? "answer-correct" : "answer-wrong");
     elements.nextButton.disabled = false;
-    setQuestionActionBarVisible(true);
     if (state.mode === "topic" && state.topic) markTopicStarted(state.topic);
     saveCurrentTestProgress();
     elements.showCorrectButton.classList.toggle("hidden", answer === question.correctAnswer);
     renderQuestionNav();
     maybeShowExamFailedNotice();
+    renderQuestion();
+    if (answerMode === "auto-correct" && answer === question.correctAnswer && $("#exam-failed-modal").classList.contains("hidden")) {
+      clearAnswerAdvanceTimeout();
+      const answeredIndex = state.currentIndex;
+      answerAdvanceTimeout = window.setTimeout(() => {
+        answerAdvanceTimeout = null;
+        if (state.currentIndex === answeredIndex && state.currentTest[answeredIndex]?.userAnswer !== undefined) advanceToNextQuestion();
+      }, 350);
+    }
   }));
   elements.showCorrectButton.onclick = () => {
     if (question.userAnswer === undefined || question.userAnswer === question.correctAnswer) return;
@@ -911,6 +954,45 @@ function setQuestionActionBarVisible(visible) {
   if (!actionBar.classList.contains("hidden")) return;
   actionBar.classList.remove("hidden");
   window.requestAnimationFrame(() => actionBar.classList.add("is-visible"));
+}
+
+function checkCurrentAnswer() {
+  const question = state.currentTest[state.currentIndex];
+  if (!question || question.userAnswer !== undefined || question.pendingAnswer === undefined) return;
+  question.userAnswer = question.pendingAnswer;
+  delete question.pendingAnswer;
+  question.showCorrectAnswer = false;
+  if (state.mode === "topic" && state.topic) markTopicStarted(state.topic);
+  saveCurrentTestProgress();
+  renderQuestionNav();
+  renderQuestion();
+  maybeShowExamFailedNotice();
+}
+
+function advanceToNextQuestion() {
+  clearAnswerAdvanceTimeout();
+  if (state.currentTest[state.currentIndex]?.userAnswer === undefined) return;
+  if (state.currentIndex === state.currentTest.length - 1) {
+    finishTest();
+    return;
+  }
+  state.currentIndex += 1;
+  saveCurrentTestProgress();
+  renderQuestion();
+}
+
+function initializeAnswerModeSettings() {
+  document.querySelectorAll("input[name='answer-mode']").forEach((input) => {
+    input.checked = input.value === getAnswerMode();
+    input.addEventListener("change", () => {
+      if (!input.checked) return;
+      clearAnswerAdvanceTimeout();
+      localStorage.setItem(ANSWER_MODE_STORAGE_KEY, input.value);
+      const question = state.currentTest[state.currentIndex];
+      if (question?.pendingAnswer !== undefined) delete question.pendingAnswer;
+      if (state.currentTest.length && !$("#question-layout").classList.contains("hidden")) renderQuestion();
+    });
+  });
 }
 
 const EXAM_PASS_PERCENT = 90;
@@ -1258,16 +1340,19 @@ function init() {
     }
     if (viewLink && !viewLink.dataset.mode) showView(viewLink.dataset.view);
   });
+  initializeAnswerModeSettings();
+  $("#check-answer-button").addEventListener("click", checkCurrentAnswer);
   $("#previous-button").addEventListener("click", () => {
+    clearAnswerAdvanceTimeout();
     if (state.currentIndex === 0) return;
     state.currentIndex -= 1;
     saveCurrentTestProgress();
     renderQuestion();
   });
-  $("#next-button").addEventListener("click", () => {
-    if (state.currentTest[state.currentIndex]?.userAnswer === undefined) return;
-    if (state.currentIndex === state.currentTest.length - 1) finishTest();
-    else { state.currentIndex += 1; saveCurrentTestProgress(); renderQuestion(); }
+  $("#next-button").addEventListener("click", advanceToNextQuestion);
+  $("#exam-failed-continue").addEventListener("click", () => {
+    $("#exam-failed-modal").classList.add("hidden");
+    if (getAnswerMode() === "auto-correct" && state.currentTest[state.currentIndex]?.userAnswer === state.currentTest[state.currentIndex]?.correctAnswer) advanceToNextQuestion();
   });
   $("#retry-button").addEventListener("click", () => startTest(state.mode, state.topic));
   $("#share-result-button").addEventListener("click", shareTestResult);
@@ -1276,7 +1361,6 @@ function init() {
   $("#report-close").addEventListener("click", closeReportModal);
   $("#report-form").addEventListener("submit", submitReport);
   $("#feedback-form").addEventListener("submit", submitFeedback);
-  $("#exam-failed-continue").addEventListener("click", () => $("#exam-failed-modal").classList.add("hidden"));
   $("#saved-clear-all").addEventListener("click", openSavedClearConfirmation);
   $("#saved-clear-close").addEventListener("click", closeSavedClearConfirmation);
   $("#saved-clear-cancel").addEventListener("click", closeSavedClearConfirmation);
