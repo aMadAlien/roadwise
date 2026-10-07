@@ -245,7 +245,7 @@ function resumeSavedTest() {
   $(".test-progress-label").classList.remove("hidden");
   $("#topic-picker").classList.add("hidden");
   $("#question-layout").classList.remove("hidden");
-  if (state.mode === "random") startExamTimer();
+  if (state.mode === "random" || state.mode === "ticket") startExamTimer();
   showView("test");
   renderQuestion();
 }
@@ -691,7 +691,7 @@ async function startTest(mode = "random", topic = null, options = {}) {
   $("#topic-picker").classList.add("hidden");
   $("#question-layout").classList.remove("hidden");
   trackAnalyticsEvent("test_started", { mode, topic: topic || "all", total: testSize });
-  if (mode === "random") startExamTimer();
+  if (mode === "random" || mode === "ticket") startExamTimer();
   showView("test"); renderQuestion();
 }
 
@@ -1001,8 +1001,9 @@ function finishTest() {
   wrongQuestions.forEach((question) => { if (!state.errors.includes(question.id)) state.errors.push(question.id); });
   const percent = Math.round((correct / state.currentTest.length) * 100);
   const passed = isExamPassed(correct, state.currentTest.length);
-  state.lastResult = { correct, total: state.currentTest.length, percent, wrongQuestions, passed };
-  state.history.push({ percent, correct, total: state.currentTest.length, passed, mode: state.mode, topic: state.topic, date: new Date().toISOString() });
+  const durationMs = ["random", "ticket"].includes(state.mode) && state.timerStartedAt ? Date.now() - state.timerStartedAt : null;
+  state.lastResult = { correct, total: state.currentTest.length, percent, wrongQuestions, passed, durationMs };
+  state.history.push({ percent, correct, total: state.currentTest.length, passed, mode: state.mode, topic: state.topic, durationMs, date: new Date().toISOString() });
   if (state.mode === "topic" && state.topic) markTopicCompleted(state.topic, wrongQuestions.length, percent);
   if (state.mode === "ticket" && state.ticket) {
     state.ticketProgress[state.ticket] = {
@@ -1026,6 +1027,10 @@ function renderResults() {
   const result = state.lastResult; $("#result-percent").textContent = `${result.percent}%`; $("#correct-count").textContent = result.correct; $("#wrong-count").textContent = result.total - result.correct; $("#result-total").textContent = result.total;
   $("#result-percent-label").textContent = "результат";
   $("#result-breakdown").classList.remove("hidden");
+  const durationStat = $("#result-duration");
+  const hasDuration = Number.isFinite(result.durationMs);
+  durationStat.classList.toggle("hidden", !hasDuration);
+  if (hasDuration) $("#result-duration-value").textContent = formatTimerDuration(result.durationMs);
   $("#results-title").textContent = !result.passed ? "Іспит не складено." : result.percent >= 80 ? "Відмінний результат." : result.percent >= 50 ? "Гарний старт." : "Є над чим попрацювати.";
   $("#results-subtitle").textContent = result.passed ? `Правильних відповідей: ${result.correct} з ${result.total}. Результат збережено локально.` : `Правильних відповідей: ${result.correct} з ${result.total}. Допущено ${result.total - result.correct} помилок (для складання іспиту потрібно щонайменше ${EXAM_PASS_PERCENT}% правильних відповідей). Результат збережено локально.`;
   $("#mistakes-preview").innerHTML = result.wrongQuestions.length ? `<p class="eyebrow">Питання для повторення</p>${result.wrongQuestions.map((question) => `<div class="mistake-item"><strong>${question.question}</strong><span>${question.topic}</span></div>`).join("")}` : `<p class="eyebrow">Без помилок</p><p>Усі відповіді правильні. Так тримати.</p>`;
