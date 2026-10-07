@@ -1064,6 +1064,107 @@ function renderResults() {
   $("#mistakes-preview").innerHTML = result.wrongQuestions.length ? `<p class="eyebrow">Питання для повторення</p>${result.wrongQuestions.map((question) => `<div class="mistake-item"><strong>${question.question}</strong><span>${question.topic}</span></div>`).join("")}` : `<p class="eyebrow">Без помилок</p><p>Усі відповіді правильні. Так тримати.</p>`;
 }
 
+function createResultShareCard(result) {
+  return new Promise((resolve, reject) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1200;
+    canvas.height = 630;
+    const context = canvas.getContext("2d");
+    if (!context) {
+      reject(new Error("Не вдалося створити картку результату"));
+      return;
+    }
+    context.fillStyle = "#f4f8f7";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = "#17231f";
+    context.fillRect(0, 0, canvas.width, 150);
+    context.fillStyle = "#ffffff";
+    context.font = '700 34px "Arsenal", sans-serif';
+    context.fillText("ROADWISE", 72, 94);
+    context.fillStyle = "#deeff5";
+    context.font = '600 20px "DM Sans", sans-serif';
+    context.fillText("МОЇ РЕЗУЛЬТАТИ ПДР", 870, 91);
+    context.fillStyle = result.passed ? "#449e48" : "#ff805b";
+    context.font = '700 150px "Arsenal", sans-serif';
+    context.fillText(`${result.percent}%`, 72, 358);
+    context.fillStyle = "#17231f";
+    context.font = '700 34px "Arsenal", sans-serif';
+    context.fillText(result.passed ? "Іспит складено" : "Є до чого прагнути", 78, 422);
+    context.fillStyle = "#718078";
+    context.font = '500 24px "DM Sans", sans-serif';
+    context.fillText(`Правильних відповідей: ${result.correct} із ${result.total}`, 80, 480);
+    const modeLabel = resultShareModeLabel();
+    context.fillText(modeLabel, 80, 524);
+    if (Number.isFinite(result.durationMs)) context.fillText(`Час: ${formatTimerDuration(result.durationMs)}`, 80, 568);
+    context.fillStyle = "#449e48";
+    context.fillRect(850, 205, 270, 270);
+    context.fillStyle = "#ffffff";
+    context.font = '700 52px "Arsenal", sans-serif';
+    context.textAlign = "center";
+    context.fillText(`${result.correct}/${result.total}`, 985, 330);
+    context.font = '500 22px "DM Sans", sans-serif';
+    context.fillText("правильних", 985, 378);
+    context.textAlign = "left";
+    const shareUrl = new URL(window.location.pathname, window.location.origin).href;
+    context.fillStyle = "#718078";
+    context.font = '500 18px "DM Sans", sans-serif';
+    context.fillText(new URL(shareUrl).host, 80, 606);
+    canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error("Не вдалося зберегти картку результату")), "image/png");
+  });
+}
+
+function resultShareModeLabel() {
+  if (state.mode === "ticket") return `Білет ${state.ticket}`;
+  if (state.mode === "random") return "Випадковий іспит";
+  if (state.mode === "topic") return "Тренування за темою";
+  if (state.mode === "mistakes") return "Мої помилки";
+  if (state.mode === "saved") return "Збережені питання";
+  return "Тест ПДР";
+}
+
+async function shareTestResult() {
+  const result = state.lastResult;
+  const button = $("#share-result-button");
+  const status = $("#share-result-status");
+  if (!result || button.disabled) return;
+  button.disabled = true;
+  status.textContent = "Готуємо картку...";
+  const shareUrl = new URL(window.location.pathname, window.location.origin).href;
+  const modeLabel = resultShareModeLabel().toLowerCase();
+  const caption = `Мій результат: ${result.correct} з ${result.total} правильних у форматі «${modeLabel}» (${result.percent}%).`;
+  try {
+    const blob = await createResultShareCard(result);
+    const file = typeof File === "undefined" ? null : new File([blob], "roadwise-result.png", { type: "image/png" });
+    let canShareFile = false;
+    if (file && navigator.canShare) {
+      try {
+        canShareFile = navigator.canShare({ files: [file] });
+      } catch { }
+    }
+    if (navigator.share) {
+      await navigator.share({ title: "Мій результат Roadwise", text: caption, url: shareUrl, ...(canShareFile ? { files: [file] } : {}) });
+      status.textContent = "Результатом поділилися.";
+    } else {
+      const downloadUrl = URL.createObjectURL(blob);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = downloadUrl;
+      downloadLink.download = "roadwise-result.png";
+      downloadLink.click();
+      window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+      let captionCopied = false;
+      try {
+        await navigator.clipboard.writeText(`${caption} ${shareUrl}`);
+        captionCopied = true;
+      } catch { }
+      status.textContent = captionCopied ? "Картку завантажено, текст результату скопійовано." : "Картку завантажено. Її можна додати до допису в соцмережі.";
+    }
+  } catch (error) {
+    status.textContent = error.name === "AbortError" ? "Поширення скасовано." : error.message || "Не вдалося підготувати результат.";
+  } finally {
+    button.disabled = false;
+  }
+}
+
 function pluralizeUk(count, one, few, many) {
   const mod10 = count % 10; const mod100 = count % 100;
   if (mod10 === 1 && mod100 !== 11) return one;
@@ -1169,6 +1270,7 @@ function init() {
     else { state.currentIndex += 1; saveCurrentTestProgress(); renderQuestion(); }
   });
   $("#retry-button").addEventListener("click", () => startTest(state.mode, state.topic));
+  $("#share-result-button").addEventListener("click", shareTestResult);
   $("#test-timer").addEventListener("click", toggleExamTimerVisibility);
   $("#report-button").addEventListener("click", openReportModal);
   $("#report-close").addEventListener("click", closeReportModal);

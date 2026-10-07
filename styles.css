@@ -887,6 +887,26 @@ button {
     display: flex;
     gap: 10px;
 }
+.share-result-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    width: auto;
+    margin-top: 14px;
+    padding: 11px 15px;
+    font-size: 12px;
+}
+.share-result-button:disabled {
+    cursor: wait;
+    opacity: 0.6;
+}
+.share-result-status {
+    min-height: 18px;
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+}
 .primary-button {
     background: var(--ink);
     color: #fff;
