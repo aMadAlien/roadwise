@@ -485,7 +485,7 @@
       "Венозна.",
       "Капілярна."
     ],
-    "correctAnswer": 1,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 409,
@@ -553,7 +553,7 @@
       "Пульсує, швидко витікає, яскравого кольору.",
       "Витікає з рани краплями."
     ],
-    "correctAnswer": 1,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 409,
