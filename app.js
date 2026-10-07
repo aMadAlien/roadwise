@@ -577,6 +577,7 @@ function tryTicketsFromIntro() {
 }
 
 function showView(viewName) {
+  $(".app-shell").classList.toggle("is-test-view", viewName === "test");
   document.querySelectorAll(".view").forEach((view) => view.classList.toggle("is-visible", view.id === `${viewName}-view`));
   document.querySelectorAll("[data-view]").forEach((link) => link.classList.toggle("is-active", link.dataset.view === viewName));
   if (viewName !== "test") stopExamTimer();
@@ -696,6 +697,7 @@ async function startTest(mode = "random", topic = null, options = {}) {
 }
 
 function showTestResult() {
+  setQuestionActionBarVisible(false);
   $("#test-empty-state").classList.add("hidden");
   $("#topic-picker").classList.add("hidden");
   $("#question-layout").classList.add("hidden");
@@ -782,6 +784,7 @@ function renderTicketsView() {
 }
 
 function returnToTopicPicker() {
+  setQuestionActionBarVisible(false);
   $("#question-layout").classList.add("hidden");
   $("#topic-picker").classList.remove("hidden");
   $(".question-nav").classList.add("hidden");
@@ -795,6 +798,7 @@ function returnToTopicPicker() {
 }
 
 function returnToTickets() {
+  setQuestionActionBarVisible(false);
   $("#question-layout").classList.add("hidden");
   $("#topic-picker").classList.add("hidden");
   $(".question-nav").classList.add("hidden");
@@ -822,6 +826,7 @@ function renderQuestion() {
     answersList: $("#answers-list"),
     showCorrectButton: $("#show-correct-button"),
     nextButton: $("#next-button"),
+    previousButton: $("#previous-button"),
     reportButton: $("#report-button"),
     saveButton: $("#save-question-button"),
     saveButtonLabel: $("#save-button-label")
@@ -866,6 +871,8 @@ function renderQuestion() {
   const answeredIncorrectly = question.userAnswer !== undefined && question.userAnswer !== question.correctAnswer;
   elements.showCorrectButton.classList.toggle("hidden", !answeredIncorrectly || question.showCorrectAnswer);
   elements.nextButton.disabled = question.userAnswer === undefined;
+  elements.previousButton.disabled = state.currentIndex === 0;
+  setQuestionActionBarVisible(question.userAnswer !== undefined);
   elements.nextButton.innerHTML = state.currentIndex === state.currentTest.length - 1 ? "<span></span> Завершити тест <span>✓</span>" : `<span></span> Наступне питання <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><title>arrow-next-ltr</title><path fill="currentColor" d="M18 9.804v1.392l-5.688 5.883l-1.436-1.39L14.93 11.5H1v-2h13.923l-4.047-4.165l1.434-1.394z"/></svg>`;
   elements.questionNav.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => { state.currentIndex = Number(button.dataset.questionIndex); saveCurrentTestProgress(); renderQuestion(); }));
   elements.answersList.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => {
@@ -876,6 +883,7 @@ function renderQuestion() {
     elements.answersList.querySelectorAll("button").forEach((item) => item.classList.remove("selected", "answer-correct", "answer-wrong"));
     button.classList.add("selected", answer === question.correctAnswer ? "answer-correct" : "answer-wrong");
     elements.nextButton.disabled = false;
+    setQuestionActionBarVisible(true);
     if (state.mode === "topic" && state.topic) markTopicStarted(state.topic);
     saveCurrentTestProgress();
     elements.showCorrectButton.classList.toggle("hidden", answer === question.correctAnswer);
@@ -887,6 +895,18 @@ function renderQuestion() {
     question.showCorrectAnswer = true;
     renderQuestion();
   };
+}
+
+function setQuestionActionBarVisible(visible) {
+  const actionBar = $("#question-action-bar");
+  if (!visible) {
+    actionBar.classList.remove("is-visible");
+    actionBar.classList.add("hidden");
+    return;
+  }
+  if (!actionBar.classList.contains("hidden")) return;
+  actionBar.classList.remove("hidden");
+  window.requestAnimationFrame(() => actionBar.classList.add("is-visible"));
 }
 
 const EXAM_PASS_PERCENT = 90;
@@ -979,8 +999,13 @@ async function submitFeedback(event) {
 }
 
 function scrollActiveQuestionNavIntoView() {
+  const questionNav = $("#question-nav");
   const activeButton = $("#question-nav .question-nav-item.active");
-  if (activeButton) activeButton.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  if (!activeButton) return;
+  const navRect = questionNav.getBoundingClientRect();
+  const activeRect = activeButton.getBoundingClientRect();
+  const left = questionNav.scrollLeft + activeRect.left - navRect.left - (questionNav.clientWidth - activeRect.width) / 2;
+  questionNav.scrollTo({ left, behavior: "smooth" });
 }
 
 function renderQuestionNav() {
@@ -989,7 +1014,6 @@ function renderQuestionNav() {
     const question = state.currentTest[index];
     button.className = `question-nav-item ${question.userAnswer === undefined ? "" : question.userAnswer === question.correctAnswer ? "correct" : "wrong"} ${index === state.currentIndex ? "active" : ""}`;
   });
-  scrollActiveQuestionNavIntoView();
 }
 
 function finishTest() {
@@ -1129,7 +1153,17 @@ function init() {
     }
     if (viewLink && !viewLink.dataset.mode) showView(viewLink.dataset.view);
   });
-  $("#next-button").addEventListener("click", () => { if (state.currentIndex === state.currentTest.length - 1) finishTest(); else { state.currentIndex += 1; saveCurrentTestProgress(); renderQuestion(); } });
+  $("#previous-button").addEventListener("click", () => {
+    if (state.currentIndex === 0) return;
+    state.currentIndex -= 1;
+    saveCurrentTestProgress();
+    renderQuestion();
+  });
+  $("#next-button").addEventListener("click", () => {
+    if (state.currentTest[state.currentIndex]?.userAnswer === undefined) return;
+    if (state.currentIndex === state.currentTest.length - 1) finishTest();
+    else { state.currentIndex += 1; saveCurrentTestProgress(); renderQuestion(); }
+  });
   $("#retry-button").addEventListener("click", () => startTest(state.mode, state.topic));
   $("#test-timer").addEventListener("click", toggleExamTimerVisibility);
   $("#report-button").addEventListener("click", openReportModal);

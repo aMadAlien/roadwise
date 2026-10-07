@@ -150,6 +150,9 @@ button {
     gap: 14px;
     border-bottom: 1px solid var(--line);
 }
+.app-shell.is-test-view .topbar {
+    display: none;
+}
 .topbar-spacer {
     flex: 1;
 }
@@ -749,6 +752,54 @@ button {
     opacity: 0.35;
     cursor: not-allowed;
 }
+.question-action-bar {
+    position: fixed;
+    z-index: 8;
+    right: 0;
+    bottom: 0;
+    left: 250px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px 5% calc(12px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 -8px 24px rgba(23, 35, 31, 0.08);
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    transform: translateY(calc(100% + 12px));
+    visibility: hidden;
+    transition: opacity 0.22s ease, transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.32s;
+}
+.question-action-bar.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+.question-action-bar.hidden {
+    display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+    .question-action-bar {
+        transition: none;
+    }
+}
+.question-action-bar > button {
+    flex: 1;
+    width: auto;
+    max-width: 370px;
+    min-height: 52px;
+    margin: 0;
+}
+.question-action-bar .question-previous-button {
+    border: 1px solid var(--line);
+    background: var(--white);
+    color: var(--ink);
+}
+.question-action-bar .question-previous-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
 .topic-picker {
     max-width: 760px;
     margin: 30px auto -35px;
@@ -934,6 +985,9 @@ button {
     .main-content {
         margin-left: 64px;
     }
+    .question-action-bar {
+        left: 64px;
+    }
     .topbar {
         height: 72px;
         padding: 0 5%;
@@ -942,7 +996,7 @@ button {
         font-size: 11px;
     }
     .view {
-        padding: 38px 5% 60px;
+        padding: 25px 5% 60px;
     }
     .hero-heading {
         min-height: 150px;

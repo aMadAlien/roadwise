@@ -269,13 +269,6 @@
           <div class="answers-list" id="answers-list"></div>
           <button class="show-correct-button hidden" type="button" id="show-correct-button">Показати правильну
             відповідь</button>
-          <button class="next-button" type="button" id="next-button" disabled><span></span>Наступне питання
-            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-              <title>arrow-next-ltr</title>
-              <path fill="currentColor"
-                d="M18 9.804v1.392l-5.688 5.883l-1.436-1.39L14.93 11.5H1v-2h13.923l-4.047-4.165l1.434-1.394z" />
-            </svg>
-          </button>
           <div class="question-footer">
             <button class="save-button" type="button" id="save-question-button"><svg aria-hidden="true" width="14"
                 height="14" viewBox="0 0 24 24">
@@ -291,6 +284,14 @@
                 </path>
               </svg> Помилка в питанні?</button>
           </div>
+        </div>
+        <div class="question-action-bar hidden" id="question-action-bar">
+          <button class="secondary-button question-previous-button" type="button" id="previous-button" disabled><span aria-hidden="true">←</span>Попереднє</button>
+          <button class="next-button question-next-button" type="button" id="next-button" disabled><span></span>Наступне питання
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" aria-hidden="true">
+              <path fill="currentColor" d="M18 9.804v1.392l-5.688 5.883l-1.436-1.39L14.93 11.5H1v-2h13.923l-4.047-4.165l1.434-1.394z" />
+            </svg>
+          </button>
         </div>
         <div class="test-result hidden" id="test-result">
           <div class="results-hero" id="results-hero">
