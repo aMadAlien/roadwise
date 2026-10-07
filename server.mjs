@@ -17,16 +17,20 @@ const reportRateLimitMax = Number(process.env.REPORT_RATE_LIMIT_MAX || 5);
 const reportRateLimitWindowMs = Number(process.env.REPORT_RATE_LIMIT_WINDOW_MS || 10 * 60 * 1000);
 const telegramRateLimitMax = Number(process.env.TELEGRAM_RATE_LIMIT_MAX || 20);
 const telegramRateLimitWindowMs = Number(process.env.TELEGRAM_RATE_LIMIT_WINDOW_MS || 60 * 1000);
+const targetedSurveyRateLimitEnabled = process.env.TARGETED_SURVEY_RATE_LIMIT_ENABLED === "true";
 const analyticsRateLimitMax = Number(process.env.ANALYTICS_RATE_LIMIT_MAX || 120);
 const analyticsRateLimitWindowMs = Number(process.env.ANALYTICS_RATE_LIMIT_WINDOW_MS || 60 * 1000);
 const visitorCookieName = "roadwise_visitor";
 const visitorThanksReactionCookieName = "roadwise_thanks_reacted";
-const targetedFeedbackPromptCookieName = "roadwise_targeted_feedback_prompt_seen";
-const thankedVisitorId = "abaeac5fee03cc2ef458040a296d4442";
-const targetedFeedbackVisitorIds = new Set([
-  "abaeac5fee03cc2ef458040a296d4442",
-  "7d3801ed74aabe4ce7d73c6921462981",
-]);
+const thankedVisitorId = "";
+const targetedSurveyVersion = 2;
+const targetedSurveyQuestions = [
+  { title: "З якою метою ти найчастіше заходиш на Roadwise?", options: ["Готуюся до теоретичного іспиту", "Вчу окремі теми", "Повторюю складні питання", "Тренуюсь для себе", "Все одразу"] },
+  { title: "Який формат тренування використовуєш найчастіше?", options: ["За темами", "За білетами", "Випадковий іспит", "Мої помилки"] },
+  { title: "Чого тобі найбільше бракує або що варто покращити?", options: ["Пояснень до відповідей", "Більше різних режимів тренування", "Зручнішого повторення помилок", "Можливості зберігати питання по категоріях", "Нічого, усе необхідне є"], other: true },
+  { title: "Наскільки вам зручно користуватися сайтом?", options: ["1", "2", "3", "4", "5"] },
+  { title: "Наскільки ймовірно, що порадиш Roadwise друзям?", options: Array.from({ length: 11 }, (_, score) => String(score)) }
+];
 const excludedAnalyticsVisitors = new Set([
   "b23667de6c213192205a3b9f3f1fdf3f",
   "b23cfece3870fdc9affba62aad11d1af",
@@ -87,7 +91,9 @@ function analyticsDay(day = new Date().toISOString().slice(0, 10)) {
 }
 
 function visitorRecord(visitorId, now) {
-  return analytics.visitors[visitorId] || { firstSeen: now, lastSeen: now, visits: 0, testStarts: 0, testsCompleted: 0, questionsAnswered: 0 };
+  const visitor = analytics.visitors[visitorId] || { firstSeen: now, lastSeen: now, visits: 0, testStarts: 0, testsCompleted: 0, questionsAnswered: 0 };
+  visitor.feedbackSurvey ||= { status: "not_started", answers: [], version: targetedSurveyVersion };
+  return visitor;
 }
 
 function trackPageView(request, response) {
@@ -357,6 +363,20 @@ function allowReport(request, response) {
   return true;
 }
 
+function allowTargetedSurveyRequest(request, response) {
+  return !targetedSurveyRateLimitEnabled || allowReport(request, response);
+}
+
+function allowTargetedSurveyTelegram(response = null) {
+  if (!targetedSurveyRateLimitEnabled) return true;
+  pruneRateLimitStore(telegramRateLimit, telegramRateLimitWindowMs);
+  const telegramLimit = consumeRateLimit(telegramRateLimit, "global", telegramRateLimitMax, telegramRateLimitWindowMs);
+  if (telegramLimit.allowed) return true;
+  if (response) rejectRateLimitedRequest(response, telegramLimit.retryAfter);
+  else console.error(`Survey notification skipped: Telegram rate limit exceeded, retry in ${telegramLimit.retryAfter}s`);
+  return false;
+}
+
 function readBody(request) {
   return new Promise((resolve, reject) => {
     let body = "";
@@ -390,14 +410,6 @@ function feedbackText(payload) {
     "💬 Нове повідомлення Roadwise",
     `Повідомлення: ${payload.message}`,
     `Контакт: ${payload.contact || "анонімно"}`,
-    `Відвідувач: ${payload.visitorId}`
-  ].join("\n\n");
-}
-
-function targetedFeedbackText(payload) {
-  return [
-    "💬 Пропозиція від запрошеного користувача Roadwise",
-    `Повідомлення: ${payload.message}`,
     `Відвідувач: ${payload.visitorId}`
   ].join("\n\n");
 }
@@ -472,6 +484,19 @@ async function sendTelegramMessage(chatId, text) {
     body: JSON.stringify({ chat_id: chatId, text: text.slice(0, 4000) })
   });
   if (!telegramResponse.ok) throw new Error(`Telegram API: ${await telegramResponse.text()}`);
+}
+
+async function notifyTargetedSurveyTelegram(text) {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    console.error("Survey notification skipped: Telegram is not configured");
+    return;
+  }
+  if (!allowTargetedSurveyTelegram()) return;
+  try {
+    await sendTelegramMessage(TELEGRAM_CHAT_ID, text);
+  } catch (error) {
+    console.error("Survey Telegram notification failed:", errorDetails(error));
+  }
 }
 
 async function handleTelegramWebhook(request, response) {
@@ -677,59 +702,154 @@ async function submitFeedback(request, response) {
   }
 }
 
+function isTargetedSurveyEligible(visitorId, visitor) {
+  const activeDays = Object.values(analytics.daily).filter((day) => day.visitors?.includes(visitorId)).length;
+  return visitor.testsCompleted >= 12 || activeDays >= 3;
+}
+
+function targetedSurveyTestRequest(request) {
+  const url = new URL(request.url, `http://${request.headers.host || "localhost"}`);
+  if (url.searchParams.get("survey-test") !== "1") return { requested: false };
+  const localHosts = new Set(["localhost", "127.0.0.1"]);
+  let hostIsLocal = false;
+  let originIsLocal = !request.headers.origin;
+  try {
+    hostIsLocal = localHosts.has(new URL(`http://${request.headers.host}`).hostname);
+    if (request.headers.origin) originIsLocal = localHosts.has(new URL(request.headers.origin).hostname);
+  } catch { }
+  const sessionId = url.searchParams.get("session") || "";
+  const validSessionId = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(sessionId);
+  return { requested: true, allowed: hostIsLocal && originIsLocal && validSessionId, sessionId };
+}
+
 async function getTargetedFeedbackPrompt(request, response) {
   const visitorId = getVisitorId(request);
   setVisitorCookie(response, visitorId);
-  const hasSeenPrompt = parseCookies(request)[targetedFeedbackPromptCookieName] === "1";
-  if (!targetedFeedbackVisitorIds.has(visitorId) || hasSeenPrompt) {
+  const testRequest = targetedSurveyTestRequest(request);
+  if (testRequest.requested && !testRequest.allowed) {
+    sendJson(response, 403, { error: "Тестовий режим доступний лише локально" });
+    return;
+  }
+  if (excludedAnalyticsVisitors.has(visitorId) && !testRequest.requested) {
     sendJson(response, 200, { show: false });
     return;
   }
-  response.setHeader("Set-Cookie", [
-    `${visitorCookieName}=${visitorId}; Max-Age=31536000; Path=/; SameSite=Lax; HttpOnly`,
-    `${targetedFeedbackPromptCookieName}=1; Max-Age=31536000; Path=/; SameSite=Lax; HttpOnly`
-  ]);
-  try {
-    if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
-      pruneRateLimitStore(telegramRateLimit, telegramRateLimitWindowMs);
-      const telegramLimit = consumeRateLimit(telegramRateLimit, "global", telegramRateLimitMax, telegramRateLimitWindowMs);
-      if (telegramLimit.allowed) await sendTelegramMessage(TELEGRAM_CHAT_ID, `Користувач побачив запрошення залишити пропозицію\nВідвідувач: ${visitorId}`);
-    }
-  } catch (error) {
-    console.error("Targeted feedback prompt notification failed:", errorDetails(error));
+  const now = new Date().toISOString();
+  const visitor = visitorRecord(visitorId, now);
+  let survey = visitor.feedbackSurvey;
+  let surveyChanged = false;
+  if (testRequest.requested && survey.testSessionId !== testRequest.sessionId) {
+    survey = {
+      status: "in_progress",
+      answers: [],
+      version: targetedSurveyVersion,
+      testSessionId: testRequest.sessionId
+    };
+    visitor.feedbackSurvey = survey;
+    surveyChanged = true;
   }
-  sendJson(response, 200, { show: true });
+  if (survey.status === "in_progress" && survey.version !== targetedSurveyVersion) {
+    survey.answers = [];
+    survey.version = targetedSurveyVersion;
+    surveyChanged = true;
+  }
+  if (survey.status === "not_started" && isTargetedSurveyEligible(visitorId, visitor)) {
+    survey.status = "in_progress";
+    survey.version = targetedSurveyVersion;
+    surveyChanged = true;
+  }
+  const shouldNotifyShown = survey.status === "in_progress" && !survey.shownNotifiedAt;
+  if (shouldNotifyShown) {
+    survey.shownNotifiedAt = now;
+    surveyChanged = true;
+  }
+  if (surveyChanged) {
+    visitor.lastSeen = now;
+    analytics.visitors[visitorId] = visitor;
+    await saveAnalytics();
+  }
+  if (shouldNotifyShown) {
+    await notifyTargetedSurveyTelegram([
+      "👀 Користувач побачив запрошення до опитування Roadwise",
+      `Тестів завершено: ${visitor.testsCompleted || 0}`,
+      `Відповідей: ${survey.answers.length} із ${targetedSurveyQuestions.length}`,
+      `Відвідувач: ${visitorId}`
+    ].join("\n\n"));
+  }
+  sendJson(response, 200, {
+    show: survey.status === "in_progress",
+    questionIndex: survey.answers.length
+  });
 }
 
 async function submitTargetedFeedback(request, response) {
   const visitorId = getVisitorId(request);
-  if (!targetedFeedbackVisitorIds.has(visitorId)) {
-    sendJson(response, 403, { error: "Недоступно" });
-    return;
-  }
+  const testRequest = targetedSurveyTestRequest(request);
   try {
     const payload = JSON.parse(await readBody(request));
-    const message = typeof payload.message === "string" ? payload.message.trim().slice(0, 2000) : "";
-    if (!message) {
-      sendJson(response, 400, { error: "Напишіть вашу пропозицію" });
+    const questionIndex = Number.isInteger(payload.questionIndex) ? payload.questionIndex : -1;
+    const question = targetedSurveyQuestions[questionIndex];
+    const answer = typeof payload.answer === "string" ? payload.answer.trim().slice(0, 1000) : "";
+    if (testRequest.requested && !testRequest.allowed) {
+      sendJson(response, 403, { error: "Тестовий режим доступний лише локально" });
+      return;
+    }
+    const visitor = analytics.visitors[visitorId];
+    const survey = visitor?.feedbackSurvey;
+    if (!question || !answer || survey?.status !== "in_progress" || survey.version !== targetedSurveyVersion || (testRequest.requested && survey.testSessionId !== testRequest.sessionId) || questionIndex !== survey.answers.length) {
+      sendJson(response, 400, { error: "Некоректна або вже надіслана відповідь" });
+      return;
+    }
+    if (question.options && !question.options.includes(answer) && !(question.other && answer.startsWith("Інше: ") && answer.slice(7).trim())) {
+      sendJson(response, 400, { error: "Оберіть відповідь зі списку" });
       return;
     }
     if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
       sendJson(response, 503, { error: "Telegram ще не налаштований на сервері" });
       return;
     }
-    pruneRateLimitStore(telegramRateLimit, telegramRateLimitWindowMs);
-    const telegramLimit = consumeRateLimit(telegramRateLimit, "global", telegramRateLimitMax, telegramRateLimitWindowMs);
-    if (!telegramLimit.allowed) {
-      rejectRateLimitedRequest(response, telegramLimit.retryAfter);
-      return;
-    }
-    await sendTelegramMessage(TELEGRAM_CHAT_ID, targetedFeedbackText({ message, visitorId }));
-    sendJson(response, 200, { ok: true });
+    if (!allowTargetedSurveyTelegram(response)) return;
+    const telegramText = [
+      `📝 Опитування Roadwise: ${questionIndex + 1}/${targetedSurveyQuestions.length}`,
+      `Питання: ${question.title}`,
+      `Відповідь: ${answer}`,
+      `Відвідувач: ${visitorId}`
+    ].join("\n\n");
+    await sendTelegramMessage(TELEGRAM_CHAT_ID, telegramText);
+    survey.answers.push(answer);
+    if (survey.answers.length === targetedSurveyQuestions.length) survey.status = "complete";
+    visitor.lastSeen = new Date().toISOString();
+    analytics.visitors[visitorId] = visitor;
+    await saveAnalytics();
+    sendJson(response, 200, { ok: true, complete: survey.status === "complete", questionIndex: survey.answers.length });
   } catch (error) {
     const status = error.message === "Повідомлення завелике" ? 413 : error instanceof SyntaxError ? 400 : 502;
     sendJson(response, status, { error: error.message || "Не вдалося надіслати пропозицію" });
   }
+}
+
+async function dismissTargetedFeedback(request, response) {
+  const visitorId = getVisitorId(request);
+  const testRequest = targetedSurveyTestRequest(request);
+  if (testRequest.requested) {
+    if (!testRequest.allowed) {
+      sendJson(response, 403, { error: "Тестовий режим доступний лише локально" });
+      return;
+    }
+  }
+  const visitor = analytics.visitors[visitorId];
+  const survey = visitor?.feedbackSurvey;
+  if (survey?.status === "in_progress" && !survey.closedNotifiedAt && (!testRequest.requested || survey.testSessionId === testRequest.sessionId)) {
+    survey.status = "dismissed";
+    survey.closedNotifiedAt = new Date().toISOString();
+    await saveAnalytics();
+    await notifyTargetedSurveyTelegram([
+      "✖️ Користувач закрив незавершене опитування Roadwise",
+      `Відповідей до закриття: ${survey.answers.length} із ${targetedSurveyQuestions.length}`,
+      `Відвідувач: ${visitorId}`
+    ].join("\n\n"));
+  }
+  sendJson(response, 204, null);
 }
 
 function serveStatic(request, response) {
@@ -787,7 +907,7 @@ const server = http.createServer((request, response) => {
     sendJson(response, 400, { error: "Некоректний запит" });
     return;
   }
-  if (request.method === "OPTIONS" && (requestPath === "/api/report-question" || requestPath === "/api/feedback" || requestPath === "/api/analytics/event" || requestPath === "/api/visitor-thanks" || requestPath === "/api/targeted-feedback")) {
+  if (request.method === "OPTIONS" && (requestPath === "/api/report-question" || requestPath === "/api/feedback" || requestPath === "/api/analytics/event" || requestPath === "/api/visitor-thanks" || requestPath === "/api/targeted-feedback" || requestPath === "/api/targeted-feedback-dismiss")) {
     response.writeHead(204, response.corsHeaders);
     response.end();
     return;
@@ -815,7 +935,9 @@ const server = http.createServer((request, response) => {
   } else if (request.method === "POST" && requestPath === "/api/feedback") {
     if (allowReport(request, response)) submitFeedback(request, response);
   } else if (request.method === "POST" && requestPath === "/api/targeted-feedback") {
-    if (allowReport(request, response)) submitTargetedFeedback(request, response);
+    if (allowTargetedSurveyRequest(request, response)) submitTargetedFeedback(request, response);
+  } else if (request.method === "POST" && requestPath === "/api/targeted-feedback-dismiss") {
+    if (allowTargetedSurveyRequest(request, response)) dismissTargetedFeedback(request, response);
   } else if (request.method === "POST" && requestPath === "/api/client-error") {
     reportClientError(request, response);
   } else if (request.method === "POST" && requestPath === "/api/visitor-thanks") {

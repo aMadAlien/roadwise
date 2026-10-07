@@ -64,7 +64,7 @@ function reportImageLoadError(question) {
   fetch("api/client-error", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), keepalive: true }).catch(() => { });
 }
 function trackAnalyticsEvent(event, details = {}) {
-  fetch("api/analytics/event", {
+  return fetch("api/analytics/event", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ event, ...details }),
@@ -81,7 +81,7 @@ function reportVisitorThanksReaction(action) {
   }).catch(() => { });
 }
 
-trackAnalyticsEvent("page_view", { mode: "none", topic: "all", total: 0 });
+const pageViewTracked = trackAnalyticsEvent("page_view", { mode: "none", topic: "all", total: 0 });
 
 async function loadQuestions() {
   clearAppError();
@@ -424,16 +424,131 @@ function confirmRating() {
   window.setTimeout(closeRatingPrompt, 700);
 }
 
+const targetedSurveyQuestions = [
+  { title: "З якою метою ти найчастіше заходиш на Roadwise?", type: "choice", options: ["Готуюся до теоретичного іспиту", "Вчу окремі теми", "Повторюю складні питання", "Тренуюсь для себе", "Все одразу"] },
+  { title: "Який формат тренування тобі подобається найбільше?", type: "choice", options: ["За темами", "За білетами", "Випадковий іспит", "Мої помилки"] },
+  { title: "Чого тобі найбільше бракує або що варто покращити?", type: "choice-other", options: ["Пояснень до відповідей", "Більше різних режимів тренування", "Зручнішого повторення помилок", "Можливості зберігати питання по категоріях", "Нічого, усе необхідне є"], other: true },
+  { title: "Наскільки вам зручно користуватися сайтом?", type: "stars", options: ["1", "2", "3", "4", "5"] },
+  { title: "Наскільки ймовірно, що порадиш Roadwise друзям?", type: "slider" }
+];
+const isTargetedSurveyPreview = ["localhost", "127.0.0.1"].includes(window.location.hostname) && new URLSearchParams(window.location.search).get("survey-test") === "1";
+const targetedSurveyPreviewSession = isTargetedSurveyPreview ? crypto.randomUUID() : null;
+
+function targetedSurveyEndpoint(path) {
+  return isTargetedSurveyPreview
+    ? `${path}?survey-test=1&session=${encodeURIComponent(targetedSurveyPreviewSession)}`
+    : path;
+}
+
 async function showTargetedFeedbackPrompt() {
   try {
-    const response = await fetch("api/targeted-feedback-prompt", { cache: "no-store" });
+    const response = await fetch(targetedSurveyEndpoint("api/targeted-feedback-prompt"), { cache: "no-store" });
     const payload = await response.json();
-    if (response.ok && payload.show) $("#targeted-feedback-modal").classList.remove("hidden");
+    if (!response.ok || !payload.show) return;
+    $("#targeted-feedback-modal").classList.remove("hidden");
+    if (isTargetedSurveyPreview) $("#targeted-feedback-content .eyebrow").textContent = "Тестовий режим · відповіді надсилаються в Telegram";
+    if (payload.questionIndex > 0) renderTargetedSurveyQuestion(payload.questionIndex);
   } catch { }
 }
 
 function closeTargetedFeedbackPrompt() {
+  fetch(targetedSurveyEndpoint("api/targeted-feedback-dismiss"), { method: "POST", keepalive: true }).catch(() => { });
   $("#targeted-feedback-modal").classList.add("hidden");
+}
+
+function startTargetedSurvey() {
+  renderTargetedSurveyQuestion(0);
+}
+
+function renderTargetedSurveyQuestion(questionIndex) {
+  const question = targetedSurveyQuestions[questionIndex];
+  if (!question) return;
+  const content = $("#targeted-feedback-content");
+  const choices = question.type === "choice" || question.type === "choice-other"
+    ? `<div class="targeted-survey-choices" role="group" aria-label="${question.title}">${question.options.map((option, index) => `<button type="button" class="targeted-survey-choice" data-choice-index="${index}">${option}</button>`).join("")}${question.other ? `<button type="button" class="targeted-survey-choice" data-choice-index="${question.options.length}">Інше</button>` : ""}</div>${question.other ? '<label class="targeted-survey-label hidden" id="targeted-survey-other-label" for="targeted-survey-other">Уточни, будь ласка</label><textarea class="hidden" id="targeted-survey-other" rows="3" maxlength="1000" placeholder="Твій варіант"></textarea>' : ""}`
+    : question.type === "stars"
+      ? `<div class="targeted-survey-stars" role="radiogroup" aria-label="${question.title}">${question.options.map((option, index) => `<button type="button" class="targeted-survey-choice targeted-survey-star" data-choice-index="${index}" role="radio" aria-checked="false" aria-label="${option} з 5 зірок">★</button>`).join("")}</div><p class="targeted-survey-stars-labels"><span>⭐ 1 — зовсім незручно</span><span>⭐ 5 — дуже зручно</span></p><p class="targeted-survey-star-value" id="targeted-survey-star-value" aria-live="polite">Обери оцінку</p>`
+    : question.type === "slider"
+      ? '<div class="targeted-survey-scale"><output class="targeted-survey-score" id="targeted-survey-score" for="targeted-survey-slider" aria-live="polite">5</output><input class="targeted-survey-slider" id="targeted-survey-slider" type="range" min="0" max="10" step="1" value="5" aria-label="Оцінка від 0 до 10"><div class="targeted-survey-scale-labels"><span>Зовсім ні</span><span>Точно так</span></div></div>'
+      : '<label class="targeted-survey-label" for="targeted-survey-answer">Твоя відповідь</label><textarea id="targeted-survey-answer" name="answer" rows="4" maxlength="1000" required placeholder="Можна коротко, своїми словами"></textarea>';
+  content.innerHTML = `<p class="eyebrow">Питання ${questionIndex + 1} з ${targetedSurveyQuestions.length}</p><h2 id="targeted-feedback-title">${question.title}</h2><form id="targeted-survey-form">${choices}<p class="rating-hint" id="targeted-survey-status" role="status"></p><button type="submit" class="rating-confirm" id="targeted-survey-submit" disabled>Надіслати відповідь</button></form>`;
+  const form = $("#targeted-survey-form");
+  const submit = $("#targeted-survey-submit");
+  form.querySelectorAll(".targeted-survey-choice").forEach((button) => button.addEventListener("click", () => {
+    const isStars = question.type === "stars";
+    const selectedIndex = Number(button.dataset.choiceIndex);
+    form.querySelectorAll(".targeted-survey-choice").forEach((choice) => {
+      const isSelected = isStars ? Number(choice.dataset.choiceIndex) <= selectedIndex : choice === button;
+      choice.classList.toggle("is-selected", isSelected);
+      choice.classList.toggle("is-current", isStars && choice === button);
+      if (isStars) choice.setAttribute("aria-checked", choice === button ? "true" : "false");
+    });
+    if (question.type === "choice-other") {
+      const isOther = selectedIndex === question.options.length;
+      const otherLabel = $("#targeted-survey-other-label");
+      const otherField = $("#targeted-survey-other");
+      otherLabel.classList.toggle("hidden", !isOther);
+      otherField.classList.toggle("hidden", !isOther);
+      otherField.required = isOther;
+      submit.disabled = isOther && !otherField.value.trim();
+      if (isOther) otherField.focus();
+    } else {
+      submit.disabled = false;
+    }
+    if (isStars) $("#targeted-survey-star-value").textContent = `${selectedIndex + 1} з 5`;
+  }));
+  const answerField = $("#targeted-survey-answer");
+  if (answerField) answerField.addEventListener("input", () => { submit.disabled = !answerField.value.trim(); });
+  const otherField = $("#targeted-survey-other");
+  if (otherField) otherField.addEventListener("input", () => {
+    const otherButton = form.querySelector(`.targeted-survey-choice[data-choice-index="${question.options.length}"]`);
+    submit.disabled = otherButton.classList.contains("is-selected") && !otherField.value.trim();
+  });
+  const slider = $("#targeted-survey-slider");
+  if (slider) {
+    submit.disabled = false;
+    slider.addEventListener("input", () => { $("#targeted-survey-score").value = slider.value; });
+  }
+  form.addEventListener("submit", (event) => submitTargetedSurveyAnswer(event, questionIndex));
+}
+
+async function submitTargetedSurveyAnswer(event, questionIndex) {
+  event.preventDefault();
+  const question = targetedSurveyQuestions[questionIndex];
+  const form = event.currentTarget;
+  const selectedChoice = form.querySelector(".targeted-survey-choice.is-selected");
+  const answerField = $("#targeted-survey-answer");
+  const otherField = $("#targeted-survey-other");
+  const slider = $("#targeted-survey-slider");
+  const selectedOption = question.type === "stars" ? form.querySelector(".targeted-survey-star.is-current") : selectedChoice;
+  const selectedIndex = Number(selectedOption?.dataset.choiceIndex);
+  const answer = question.type === "choice" || question.type === "stars"
+    ? question.options[selectedIndex]
+    : question.type === "choice-other"
+      ? selectedIndex === question.options.length ? `Інше: ${otherField?.value.trim()}` : question.options[selectedIndex]
+      : question.type === "slider" ? slider?.value : answerField?.value.trim();
+  const submit = $("#targeted-survey-submit");
+  const status = $("#targeted-survey-status");
+  if (!answer) return;
+  submit.disabled = true;
+  status.textContent = "Надсилаємо відповідь...";
+  try {
+    const response = await fetch(targetedSurveyEndpoint("api/targeted-feedback"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ questionIndex, answer })
+    });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "Не вдалося надіслати відповідь");
+    if (payload.complete) {
+      $("#targeted-feedback-content").innerHTML = '<p class="eyebrow">Дякуємо за чесність</p><h2 id="targeted-feedback-title">Тепер знаємо, куди їхати далі</h2><p>Твої відповіді вже допомагають зробити Roadwise кращим.</p>';
+      return;
+    }
+    renderTargetedSurveyQuestion(payload.questionIndex);
+  } catch (error) {
+    status.textContent = error.message;
+    submit.disabled = false;
+  }
 }
 
 function showTicketsIntroPrompt() {
@@ -449,28 +564,6 @@ function closeTicketsIntroPrompt() {
 function tryTicketsFromIntro() {
   closeTicketsIntroPrompt();
   showView("tickets");
-}
-
-async function submitTargetedFeedback(event) {
-  event.preventDefault();
-  const message = $("#targeted-feedback-message").value.trim();
-  const status = $("#targeted-feedback-status");
-  const submit = $("#targeted-feedback-submit");
-  if (!message) return;
-  submit.disabled = true;
-  status.classList.remove("is-success");
-  status.textContent = "Надсилаємо...";
-  try {
-    const response = await fetch("api/targeted-feedback", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message }) });
-    const payload = await response.json();
-    if (!response.ok) throw new Error(payload.error || "Не вдалося надіслати пропозицію");
-    status.textContent = "Дякуємо. Ми обов'язково це прочитаємо.";
-    status.classList.add("is-success");
-    window.setTimeout(closeTargetedFeedbackPrompt, 1100);
-  } catch (error) {
-    status.textContent = error.message;
-    submit.disabled = false;
-  }
 }
 
 function showView(viewName) {
@@ -909,7 +1002,7 @@ function finishTest() {
       completedAt: new Date().toISOString()
     };
   }
-  trackAnalyticsEvent("test_completed", { mode: state.mode, topic: state.topic || "all", total: state.currentTest.length, correct });
+  trackAnalyticsEvent("test_completed", { mode: state.mode, topic: state.topic || "all", total: state.currentTest.length, correct }).then(showTargetedFeedbackPrompt);
   stopExamTimer();
   clearCurrentTestProgress();
   saveProgress();
@@ -1048,7 +1141,7 @@ function init() {
   $("#rating-confirm").addEventListener("click", confirmRating);
   $("#targeted-feedback-close").addEventListener("click", closeTargetedFeedbackPrompt);
   $("#targeted-feedback-modal").addEventListener("click", (event) => { if (event.target.id === "targeted-feedback-modal") closeTargetedFeedbackPrompt(); });
-  $("#targeted-feedback-form").addEventListener("submit", submitTargetedFeedback);
+  $("#targeted-feedback-start").addEventListener("click", startTargetedSurvey);
   $("#tickets-intro-try").addEventListener("click", tryTicketsFromIntro);
   $("#tickets-intro-later").addEventListener("click", closeTicketsIntroPrompt);
   document.querySelectorAll(".rating-star").forEach((star) => {
@@ -1059,7 +1152,7 @@ function init() {
   document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeReportModal(); });
   window.addEventListener("error", (event) => reportClientError(event.error || new Error(event.message)));
   window.addEventListener("unhandledrejection", (event) => reportClientError(event.reason || new Error("Unhandled promise rejection")));
-  loadQuestions().then(() => { showTicketsIntroPrompt(); showRatingPrompt(); showTargetedFeedbackPrompt(); showResumeToast(); }).catch(handleInitialLoadError);
+  loadQuestions().then(() => pageViewTracked).then(() => { showTicketsIntroPrompt(); showRatingPrompt(); showTargetedFeedbackPrompt(); showResumeToast(); }).catch(handleInitialLoadError);
 }
 
 function handleInitialLoadError(error) {
