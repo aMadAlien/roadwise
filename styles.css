@@ -1682,8 +1682,62 @@ button {
 }
 .saved-actions {
     display: flex;
+    align-items: center;
     gap: 10px;
     margin: 22px 0 30px;
+}
+.saved-clear-button {
+    margin-left: auto;
+    padding: 10px 4px;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    font-size: 11px;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+    opacity: 0.72;
+    transition: color 0.18s ease, opacity 0.18s ease, text-decoration-color 0.18s ease;
+}
+.saved-clear-button:hover,
+.saved-clear-button:focus-visible {
+    color: var(--orange);
+    text-decoration-color: currentColor;
+    opacity: 1;
+}
+.saved-clear-button:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 3px;
+}
+.saved-clear-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.saved-clear-actions button {
+    min-height: 42px;
+    padding: 10px 14px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+}
+.saved-clear-actions .secondary-button {
+    border: 1px solid var(--line);
+    background: var(--white);
+    color: var(--ink);
+}
+.saved-clear-confirm {
+    border: 1px solid var(--orange);
+    background: var(--orange);
+    color: var(--white);
+}
+.saved-clear-confirm:hover {
+    filter: brightness(0.92);
+}
+.saved-clear-actions button:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 2px;
 }
 .saved-list {
     display: grid;

@@ -355,8 +355,9 @@
               <path fill="currentColor"
                 d="M18 9.804v1.392l-5.688 5.883l-1.436-1.39L14.93 11.5H1v-2h13.923l-4.047-4.165l1.434-1.394z" />
             </svg></button>
-          <button class="secondary-button" type="button" id="saved-clear-all"><span></span>Видалити
-            всі<span></span></button>
+          <button class="saved-clear-button" type="button" id="saved-clear-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 16 16"><title>remove</title><path fill="currentColor" fill-rule="evenodd" d="M5.75 3V1.5h4.5V3zm-1.5 0V1a1 1 0 0 1 1-1h5.5a1 1 0 0 1 1 1v2h2.5a.75.75 0 0 1 0 1.5h-.365l-.743 9.653A2 2 0 0 1 11.148 16H4.852a2 2 0 0 1-1.994-1.847L2.115 4.5H1.75a.75.75 0 0 1 0-1.5zm-.63 1.5h8.76l-.734 9.538a.5.5 0 0 1-.498.462H4.852a.5.5 0 0 1-.498-.462z" clip-rule="evenodd"/></svg>
+          </button>
         </div>
         <div class="saved-list" id="saved-list"></div>
         <div class="empty-state" id="saved-empty-state">
@@ -501,6 +502,18 @@
         <button class="primary-button" type="button" id="restart-new"><span></span> Почати новий тест<span></span></button>
         <button class="next-button" type="button" id="restart-continue"><span></span>Продовжити<span></span></button>
         <button class="secondary-button" type="button" id="restart-cancel"><span></span>Скасувати<span></span></button>
+      </div>
+    </div>
+  </div>
+  <div class="report-modal hidden" id="saved-clear-modal" role="dialog" aria-modal="true" aria-labelledby="saved-clear-title" aria-describedby="saved-clear-description">
+    <div class="report-dialog saved-clear-dialog">
+      <button class="report-close" type="button" id="saved-clear-close" aria-label="Закрити">×</button>
+      <p class="eyebrow">Підтвердження дії</p>
+      <h2 id="saved-clear-title">Видалити всі збережені питання?</h2>
+      <p class="report-question" id="saved-clear-description"></p>
+      <div class="saved-clear-actions">
+        <button style="width: 50%; justify-content: center;" class="secondary-button" type="button" id="saved-clear-cancel">Скасувати</button>
+        <button style="width: 50%;" class="saved-clear-confirm" type="button" id="saved-clear-confirm">Видалити всі</button>
       </div>
     </div>
   </div>

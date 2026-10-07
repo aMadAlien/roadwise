@@ -299,6 +299,16 @@ function clearSavedQuestions() {
   updateNavBadge();
 }
 
+function openSavedClearConfirmation() {
+  $("#saved-clear-description").textContent = `Буде видалено ${state.savedQuestions.length} ${pluralizeUk(state.savedQuestions.length, "збережене питання", "збережені питання", "збережених питань")}. Відновити їх не вдасться.`;
+  $("#saved-clear-modal").classList.remove("hidden");
+  $("#saved-clear-cancel").focus();
+}
+
+function closeSavedClearConfirmation() {
+  $("#saved-clear-modal").classList.add("hidden");
+}
+
 function updateNavBadge() {
   const badge = $("#saved-nav-count");
   badge.textContent = state.savedQuestions.length;
@@ -1122,7 +1132,14 @@ function init() {
   $("#report-form").addEventListener("submit", submitReport);
   $("#feedback-form").addEventListener("submit", submitFeedback);
   $("#exam-failed-continue").addEventListener("click", () => $("#exam-failed-modal").classList.add("hidden"));
-  $("#saved-clear-all").addEventListener("click", clearSavedQuestions);
+  $("#saved-clear-all").addEventListener("click", openSavedClearConfirmation);
+  $("#saved-clear-close").addEventListener("click", closeSavedClearConfirmation);
+  $("#saved-clear-cancel").addEventListener("click", closeSavedClearConfirmation);
+  $("#saved-clear-modal").addEventListener("click", (event) => { if (event.target.id === "saved-clear-modal") closeSavedClearConfirmation(); });
+  $("#saved-clear-confirm").addEventListener("click", () => {
+    clearSavedQuestions();
+    closeSavedClearConfirmation();
+  });
   $("#app-status-retry").addEventListener("click", () => {
     if (state.retryAction) state.retryAction();
     else loadQuestions().catch(handleInitialLoadError);
@@ -1149,7 +1166,12 @@ function init() {
     star.addEventListener("mouseleave", () => updateRatingStars(pendingRating || 0));
     star.addEventListener("click", () => setRating(Number(star.dataset.rating)));
   });
-  document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeReportModal(); });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeReportModal();
+      closeSavedClearConfirmation();
+    }
+  });
   window.addEventListener("error", (event) => reportClientError(event.error || new Error(event.message)));
   window.addEventListener("unhandledrejection", (event) => reportClientError(event.reason || new Error("Unhandled promise rejection")));
   loadQuestions().then(() => pageViewTracked).then(() => { showTicketsIntroPrompt(); showRatingPrompt(); showTargetedFeedbackPrompt(); showResumeToast(); }).catch(handleInitialLoadError);
