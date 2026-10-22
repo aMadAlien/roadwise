@@ -49,4 +49,12 @@ export const AVAILABLE_TOPICS = [
   "42-nadannya-domedychnoyi-dopomohy",
   "43-etyka-vodinnya-kultura-ta-vidpochynok-vodiya",
   "44-yevroprotokol",
+  "45-dodatkovi-pytannya-shchodo-katehoriy-a1-a-zahalni",
+  "46-dodatkovi-pytannya-shchodo-katehoriy-a1-a-budova-i-terminy",
+  "47-dodatkovi-pytannya-shchodo-katehoriy-a1-a-yurydychna-vidpovidalnist",
+  "48-dodatkovi-pytannya-shchodo-katehoriy-a1-a-bezpeka",
+  "49-dodatkovi-pytannya-shchodo-katehoriy-v1-v-zahalni",
+  "50-dodatkovi-pytannya-shchodo-katehoriy-v1-v-budova-i-terminy",
+  "51-dodatkovi-pytannya-shchodo-katehoriy-v1-v-yurydychna-vidpovidalnist",
+  "52-dodatkovi-pytannya-shchodo-katehoriy-v1-v-bezpeka"
 ];
