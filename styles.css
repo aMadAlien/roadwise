@@ -1440,6 +1440,43 @@ button {
 .feature-later-button:hover {
     color: var(--ink);
 }
+.random-category-dialog select {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    background: var(--white);
+    color: var(--ink);
+    font: inherit;
+}
+.random-category-label {
+    position: relative;
+    z-index: 1;
+    display: block;
+    margin-top: 22px;
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 700;
+}
+.random-category-remember {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 12px;
+    cursor: pointer;
+}
+.random-category-remember input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--mint-dark);
+}
 .rating-dialog > p:not(.eyebrow):not(.rating-hint) {
     position: relative;
     z-index: 1;

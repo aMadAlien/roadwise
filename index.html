@@ -522,6 +522,25 @@
       </div>
     </div>
   </div>
+  <div class="rating-modal hidden" id="random-category-modal" role="dialog" aria-modal="true" aria-labelledby="random-category-title">
+    <div class="rating-dialog feature-dialog random-category-dialog">
+      <p class="eyebrow">Підготовка до іспиту</p>
+      <h2 id="random-category-title">Яку категорію складаєш?</h2>
+      <p>До випадкового тесту увійдуть загальні питання та додаткові питання для вибраної категорії.</p>
+      <label class="random-category-label" for="random-category-select">Категорія посвідчення</label>
+      <select id="random-category-select">
+        <option value="">Оберіть категорію</option>
+      </select>
+      <label class="random-category-remember">
+        <input type="checkbox" id="random-category-remember" />
+        <span>Запам'ятати і більше не питати</span>
+      </label>
+      <div class="feature-dialog-actions">
+        <button type="button" class="rating-confirm" id="random-category-start" disabled>Почати тест <span aria-hidden="true">→</span></button>
+        <button type="button" class="feature-later-button" id="random-category-cancel">Скасувати</button>
+      </div>
+    </div>
+  </div>
   <div class="resume-toast hidden" id="resume-toast" role="status">
     <div><strong>Бажаєте продовжити?</strong><span id="resume-toast-details">У тебе залишився незавершений тест.</span>
     </div>

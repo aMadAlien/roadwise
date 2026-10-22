@@ -76,3 +76,60 @@ export const AVAILABLE_TOPICS = [
   "67-dodatkovi-pytannya-shchodo-katehoriyi-t-yurydychna-vidpovilnist",
   "68-dodatkovi-pytannya-shchodo-katehoriyi-t-bezpeka"
 ];
+
+export const RANDOM_TEST_CATEGORIES = {
+  a: {
+    label: "A, A1",
+    topicIds: [
+      "45-dodatkovi-pytannya-shchodo-katehoriy-a1-a-zahalni",
+      "46-dodatkovi-pytannya-shchodo-katehoriy-a1-a-budova-i-terminy",
+      "47-dodatkovi-pytannya-shchodo-katehoriy-a1-a-yurydychna-vidpovidalnist",
+      "48-dodatkovi-pytannya-shchodo-katehoriy-a1-a-bezpeka"
+    ]
+  },
+  b: {
+    label: "B, B1",
+    topicIds: [
+      "49-dodatkovi-pytannya-shchodo-katehoriy-v1-v-zahalni",
+      "50-dodatkovi-pytannya-shchodo-katehoriy-v1-v-budova-i-terminy",
+      "51-dodatkovi-pytannya-shchodo-katehoriy-v1-v-yurydychna-vidpovidalnist",
+      "52-dodatkovi-pytannya-shchodo-katehoriy-v1-v-bezpeka"
+    ]
+  },
+  c: {
+    label: "C, C1",
+    topicIds: [
+      "53-dodatkovi-pytannya-shchodo-katehoriy-c1-c-zahalni",
+      "54-dodatkovi-pytannya-shchodo-katehoriy-c1-c-budova-i-terminy",
+      "55-dodatkovi-pytannya-shchodo-katehoriy-c1-c-yurydychna-vidpovidalnist",
+      "56-dodatkovi-pytannya-shchodo-katehoriy-c1-c-bezpeka"
+    ]
+  },
+  d: {
+    label: "D, D1",
+    topicIds: [
+      "57-dodatkovi-pytannya-shchodo-katehoriy-d1-d-zahalni",
+      "58-dodatkovi-pytannya-shchodo-katehoriy-d1-d-budova-i-terminy",
+      "59-dodatkovi-pytannya-shchodo-katehoriy-d1-d-yurydychna-vidpovidalnist",
+      "60-dodatkovi-pytannya-shchodo-katehoriy-d1-d-bezpeka"
+    ]
+  },
+  e: {
+    label: "BE, C1E, CE, D1E, DE",
+    topicIds: [
+      "61-dodatkovi-pytannya-shchodo-katehoriy-be-c1e-ce-d1e-de-zahalni",
+      "62-dodatkovi-pytannya-shchodo-katehoriy-be-c1e-ce-d1e-de-budova-y-terminy",
+      "63-dodatkovi-pytannya-shchodo-katehoriy-be-c1e-ce-d1e-de-yurydychna-vidpovilnist",
+      "64-dodatkovi-pytannya-shchodo-katehoriy-be-c1e-ce-d1e-de-bezpeka"
+    ]
+  },
+  t: {
+    label: "T",
+    topicIds: [
+      "65-dodatkovi-pytannya-shchodo-katehoriyi-t-zahalni",
+      "66-dodatkovi-pytannya-shchodo-katehoriyi-t-budova-i-terminy",
+      "67-dodatkovi-pytannya-shchodo-katehoriyi-t-yurydychna-vidpovilnist",
+      "68-dodatkovi-pytannya-shchodo-katehoriyi-t-bezpeka"
+    ]
+  }
+};

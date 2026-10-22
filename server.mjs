@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 import { fileURLToPath } from "url";
-import { AVAILABLE_TOPICS } from "./available-topics.js";
+import { AVAILABLE_TOPICS, RANDOM_TEST_CATEGORIES } from "./available-topics.js";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT || 3000);
@@ -364,9 +364,15 @@ function shuffleArray(items) {
   return array;
 }
 
-function getRandomQuestions(count) {
+function getRandomQuestions(count, category = null) {
   const index = loadTopicIndex();
-  const entries = AVAILABLE_RANDOM_TOPICS.length ? index.filter((entry) => AVAILABLE_RANDOM_TOPICS.includes(entry.file.replace(/\.json$/, ""))) : index;
+  const selectedTopics = category ? RANDOM_TEST_CATEGORIES[category].topicIds : [];
+  const categoryTopicIds = new Set(Object.values(RANDOM_TEST_CATEGORIES).flatMap(({ topicIds }) => topicIds));
+  const entries = index.filter((entry) => {
+    const topicId = entry.file.replace(/\.json$/, "");
+    if (AVAILABLE_RANDOM_TOPICS.length && !AVAILABLE_RANDOM_TOPICS.includes(topicId)) return false;
+    return !category || !categoryTopicIds.has(topicId) || selectedTopics.includes(topicId);
+  });
   const pool = entries.flatMap((entry) => loadTopicFile(entry.file));
   return shuffleArray(pool).slice(0, count);
 }
@@ -376,7 +382,12 @@ function handleRandomQuestions(request, response) {
     const url = new URL(request.url, "http://localhost");
     const requestedCount = Number(url.searchParams.get("count"));
     const count = Number.isInteger(requestedCount) && requestedCount > 0 ? Math.min(requestedCount, 50) : 20;
-    sendJson(response, 200, { questions: getRandomQuestions(count) });
+    const category = url.searchParams.get("category");
+    if (category && !Object.hasOwn(RANDOM_TEST_CATEGORIES, category)) {
+      sendJson(response, 400, { error: "Некоректна категорія" });
+      return;
+    }
+    sendJson(response, 200, { questions: getRandomQuestions(count, category) });
   } catch (error) {
     reportCriticalError(error, "questions-random");
     sendJson(response, 500, { error: "Не вдалося отримати питання" });

@@ -1,10 +1,11 @@
-import { AVAILABLE_TOPICS } from "./available-topics.js";
+import { AVAILABLE_TOPICS, RANDOM_TEST_CATEGORIES } from "./available-topics.js";
 
-const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), ticketCache: null, currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, ticket: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), ticketProgress: JSON.parse(localStorage.getItem("roadwise-ticket-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null, timerInterval: null, timerStartedAt: null, savedQuestions: JSON.parse(localStorage.getItem("roadwise-saved") || "[]") };
+const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), ticketCache: null, currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, ticket: null, randomCategory: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), ticketProgress: JSON.parse(localStorage.getItem("roadwise-ticket-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null, timerInterval: null, timerStartedAt: null, savedQuestions: JSON.parse(localStorage.getItem("roadwise-saved") || "[]") };
 const isReturningVisitor = localStorage.getItem("roadwise_visited") === "1";
 localStorage.setItem("roadwise_visited", "1");
 let pendingRating = null;
 let pendingTestStart = null;
+let pendingCategoryTest = null;
 let answerAdvanceTimeout = null;
 let appStatusTimeout = null;
 const $ = (selector) => document.querySelector(selector);
@@ -179,8 +180,8 @@ async function loadTickets() {
   return tickets;
 }
 
-async function loadRandomQuestions(count) {
-  const response = await fetch(`api/questions/random?count=${count}&v=${dataRequestVersion}`, { cache: "no-store" });
+async function loadRandomQuestions(count, category) {
+  const response = await fetch(`api/questions/random?count=${count}&category=${encodeURIComponent(category)}&v=${dataRequestVersion}`, { cache: "no-store" });
   if (!response.ok) throw new Error(`Не вдалося завантажити питання: ${response.status}`);
   const data = await response.json();
   return Array.isArray(data.questions) ? data.questions : [];
@@ -294,6 +295,33 @@ function requestTestStart(mode, topic) {
   startTest(mode, topic, { skipPrompt: true });
 }
 
+function getSavedRandomCategory() {
+  const category = localStorage.getItem("roadwise-random-category");
+  return Object.hasOwn(RANDOM_TEST_CATEGORIES, category) ? category : null;
+}
+
+function showRandomCategoryPrompt(mode, topic, options) {
+  pendingCategoryTest = { mode, topic, options };
+  $("#random-category-select").value = "";
+  $("#random-category-remember").checked = false;
+  $("#random-category-start").disabled = true;
+  $("#random-category-modal").classList.remove("hidden");
+}
+
+function closeRandomCategoryPrompt() {
+  pendingCategoryTest = null;
+  $("#random-category-modal").classList.add("hidden");
+}
+
+function startRandomTestWithCategory() {
+  const category = $("#random-category-select").value;
+  if (!Object.hasOwn(RANDOM_TEST_CATEGORIES, category) || !pendingCategoryTest) return;
+  const { mode, topic, options } = pendingCategoryTest;
+  if ($("#random-category-remember").checked) localStorage.setItem("roadwise-random-category", category);
+  closeRandomCategoryPrompt();
+  startTest(mode, topic, { ...options, category, skipPrompt: true });
+}
+
 function closeRestartModal() {
   pendingTestStart = null;
   $("#restart-modal").classList.add("hidden");
@@ -303,7 +331,6 @@ function startPendingTest(restart) {
   const nextTest = pendingTestStart;
   if (!nextTest) return;
   closeRestartModal();
-  clearCurrentTestProgress();
   startTest(nextTest.mode, nextTest.topic, { skipPrompt: true, restart });
 }
 
@@ -662,6 +689,11 @@ async function startTest(mode = "random", topic = null, options = {}) {
     requestTestStart(mode, topic);
     return;
   }
+  const randomCategory = mode === "random" ? options.category || getSavedRandomCategory() : null;
+  if (mode === "random" && !randomCategory) {
+    showRandomCategoryPrompt(mode, topic, options);
+    return;
+  }
   if (mode === "topic" && !topic) {
     state.mode = mode; state.topic = null; state.currentIndex = 0; state.selectedAnswer = null; state.examFailed = false;
     $("#test-empty-state").classList.add("hidden");
@@ -681,17 +713,17 @@ async function startTest(mode = "random", topic = null, options = {}) {
     return;
   }
   clearCurrentTestProgress();
-  state.mode = mode; state.topic = topic; state.ticket = mode === "ticket" ? Number(topic) : null; state.currentIndex = 0; state.selectedAnswer = null; state.examFailed = false;
+  state.mode = mode; state.topic = topic; state.ticket = mode === "ticket" ? Number(topic) : null; state.randomCategory = randomCategory; state.currentIndex = 0; state.selectedAnswer = null; state.examFailed = false;
   $("#test-empty-state").classList.add("hidden");
   $("#test-result").classList.add("hidden");
   if (mode === "topic" && topic && !isTopicAvailable(topic)) return;
   let testSize;
   if (mode === "random") {
     try {
-      state.currentTest = await loadRandomQuestions(20);
+      state.currentTest = await loadRandomQuestions(20, randomCategory);
     } catch (error) {
       reportClientError(error);
-      showAppError("Не вдалося завантажити питання. Перевір з'єднання та спробуй ще раз.", () => startTest(mode, topic));
+      showAppError("Не вдалося завантажити питання. Перевір з'єднання та спробуй ще раз.", () => startTest(mode, topic, { category: randomCategory }));
       return;
     }
     testSize = state.currentTest.length;
@@ -1371,7 +1403,7 @@ function init() {
     $("#exam-failed-modal").classList.add("hidden");
     if (getAnswerMode() === "auto-correct" && state.currentTest[state.currentIndex]?.userAnswer === state.currentTest[state.currentIndex]?.correctAnswer) advanceToNextQuestion();
   });
-  $("#retry-button").addEventListener("click", () => startTest(state.mode, state.topic));
+  $("#retry-button").addEventListener("click", () => startTest(state.mode, state.topic, { category: state.randomCategory }));
   $("#share-result-button").addEventListener("click", shareTestResult);
   $("#test-timer").addEventListener("click", toggleExamTimerVisibility);
   $("#report-button").addEventListener("click", openReportModal);
@@ -1402,6 +1434,16 @@ function init() {
   $("#rating-close").addEventListener("click", closeRatingPrompt);
   $("#rating-modal").addEventListener("click", (event) => { if (event.target.id === "rating-modal") closeRatingPrompt(); });
   $("#rating-confirm").addEventListener("click", confirmRating);
+  $("#random-category-select").innerHTML += Object.entries(RANDOM_TEST_CATEGORIES)
+    .map(([category, { label }]) => `<option value="${category}">${label}</option>`).join("");
+  $("#random-category-select").addEventListener("change", (event) => {
+    $("#random-category-start").disabled = !Object.hasOwn(RANDOM_TEST_CATEGORIES, event.target.value);
+  });
+  $("#random-category-start").addEventListener("click", startRandomTestWithCategory);
+  $("#random-category-cancel").addEventListener("click", closeRandomCategoryPrompt);
+  $("#random-category-modal").addEventListener("click", (event) => {
+    if (event.target.id === "random-category-modal") closeRandomCategoryPrompt();
+  });
   $("#targeted-feedback-close").addEventListener("click", closeTargetedFeedbackPrompt);
   $("#targeted-feedback-modal").addEventListener("click", (event) => { if (event.target.id === "targeted-feedback-modal") closeTargetedFeedbackPrompt(); });
   $("#targeted-feedback-start").addEventListener("click", startTargetedSurvey);
@@ -1416,6 +1458,7 @@ function init() {
     if (event.key === "Escape") {
       closeReportModal();
       closeSavedClearConfirmation();
+      closeRandomCategoryPrompt();
     }
   });
   window.addEventListener("error", (event) => reportClientError(event.error || new Error(event.message)));
