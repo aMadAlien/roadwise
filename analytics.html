@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="uk-UA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#17231f" />
+  <title>Аналітика | Roadwise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Arsenal:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="analytics.css" />
+  <script src="analytics.js" defer></script>
+</head>
+<body>
+  <main class="dashboard">
+    <header class="dashboard-header">
+      <div>
+        <a class="back-link" href="/">← Roadwise</a>
+        <p class="eyebrow">ПРИВАТНА ПАНЕЛЬ</p>
+        <h1>Аналітика активності</h1>
+        <p class="subtitle">Анонімна статистика відвідувань і проходження тестів.</p>
+      </div>
+      <button id="refresh-button" class="refresh-button" type="button" disabled>Оновити дані</button>
+    </header>
+
+    <section id="access-panel" class="access-panel" aria-live="polite">
+      <p id="access-message">Потрібен пароль аналітики.</p>
+      <button id="access-button" class="refresh-button" type="button">Ввести пароль</button>
+    </section>
+
+    <section id="dashboard-content" class="hidden" aria-label="Статистика">
+      <nav class="tabs" role="tablist" aria-label="Розділи аналітики">
+        <button class="tab is-active" id="tab-overview" type="button" role="tab" aria-selected="true" aria-controls="panel-overview">Огляд</button>
+        <button class="tab" id="tab-visitors" type="button" role="tab" aria-selected="false" aria-controls="panel-visitors">Користувачі</button>
+        <button class="tab" id="tab-monthly" type="button" role="tab" aria-selected="false" aria-controls="panel-monthly">Зведення за місяцями</button>
+        <button class="tab" id="tab-days" type="button" role="tab" aria-selected="false" aria-controls="panel-days">Активність за днями</button>
+      </nav>
+
+      <section id="panel-overview" class="tab-panel" role="tabpanel" aria-labelledby="tab-overview">
+        <div id="summary-cards" class="summary-grid"></div>
+        <div class="section-heading">
+          <div>
+            <h2>Поведінка користувачів</h2>
+            <p>Категорії за весь період; групи завершених тестів не перетинаються.</p>
+          </div>
+        </div>
+        <div id="segments" class="segments-grid"></div>
+        <div class="insight-note">«Постійні» — відвідувачі, активні щонайменше у 2 різні календарні дні. Ідентифікатор — анонімний ID cookie, а не ім’я користувача.</div>
+      </section>
+
+      <section id="panel-visitors" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-visitors">
+        <div class="section-heading">
+          <div>
+            <h2>Користувачі</h2>
+            <p id="visitor-count"></p>
+            <p class="table-note">Користувачі, які не завершили жодного тесту, у таблиці не відображаються.</p>
+          </div>
+          <label class="search-label">Пошук за ID
+            <input id="visitor-search" type="search" placeholder="Наприклад, a1b2c3…" autocomplete="off" />
+          </label>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Користувач</th><th>Останній візит</th><th>Відвідування</th><th>Активні дні</th><th>Стрік</th><th>Тести розпочато</th><th>Тести завершено</th><th></th></tr></thead>
+            <tbody id="visitors-table"></tbody>
+          </table>
+        </div>
+        <div id="visitor-details" class="visitor-details hidden"></div>
+      </section>
+
+      <section id="panel-monthly" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-monthly">
+        <div class="section-heading">
+          <div>
+            <h2>Зведення за місяцями</h2>
+            <p>Середнє відвідувачів — за календарний день; дні без активності в межах періоду рахуються як нуль.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Період</th><th>Середнє відвідувачів / день</th><th>Тести розпочато</th><th>Тести завершено</th><th>Завершення</th></tr></thead>
+            <tbody id="monthly-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="panel-days" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-days">
+        <div class="section-heading">
+          <div>
+            <h2>Активність за днями</h2>
+            <p>Загальні відвідування та тестові події по кожному календарному дню.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Дата</th><th>Перегляди</th><th>Відвідувачі</th><th>Тести розпочато</th><th>Тести завершено</th><th>Відповіді</th></tr></thead>
+            <tbody id="days-table"></tbody>
+          </table>
+        </div>
+      </section>
+      <p id="updated-at" class="updated-at"></p>
+    </section>
+  </main>
+</body>
+</html>

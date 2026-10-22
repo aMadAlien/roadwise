@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /analytics.html
 
 # Add the production sitemap URL after the public domain is configured.

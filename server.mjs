@@ -92,8 +92,14 @@ function analyticsDay(day = new Date().toISOString().slice(0, 10)) {
 
 function visitorRecord(visitorId, now) {
   const visitor = analytics.visitors[visitorId] || { firstSeen: now, lastSeen: now, visits: 0, testStarts: 0, testsCompleted: 0, questionsAnswered: 0 };
+  visitor.activityByDay ||= {};
   visitor.feedbackSurvey ||= { status: "not_started", answers: [], version: targetedSurveyVersion };
   return visitor;
+}
+
+function visitorActivityDay(visitor, date) {
+  visitor.activityByDay[date] ||= { views: 0, testStarts: 0, testsCompleted: 0 };
+  return visitor.activityByDay[date];
 }
 
 function trackPageView(request, response) {
@@ -101,9 +107,10 @@ function trackPageView(request, response) {
   setVisitorCookie(response, visitorId);
   if (excludedAnalyticsVisitors.has(visitorId)) return;
   const now = new Date().toISOString();
-  const day = new Date().toISOString().slice(0, 10);
-  const daily = analyticsDay(day);
+  const date = now.slice(0, 10);
+  const daily = analyticsDay(date);
   const visitor = visitorRecord(visitorId, now);
+  visitorActivityDay(visitor, date).views += 1;
   const isReturning = visitor.visits > 0;
   daily.views += 1;
   if (!daily.visitors.includes(visitorId)) daily.visitors.push(visitorId);
@@ -115,14 +122,14 @@ function trackPageView(request, response) {
   analytics.totalPageViews += 1;
   if (!isReturning) analytics.totalUniqueVisitors += 1;
   else analytics.totalReturningVisitors += 1;
-  analytics.daily[day] = daily;
+  analytics.daily[date] = daily;
   saveAnalytics().catch((error) => console.error("Analytics write error:", error.message));
 }
 
 function publicAnalytics() {
   const daily = Object.fromEntries(Object.entries(analytics.daily).map(([date, value]) => [date, {
     views: value.views,
-    uniqueVisitors: value.visitors.length,
+    uniqueVisitors: (value.visitors || []).length,
     newVisitors: value.newVisitors || 0,
     returningVisitors: value.returningVisitors || 0,
     testStarts: value.testStarts || 0,
@@ -131,6 +138,49 @@ function publicAnalytics() {
     modes: value.modes || {},
     topics: value.topics || {}
   }]));
+  const visitorDates = new Map();
+  for (const [date, value] of Object.entries(analytics.daily)) {
+    for (const visitorId of value.visitors || []) {
+      if (!visitorDates.has(visitorId)) visitorDates.set(visitorId, new Set());
+      visitorDates.get(visitorId).add(date);
+    }
+  }
+  const visitors = Object.entries(analytics.visitors).map(([id, visitor]) => {
+    const activeDates = visitorDates.get(id) || new Set();
+    for (const date of Object.keys(visitor.activityByDay || {})) activeDates.add(date);
+    const dates = [...activeDates].sort();
+    const activityByDay = Object.fromEntries(dates.map((date) => {
+      const activity = visitor.activityByDay?.[date];
+      return [date, activity
+        ? { views: activity.views, testStarts: activity.testStarts, testsCompleted: activity.testsCompleted, recorded: true }
+        : { views: null, testStarts: null, testsCompleted: null, recorded: false }];
+    }));
+    let bestStreak = 0;
+    let streak = 0;
+    let previousDay = null;
+    for (const date of dates) {
+      const currentDay = Date.parse(`${date}T00:00:00Z`);
+      streak = previousDay !== null && currentDay - previousDay === 86_400_000 ? streak + 1 : 1;
+      bestStreak = Math.max(bestStreak, streak);
+      previousDay = currentDay;
+    }
+    const today = new Date().toISOString().slice(0, 10);
+    const yesterday = new Date(Date.now() - 86_400_000).toISOString().slice(0, 10);
+    const currentStreak = dates.length && (dates[dates.length - 1] === today || dates[dates.length - 1] === yesterday) ? streak : 0;
+    return {
+      id,
+      firstSeen: visitor.firstSeen,
+      lastSeen: visitor.lastSeen,
+      visits: visitor.visits || 0,
+      testStarts: visitor.testStarts || 0,
+      testsCompleted: visitor.testsCompleted || 0,
+      questionsAnswered: visitor.questionsAnswered || 0,
+      activeDays: dates.length,
+      currentStreak,
+      bestStreak,
+      activityByDay
+    };
+  }).sort((first, second) => Date.parse(second.lastSeen || 0) - Date.parse(first.lastSeen || 0));
   return {
     totalPageViews: analytics.totalPageViews,
     totalUniqueVisitors: analytics.totalUniqueVisitors,
@@ -141,7 +191,8 @@ function publicAnalytics() {
     totalRatings: analytics.totalRatings,
     ratings: analytics.ratings,
     completionRate: analytics.totalTestStarts ? Math.round((analytics.totalTestsCompleted / analytics.totalTestStarts) * 100) : 0,
-    daily
+    daily,
+    visitors
   };
 }
 
@@ -233,8 +284,10 @@ async function trackAnalyticsEvent(request, response) {
       return;
     }
     const now = new Date().toISOString();
-    const day = analyticsDay();
+    const date = now.slice(0, 10);
+    const day = analyticsDay(date);
     const visitor = visitorRecord(visitorId, now);
+    const visitorDay = visitorActivityDay(visitor, date);
     const modeKey = payload.mode || "unknown";
     const topicKey = payload.topic || "all";
     day.modes[modeKey] = day.modes[modeKey] || { starts: 0, completed: 0 };
@@ -257,12 +310,14 @@ async function trackAnalyticsEvent(request, response) {
       }
       analytics.totalPageViews += 1;
       visitor.visits += 1;
+      visitorDay.views += 1;
     } else if (payload.event === "test_started") {
       analytics.totalTestStarts += 1;
       day.testStarts += 1;
       day.modes[modeKey].starts += 1;
       day.topics[topicKey].starts += 1;
       visitor.testStarts += 1;
+      visitorDay.testStarts += 1;
     } else {
       analytics.totalTestsCompleted += 1;
       analytics.totalQuestionsAnswered += payload.total;
@@ -272,10 +327,11 @@ async function trackAnalyticsEvent(request, response) {
       day.topics[topicKey].completed += 1;
       visitor.testsCompleted += 1;
       visitor.questionsAnswered += payload.total;
+      visitorDay.testsCompleted += 1;
     }
     visitor.lastSeen = now;
     analytics.visitors[visitorId] = visitor;
-    analytics.daily[new Date().toISOString().slice(0, 10)] = day;
+    analytics.daily[date] = day;
     saveAnalytics().catch((error) => console.error("Analytics write error:", error.message));
     sendJson(response, 204, null);
   } catch (error) {
