@@ -6,6 +6,7 @@ localStorage.setItem("roadwise_visited", "1");
 let pendingRating = null;
 let pendingTestStart = null;
 let answerAdvanceTimeout = null;
+let appStatusTimeout = null;
 const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
 const dataRequestVersion = Date.now().toString(36);
@@ -25,17 +26,33 @@ function clearAnswerAdvanceTimeout() {
   }
 }
 
-function showAppError(message, retry = null) {
+function showAppError(message, retry = null, floating = false) {
+  if (appStatusTimeout) {
+    window.clearTimeout(appStatusTimeout);
+    appStatusTimeout = null;
+  }
   const status = $("#app-status");
   $("#app-status-message").textContent = message;
   $("#app-status-retry").classList.toggle("hidden", !retry);
+  status.classList.toggle("resume-toast", floating);
   status.classList.remove("hidden");
   status.dataset.retry = retry ? "available" : "none";
   state.retryAction = retry;
+  if (floating) {
+    appStatusTimeout = window.setTimeout(() => {
+      appStatusTimeout = null;
+      clearAppError();
+    }, 2000);
+  }
 }
 
 function clearAppError() {
+  if (appStatusTimeout) {
+    window.clearTimeout(appStatusTimeout);
+    appStatusTimeout = null;
+  }
   $("#app-status").classList.add("hidden");
+  $("#app-status").classList.remove("resume-toast");
   state.retryAction = null;
 }
 
@@ -705,7 +722,7 @@ async function startTest(mode = "random", topic = null, options = {}) {
     state.currentTest = shuffle(pool).slice(0, testSize);
   }
   state.currentTest.forEach((question) => { delete question.userAnswer; delete question.pendingAnswer; delete question.showCorrectAnswer; });
-  if (!state.currentTest.length) { showAppError("Тут поки немає питань для цього режиму."); return; }
+  if (!state.currentTest.length) { showAppError("Тут поки немає питань для цього режиму.", null, true); return; }
   $("#test-mode-label").textContent = testModeLabel(mode, topic);
   updateBackButtonLabel(mode === "topic" && topic ? "Список тем" : mode === "ticket" ? "Список білетів" : "До меню");
   $(".question-nav").classList.remove("hidden");

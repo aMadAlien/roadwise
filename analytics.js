@@ -39,7 +39,7 @@ function formatPercent(value) {
 function renderSummary(data) {
   const visitors = data.visitors || [];
   const repeatVisitors = visitors.filter((visitor) => visitor.activeDays >= 2).length;
-  console.log('run', data)
+
   const cards = [
     ["Унікальні користувачі", data.totalUniqueVisitors, "За весь період"],
     ["Постійні користувачі", repeatVisitors, "Активність у 2+ різні дні"],
