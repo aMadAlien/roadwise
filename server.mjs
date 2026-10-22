@@ -47,7 +47,9 @@ const analyticsRateLimit = new Map();
 
 function loadAnalytics() {
   try {
+    console.log('analyticsPath: ', analyticsPath)
     const saved = JSON.parse(fs.readFileSync(analyticsPath, "utf8"));
+    console.log('saved analytics: ', saved);
     return {
       totalPageViews: saved.totalPageViews || 0,
       totalUniqueVisitors: saved.totalUniqueVisitors || 0,
@@ -127,6 +129,7 @@ function trackPageView(request, response) {
 }
 
 function publicAnalytics() {
+  console.log('analytics data: ', analytics)
   const daily = Object.fromEntries(Object.entries(analytics.daily).map(([date, value]) => [date, {
     views: value.views,
     uniqueVisitors: (value.visitors || []).length,
