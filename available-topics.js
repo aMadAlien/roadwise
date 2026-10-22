@@ -72,5 +72,7 @@ export const AVAILABLE_TOPICS = [
   "63-dodatkovi-pytannya-shchodo-katehoriy-be-c1e-ce-d1e-de-yurydychna-vidpovilnist",
   "64-dodatkovi-pytannya-shchodo-katehoriy-be-c1e-ce-d1e-de-bezpeka",
   "65-dodatkovi-pytannya-shchodo-katehoriyi-t-zahalni",
-  
+  "66-dodatkovi-pytannya-shchodo-katehoriyi-t-budova-i-terminy",
+  "67-dodatkovi-pytannya-shchodo-katehoriyi-t-yurydychna-vidpovilnist",
+  "68-dodatkovi-pytannya-shchodo-katehoriyi-t-bezpeka"
 ];
