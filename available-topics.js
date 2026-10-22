@@ -56,5 +56,14 @@ export const AVAILABLE_TOPICS = [
   "49-dodatkovi-pytannya-shchodo-katehoriy-v1-v-zahalni",
   "50-dodatkovi-pytannya-shchodo-katehoriy-v1-v-budova-i-terminy",
   "51-dodatkovi-pytannya-shchodo-katehoriy-v1-v-yurydychna-vidpovidalnist",
-  "52-dodatkovi-pytannya-shchodo-katehoriy-v1-v-bezpeka"
+  "52-dodatkovi-pytannya-shchodo-katehoriy-v1-v-bezpeka",
+
+  "53-dodatkovi-pytannya-shchodo-katehoriy-c1-c-zahalni",
+  "54-dodatkovi-pytannya-shchodo-katehoriy-c1-c-budova-i-terminy",
+  "55-dodatkovi-pytannya-shchodo-katehoriy-c1-c-yurydychna-vidpovidalnist",
+  "56-dodatkovi-pytannya-shchodo-katehoriy-c1-c-bezpeka",
+  "57-dodatkovi-pytannya-shchodo-katehoriy-d1-d-zahalni",
+  "58-dodatkovi-pytannya-shchodo-katehoriy-d1-d-budova-i-terminy",
+  "59-dodatkovi-pytannya-shchodo-katehoriy-d1-d-yurydychna-vidpovidalnist",
+  "60-dodatkovi-pytannya-shchodo-katehoriy-d1-d-bezpeka"
 ];
