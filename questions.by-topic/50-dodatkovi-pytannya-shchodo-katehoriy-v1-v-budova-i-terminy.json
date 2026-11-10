@@ -9,7 +9,7 @@
       "Видимість дороги в напрямку руху менше 300 м у сутінках, в умовах туману, дощу, снігопаду тощо.",
       "Небезпечний поворот, небезпечний підйом, небезпечний спуск."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 442,
@@ -26,7 +26,7 @@
       "Вимога обов'язкової зупинки, щоб дати дорогу всім учасникам дорожнього руху.",
       "Вимога обов'язкової зупинки перед дорожнім знаком «Дати дорогу»."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 442,
@@ -44,7 +44,7 @@
       "Місце прилягання до дороги виїзду з прилеглої території.",
       "Відповіді, зазначені в пунктах 2, 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 442,
@@ -61,7 +61,7 @@
       "Максимальна відстань вправо від напрямку руху, на якому можна розпізнати транспортні засоби, що наближаються до перехрестя по головній дорозі.",
       "Максимальна відстань, на якій з місця водія можна чітко розпізнати межі елементів дороги та розміщення учасників руху, що дає змогу водієві орієнтуватися під час керування транспортним засобом."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 443,
@@ -79,7 +79,7 @@
       "Не працює пристрій для обігрівання та обдування скла.",
       "Не працює склопідйомник."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 443,
@@ -97,7 +97,7 @@
       "Не більше 7.",
       "Не більше 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 443,
@@ -114,7 +114,7 @@
       "На світлових приладах використовуються розсіювачі, що не відповідають типу конкретного світлового приладу.",
       "Відсутні протитуманні фари."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 443,
@@ -132,7 +132,7 @@
       "Знака аварійної зупинки.",
       "Противідкатних упорів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 443,
@@ -149,7 +149,7 @@
       "Несправна система випуску відпрацьованих газів.",
       "Не працює склоочисник."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 443,
@@ -166,7 +166,7 @@
       "Для зменшення витрати палива.",
       "Для покращення аеродинамічних показників автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 443,
@@ -182,7 +182,7 @@
       "Так, неможливо зняти не натиснувши на педаль гальма.",
       "Не потрібно натискати, достатньо переключити у необхідне положення."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 444,
@@ -200,7 +200,7 @@
       "Несправність гальмової системи.",
       "Високу температуру теплоносія."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 444,
@@ -218,7 +218,7 @@
       "Несправність гальмової системи.",
       "Високу температуру теплоносія."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 444,
@@ -236,7 +236,7 @@
       "С.",
       "D."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 445,
@@ -253,7 +253,7 @@
       "Індикатор стоянкового гальма.",
       "Відсутність палива у паливному баку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 445,
@@ -265,8 +265,12 @@
     "topic": "45. ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ В1, В (БУДОВА І ТЕРМІНИ)",
     "question": "Наведений індикатор червоного кольору інформує про: 446 Відчинені двері автомобіля. Блокування дверей автомобіля. Відчинені двері багажника.",
     "image": "/images/additional/45_16.jpg",
-    "answers": [],
-    "correctAnswer": null,
+    "answers": [
+      "Відчинені двері автомобіля.",
+      "Блокування дверей автомобіля.",
+      "Відчинені двері багажника"
+    ],
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 445,
@@ -283,7 +287,7 @@
       "Повний паливний бак.",
       "Непрацюючий ремінь безпеки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 446,
@@ -300,7 +304,7 @@
       "Незакриті передні двері автомобіля.",
       "Увімкнені склоочисники."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 446,
@@ -318,7 +322,7 @@
       "3.",
       "4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 446,
@@ -335,7 +339,7 @@
       "Увімкнена аварійна сигналізація.",
       "Низький рівень палива у паливному баку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 447,
@@ -352,7 +356,7 @@
       "Ближнє світло фар.",
       "Аварійна світлова сигналізація."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 447,
@@ -368,7 +372,7 @@
       "Так.",
       "Ні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 447,
@@ -385,7 +389,7 @@
       "Про неправильно відрегульоване сидіння водія.",
       "Про несправність гальмової системи."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 448,
@@ -401,7 +405,7 @@
       "Відчинені двері автомобіля.",
       "Відчинений багажник автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 448,
@@ -418,7 +422,7 @@
       "Несправність гальмівної системи.",
       "Несправність керма."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 448,
@@ -434,7 +438,7 @@
       "Індикатор блакитного кольору.",
       "Індикатор зеленого кольору."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 449,
@@ -450,7 +454,7 @@
       "Індикатор блакитного кольору.",
       "Індикатор зеленого кольору."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 449,
@@ -467,7 +471,7 @@
       "Низький рівень гальмової рідини.",
       "Низький рівень палива у паливному баку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 449,
@@ -486,7 +490,7 @@
       "3.",
       "4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 450,
@@ -504,7 +508,7 @@
       "3.",
       "4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 450,
@@ -522,7 +526,7 @@
       "3.",
       "4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 451,
@@ -540,7 +544,7 @@
       "3.",
       "4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 451,
@@ -557,7 +561,7 @@
       "Ближнє світло фар.",
       "Дальнє світло фар."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 451,

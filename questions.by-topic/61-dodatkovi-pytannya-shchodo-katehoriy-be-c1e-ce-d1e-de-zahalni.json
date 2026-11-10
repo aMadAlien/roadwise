@@ -8,7 +8,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 523,
@@ -27,7 +27,7 @@
       "Відповіді 1, 2 і 3.",
       "Відповіді 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 523,
@@ -45,7 +45,7 @@
       "Аварійна світлова сигналізація.",
       "Габаритні ліхтарі або задній протитуманний ліхтар."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 523,
@@ -63,7 +63,7 @@
       "110 км/год.",
       "130 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 523,
@@ -82,7 +82,7 @@
       "90 км/год.",
       "50 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 524,
@@ -101,7 +101,7 @@
       "90 км/год.",
       "50 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 524,
@@ -119,7 +119,7 @@
       "110 км/год.",
       "70 км/год. 504"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 524,
@@ -135,7 +135,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 525,
@@ -151,7 +151,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 525,
@@ -168,7 +168,7 @@
       "Водій трактора і водій вантажного автомобіля з причепом.",
       "Тільки водій трактора."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 525,
@@ -185,7 +185,7 @@
       "Якщо водій транспортного засобу обслуговує підприємства, які розташовані в позначеній зоні.",
       "В обох випадках."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 525,
@@ -201,7 +201,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 526,
@@ -218,7 +218,7 @@
       "За наявності у автобуса справного причіпного пристрою, встановленого заводом-виробником.",
       "Буксирування автобусами завжди заборонене."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 526,
@@ -235,7 +235,7 @@
       "За наявності у автобуса причіпного пристрою, встановленого заводом-виробником.",
       "За наявності гальмової системи у причепа."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 526,
@@ -252,7 +252,7 @@
       "За наявності гальмової системи у причепа.",
       "За дотримання всіх перерахованих вище умов."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 526,
@@ -269,7 +269,7 @@
       "Забороняється.",
       "Дозволяється завжди."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 526,
@@ -287,7 +287,7 @@
       "Ближнє світло фар на тягачі і задній протитуманний ліхтар на причепі.",
       "Протитуманні фари на тягачі та габаритні ліхтарі на причепі. 506"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 526,
@@ -304,7 +304,7 @@
       "Сума дозволеної максимально допустимої маси кожного транспортного засобу, що входить до складу автопоїзда.",
       "Сума дозволеної максимально допустимої маси автопоїзда, що не перевищує 25 т."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 527,
@@ -323,7 +323,7 @@
       "90 км/год.",
       "50 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 527,
@@ -340,7 +340,7 @@
       "Водій легкового автомобіля з причепом – зі швидкістю 90 км/год.",
       "Обидва повинні рухатися зі швидкістю не більш ніж 80 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 527,

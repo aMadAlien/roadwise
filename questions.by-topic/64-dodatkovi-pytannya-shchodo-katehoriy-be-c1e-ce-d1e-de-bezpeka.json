@@ -8,7 +8,7 @@
       "При повороті керма вправо, причіп почне йти теж вправо.",
       "При повороті керма вправо, причіп почне йти вліво."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 529,
@@ -24,7 +24,7 @@
       "При повороті керма вліво, причіп почне йти вправо.",
       "При повороті керма вліво, причіп почне йти теж вліво."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 529,
@@ -41,7 +41,7 @@
       "Входячи в поворот збільшити швидкість.",
       "Входячи в поворот не міняти швидкість."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 529,
@@ -59,7 +59,7 @@
       "Боковий вітер.",
       "Все перелічене."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 529,
@@ -76,7 +76,7 @@
       "Більше часу, ніж на автомобілі без причепу.",
       "Динамічні характеристики автомобіля не змінюються при русі з причепом."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 529,
@@ -94,7 +94,7 @@
       "Перевірити роботу приладів світлової сигналізації причепа.",
       "Виконати усі вище перелічені дії."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 529,
@@ -111,7 +111,7 @@
       "По більшому радіусу, ніж колеса автомобіля.",
       "По такому самому радіусу як і колеса автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 529,
@@ -128,7 +128,7 @@
       "Дозволено за умови дотримання швидкісного режиму в населеному або поза населеному пункті.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 529,
@@ -145,7 +145,7 @@
       "Вантаж розміщено ближче до автомобіля.",
       "Вантаж розміщено на краю причепа."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 530,
@@ -162,7 +162,7 @@
       "Зменшує гальмівний шлях.",
       "Гальмівний шлях не змінюється."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 530,
@@ -179,7 +179,7 @@
       "По траєкторії руху автомобіля.",
       "Ближче до центру повороту, ніж траєкторія руху автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 530,
@@ -196,7 +196,7 @@
       "Не змінюється.",
       "Збільшується."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 530,
@@ -213,7 +213,7 @@
       "За наявності у автобуса справного причіпного пристрою, встановленого заводом-виробником.",
       "Буксирування автобусами завжди заборонене."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 530,
@@ -230,7 +230,7 @@
       "За наявності гальмової системи у причепа.",
       "За дотримання всіх перерахованих вище умов."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 530,
@@ -247,7 +247,7 @@
       "Не звертати уваги на причеп.",
       "Постійно рухатися з невеликою швидкістю і тоді дія причепа не позначається. 510"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 530,

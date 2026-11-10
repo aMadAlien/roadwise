@@ -9,7 +9,7 @@
       "Водій легкового автомобіля з причепом – зі швидкістю 90 км/год.",
       "Обидва повинні рухатися зі швидкістю не більш ніж 80 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 419,
@@ -26,7 +26,7 @@
       "Водієві автомобіля.",
       "Швидкість обох не повинна перевищувати 20 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 419,
@@ -43,7 +43,7 @@
       "Сигналами світлофора.",
       "Правильні обидва варіанти."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 419,
@@ -61,7 +61,7 @@
       "Сигналами регулювальника.",
       "Перешкодою праворуч."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 419,
@@ -79,7 +79,7 @@
       "Зелений мотоцикл із боковим причепом.",
       "Коричневий мотоцикл із боковим причепом."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 420,
@@ -98,7 +98,7 @@
       "110 км/год.",
       "130 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 420,
@@ -114,7 +114,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 421,
@@ -130,7 +130,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 421,
@@ -147,7 +147,7 @@
       "Дозволено тільки в будні дні.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 421,
@@ -166,7 +166,7 @@
       "Мотоциклісти на мал. 2 і 3.",
       "Мотоциклісти на мал. 1 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 421,
@@ -183,7 +183,7 @@
       "Мопедів.",
       "Мотоциклів і мопедів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 422,
@@ -199,7 +199,7 @@
       "Заборонено",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 422,
@@ -216,7 +216,7 @@
       "90 км/год.",
       "80 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 422,
@@ -233,7 +233,7 @@
       "Зобов’язаний подати сигнал покажчиками повороту або рукою за 100 метрів до повороту за наявності інших учасників дорожнього руху.",
       "Зобов’язаний подати сигнал покажчиками повороту або рукою за 50 - 100 метрів до повороту."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 422,
@@ -250,7 +250,7 @@
       "Відразу після завершення маневру.",
       "Під час виконання маневру."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 422,
@@ -267,7 +267,7 @@
       "Відразу після завершення маневру.",
       "Під час виконання маневру."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 423,
@@ -284,7 +284,7 @@
       "Переконатися у тому, що це не створить перешкод або небезпеки іншим учасникам руху.",
       "Виконати дії зазначені у 1 та 2 відповідях."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 423,
@@ -301,7 +301,7 @@
       "Тільки транспортним засобам.",
       "Пішоходам і транспортним засобам."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 423,
@@ -318,7 +318,7 @@
       "Перед тротуаром дати дорогу пішоходам, що рухаються по ній, а перед проїзною частиною тільки велосипедистам і мотоциклістам.",
       "Перед проїзною частиною чи тротуаром дати дорогу пішоходам і транспортним засобам, що рухаються по ній."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 423,
@@ -335,7 +335,7 @@
       "Дозволено тільки на гнучкому зчепленні.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 423,
@@ -353,7 +353,7 @@
       "Піднімаєте ліву або праву руку вгору.",
       "Варіанти 1 та 2 вірні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 423,
@@ -370,7 +370,7 @@
       "Сигнал подається лівою або правою рукою, піднятою вгору.",
       "Сигнал подається круговим обертанням правої або лівої руки, піднятою вгору."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 423,
@@ -386,7 +386,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 424,
@@ -403,7 +403,7 @@
       "Вимогами дорожніх знаків.",
       "На свій розсуд."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 424,
@@ -421,7 +421,7 @@
       "Вимогами дорожніх знаків пріоритету.",
       "Правилами проїзду нерегульованих перехресть."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 424,
@@ -437,7 +437,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 424,
@@ -454,7 +454,7 @@
       "Перед перестроюванням, поворотом або розворотом.",
       "Завжди перед початком руху, зупинкою, перестроюванням, поворотом або розворотом."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 424,
@@ -471,7 +471,7 @@
       "Аварійну сигналізацію.",
       "Стоянкові вогні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 424,
@@ -488,7 +488,7 @@
       "Витягнете ліву руку в бік або праву руку вбік і зігнете у лікті під прямим кутом вгору.",
       "Витягнете ліву руку і зігнете у лікті під прямим кутом вгору."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 424,
@@ -506,7 +506,7 @@
       "Витягнете праву руку в бік або ліву руку вбік і зігнете у лікті під прямим кутом вгору.",
       "Варіанти 1 та 2 вірні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 424,
@@ -524,7 +524,7 @@
       "З 17 років.",
       "З 18 років."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 425,

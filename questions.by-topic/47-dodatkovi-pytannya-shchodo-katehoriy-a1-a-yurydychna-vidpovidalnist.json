@@ -11,7 +11,7 @@
       "90 км/год.",
       "50 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 427,
@@ -28,7 +28,7 @@
       "До категорії А.",
       "До категорії В1."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 427,
@@ -45,7 +45,7 @@
       "З 18 років.",
       "З 16 років."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 427,
@@ -64,7 +64,7 @@
       "90 км/год.",
       "50 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 428,
@@ -81,7 +81,7 @@
       "Заборонено ставити всі транспортні засоби.",
       "Дозволено ставити тільки велосипеди, мопеди і мотоцикли без бокового причепа."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 428,
@@ -98,7 +98,7 @@
       "Спереду і ззаду.",
       "У передбачених для цього місцях."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 428,
@@ -116,7 +116,7 @@
       "10 діб.",
       "14 діб."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 428,
@@ -134,7 +134,7 @@
       "З 17 років.",
       "З 18 років."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 429,
@@ -152,7 +152,7 @@
       "З 17 років.",
       "З 18 років."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 429,
@@ -169,7 +169,7 @@
       "Може, якщо це іноземний громадянин.",
       "Може, якщо порушення незначне."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 429,
@@ -186,7 +186,7 @@
       "Безкоштовне вилучення мотоциклу.",
       "Усне попередження від чергового по переїзду."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 429,
@@ -203,7 +203,7 @@
       "На регульованому пішохідному переході при одночасному для водія і пішоходів дозвільному сигналі світлофора.",
       "У всіх перерахованих випадках."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 429,
@@ -221,7 +221,7 @@
       "Відступати від вимог законодавства в умовах дії непереборної сили або коли іншими засобами неможливо запобігти власній загибелі чи каліцтву громадян.",
       "Права, перераховані у відповідях 1, 2, 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 429,
@@ -239,7 +239,7 @@
       "Квадро- і трицикли, мотоцикли з боковим причепом, мотоколяски та інші триколісні (чотириколісні) мототранспортні засоби, дозволена максимальна маса яких не перевищує 400 кілограмів.",
       "Відповіді 1 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 429,
@@ -258,7 +258,7 @@
       "80 км/год.",
       "90 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 430,
@@ -275,7 +275,7 @@
       "Користуватися під час руху засобами зв'язку, тримаючи їх у руці, відповідно до вимог Правил дорожнього руху.",
       "Усе перелічене вище."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 430,
@@ -294,7 +294,7 @@
       "Відповіді 1, 2 і 3.",
       "Відповіді, зазначені в пунктах 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 430,
@@ -311,7 +311,7 @@
       "Іншій особі, що має при собі посвідчення водія на право керування транспортним засобом відповідної категорії.",
       "Близькому родичу (чоловік або дружина, брат або сестра) під час його навчання водінню."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 430,
@@ -330,7 +330,7 @@
       "Усе перелічене вище.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 430,
@@ -348,7 +348,7 @@
       "Всі мотоцикли.",
       "Тільки мотоцикли без бокового причепа."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 432,

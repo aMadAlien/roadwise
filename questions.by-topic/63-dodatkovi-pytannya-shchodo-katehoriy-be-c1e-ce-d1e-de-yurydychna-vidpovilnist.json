@@ -9,7 +9,7 @@
       "З 18 років.",
       "З 19 років."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 528,
@@ -26,7 +26,7 @@
       "Відсутні передбачені конструкцією дзеркала заднього виду.",
       "Несправний зчіпний пристрій."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 528,
@@ -43,7 +43,7 @@
       "Реєстрація обов’язкова. 508",
       "Реєстрація обов’язкова, якщо причіп більше 750 кг."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 528,

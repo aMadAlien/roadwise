@@ -11,7 +11,7 @@
       "80 км/год.",
       "90 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 535,
@@ -29,7 +29,7 @@
       "Мати дозвіл на перевезення вантажів.",
       "Всі відповіді вірні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 535,
@@ -46,7 +46,7 @@
       "Перевозити в трамваї гострі і ріжучі предмети, пожежонебезпечні, вибухові, отруйні, їдкі, сморідні та наркотичні речовини, вогнепальну зброю без чохлів, інші небезпечні предмети.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 535,
@@ -63,7 +63,7 @@
       "Перевозити в тролейбусі гострі і ріжучі предмети, пожежонебезпечні, вибухові, отруйні, їдкі, сморідні та наркотичні речовини, вогнепальну зброю без чохлів, інші небезпечні предмети.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 536,
@@ -81,7 +81,7 @@
       "Вимагати від пасажирів виконання їхніх обов'язків.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 536,
@@ -99,7 +99,7 @@
       "Вимагати від пасажирів виконання їхніх обов'язків.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 536,
@@ -116,7 +116,7 @@
       "Розмовляти з пасажирами, їсти, пити, курити під час руху трамвая.",
       "Не допускати до поїздки пасажирів, якщо в салоні немає вільних місць."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 536,
@@ -133,7 +133,7 @@
       "Розмовляти з пасажирами, їсти, пити, курити під час руху тролейбуса.",
       "Не допускати до поїздки пасажирів, якщо в салоні немає вільних місць."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 536,
@@ -150,7 +150,7 @@
       "Вимагати від пасажирів пред'явити квитанцію на перевезення багажу.",
       "Починати рух до повного зачинення дверей та відчиняти їх до повної зупинки тролейбуса."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 536,
@@ -167,7 +167,7 @@
       "Мати паспорт громадянина України.",
       "Обидві відповіді правильні. 516"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 536,
@@ -184,7 +184,7 @@
       "Мати паспорт громадянина України.",
       "Обидві відповіді правильні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 537,
@@ -202,7 +202,7 @@
       "Не вдаватися ні до яких дій.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 537,
@@ -220,7 +220,7 @@
       "Не вдаватися ні до яких дій.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 537,
@@ -238,7 +238,7 @@
       "Не повинен.",
       "Діяти за обставинами, тобто на розсуд водія."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 537,
@@ -256,7 +256,7 @@
       "Не повинен.",
       "Діяти за обставинами, тобто на розсуд водія."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 537,
@@ -274,7 +274,7 @@
       "Мати дозвіл на перевезення вантажів.",
       "Всі відповіді вірні. 517"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 537,

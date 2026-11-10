@@ -9,7 +9,7 @@
       "Три роки. 462",
       "Чотири роки."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 482,
@@ -26,7 +26,7 @@
       "Обов'язкове у будь-якому випадку.",
       "Обов'язкове, тільки поза населених пунктів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 483,
@@ -43,7 +43,7 @@
       "Двох років.",
       "Трьох років."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 483,
@@ -60,7 +60,7 @@
       "Обов'язкове, тільки якщо є потерпілі.",
       "Обов'язкове в будь-якому разі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 483,
@@ -78,7 +78,7 @@
       "Не вдаватися ні до яких дій.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 483,
@@ -96,7 +96,7 @@
       "Ввімкнути аварійну світлову сигналізацію та встановити знак аварійної зупинки.",
       "Відповіді 2 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 483,
@@ -112,7 +112,7 @@
       "Не вдаватися ні до яких дій, просто залишатися на місці пригоди.",
       "Негайно зупинити транспортний засіб і залишатися на місці пригоди."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 483,
@@ -128,7 +128,7 @@
       "Так, якщо дозволяють технічні характеристики транспортного засобу.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 483,
@@ -145,7 +145,7 @@
       "Правил дорожнього руху.",
       "Всіх наказів МВС."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 483,
@@ -163,7 +163,7 @@
       "У вантажному причепі і напівпричепі, в причепі-дачі.",
       "Все вищеперераховане."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 484,
@@ -180,7 +180,7 @@
       "Після проходження спеціальної підготовки і стажування протягом 6 місяців.",
       "У будь-якому випадку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 484,
@@ -197,7 +197,7 @@
       "Для негайної доставки поліцейських до місця їхньої роботи.",
       "Усе перелічене вище."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 484,

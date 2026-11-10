@@ -8,7 +8,7 @@
       "Проїхати першим, оскільки в нього є перевага в русі перед автомобілем.",
       "Дати дорогу автомобілю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 531,
@@ -26,7 +26,7 @@
       "Ліворуч.",
       "Праворуч."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 531,
@@ -44,7 +44,7 @@
       "На світлофорах 2, 3 і 4.",
       "На світлофорах 1, 2, 3 і 4. 511"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 531,
@@ -61,7 +61,7 @@
       "Прямо.",
       "Прямо або праворуч."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 532,
@@ -79,7 +79,7 @@
       "Прямо або ліворуч.",
       "Ліворуч."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 532,
@@ -96,7 +96,7 @@
       "Може відхилятися від маршруту на свій розсуд.",
       "Обидві відповіді правильні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 532,
@@ -113,7 +113,7 @@
       "Не обов'язково.",
       "Повинен у часи пік."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 532,
@@ -130,7 +130,7 @@
       "Не обов'язково.",
       "Повинен у часи пік. 512"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 532,
@@ -147,7 +147,7 @@
       "Не більше 0,75 м.",
       "Не більше 0,3 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 533,
@@ -165,7 +165,7 @@
       "Рухатися без необхідності із занадто малою швидкістю.",
       "Виконувати будь-яку з наведених дій."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 533,
@@ -182,7 +182,7 @@
       "Може відхилятися від маршруту на свій розсуд.",
       "Обидві відповіді правильні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 533,
@@ -199,7 +199,7 @@
       "Обов'язкове, тільки якщо є потерпілі.",
       "Обов'язкове в будь-якому разі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 533,
@@ -216,7 +216,7 @@
       "Обов'язкове, тільки якщо є потерпілі.",
       "Обов'язкове в будь-якому разі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 533,
@@ -233,7 +233,7 @@
       "Безперервний період часу, який водій використовує для заповнення необхідних супровідних документів.",
       "Безперервний період часу, який водій використовує виключно для сну."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 533,
@@ -250,7 +250,7 @@
       "Безперервний період часу, який водій використовує для заповнення необхідних супровідних документів.",
       "Безперервний період часу, який водій використовує виключно для сну."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 533,
@@ -268,7 +268,7 @@
       "Правил технічної експлуатації трамвая.",
       "Відповіді 1 і 3. 513"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 533,
@@ -286,7 +286,7 @@
       "Правил технічної експлуатації тролейбуса.",
       "Відповіді 1 і 3."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 534,
@@ -304,7 +304,7 @@
       "Приймати їжу, пити або курити.",
       "Виконувати будь-яку з наведених дій."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 534,

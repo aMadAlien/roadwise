@@ -9,7 +9,7 @@
       "Не більше сімнадцяти.",
       "Не більше шістнадцяти."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 507,
@@ -26,7 +26,7 @@
       "У разі більшого зношення однієї фрикційної накладки, ніж іншої, їх необхідно поміняти місцями для рівномірного зношення.",
       "Під час заміни гальмівних колодок з одного боку треба замінити колодки і з іншого боку."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 507,
@@ -43,7 +43,7 @@
       "Перегрів гальмівногомеханізму.",
       "Втрата керованостіавтомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 507,
@@ -60,7 +60,7 @@
       "Обмежує кут поворотуколіспередньоїосі.",
       "Зменшує тиск вгальмівнихкамерахпередньоїосі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 507,
@@ -77,7 +77,7 @@
       "Збільшення швидкостіскидання зайвого тиску.",
       "Прискорення спрацьовування задніх гальмівнихмеханізмів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 507,
@@ -95,7 +95,7 @@
       "Передні й задні.",
       "Гальмівнімеханізми не задіяні. 487"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 507,
@@ -112,7 +112,7 @@
       "Гальмівна камера заднього гальмівного механізму.",
       "Балон для зберігання стисненого повітря гальмівної системи."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 508,
@@ -129,7 +129,7 @@
       "Потрапляє назад в систему.",
       "Подається у впускний колектор двигуна."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 508,
@@ -146,7 +146,7 @@
       "До гальмівного крану.",
       "Безпосередньо до гальмівної камери."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 508,
@@ -163,7 +163,7 @@
       "Зменшення загальної маси деталей гальмівної системи.",
       "Швидкість спрацьовування гальмівних механізмів."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 508,
@@ -180,7 +180,7 @@
       "Дозволено, тільки в пропорції 1/4.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 508,
@@ -197,7 +197,7 @@
       "Буде чутно сильне шипіння.",
       "Буде відчуватися відведення автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 508,
@@ -214,7 +214,7 @@
       "Моторна олива стає фіолетового кольору.",
       "Визначити неможливо."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 508,
@@ -231,7 +231,7 @@
       "18 пасажирів на сидіннях, крім водія.",
       "20 пасажирів на сидіннях, крім водія. 488"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 508,
@@ -248,7 +248,7 @@
       "Транспортний засіб загального користування (автобус, мікроавтобус, тролейбус, трамвай і таксі), що рухається за встановленим маршрутом і має певні місця на дорозі для посадки (висадки) пасажирів.",
       "Транспортний засіб, призначений для перевезення людей за маршрутами, узгодженими з пасажирами, та з зупинками на їхню вимогу."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 509,
@@ -265,7 +265,7 @@
       "Дозволено — нічого страшного.",
       "Дозволено після капремонту двигуна."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 509,
@@ -283,7 +283,7 @@
       "Кожен раз під час заміни паливного фільтра.",
       "Через 35 000 км пробігу."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 509,
@@ -300,7 +300,7 @@
       "Метод прослуховування.",
       "Порівняльний метод."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 509,
@@ -318,7 +318,7 @@
       "Діагностика кожного елемента системи запуску окремо.",
       "Усі наведені вище варіанти."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 509,
@@ -336,7 +336,7 @@
       "Діагностика під час руху.",
       "Варіанти 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 509,
@@ -353,7 +353,7 @@
       "За допомогою візуального огляду. 489",
       "За допомогою підручного інструменту."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 509,
@@ -371,7 +371,7 @@
       "За допомогою вимірювального інструмента.",
       "Усі варіанти підходять."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 510,
@@ -388,7 +388,7 @@
       "Пневматична.",
       "Механічна."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 510,
@@ -405,7 +405,7 @@
       "На боковині шини буде намальована стрілка, що вказує напрямок обертання.",
       "Напрямок обертання відображає маркування шини."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 510,
@@ -422,7 +422,7 @@
       "Підігрів повітря.",
       "Управління фарами головного освітлення."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 510,
@@ -439,7 +439,7 @@
       "Для пересування автомобіля на невелику відстань.",
       "Для запуску двигуна."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 510,
@@ -456,7 +456,7 @@
       "Спочатку позитивну, потім негативну клему.",
       "Послідовність від'єднання не має значення."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 510,
@@ -473,7 +473,7 @@
       "Підведення тепла до менш нагрітих деталей двигуна.",
       "Підтримка температури двигуна в певному робочому діапазоні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 510,
@@ -492,7 +492,7 @@
       "Для зменшення тертя.",
       "Відповіді 2, 3, 4."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 510,
@@ -509,7 +509,7 @@
       "Через холоди в'язкість моторної оливи різко зменшується, і її ефективність збільшується.",
       "Для поліпшення паливної економічності."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 511,
@@ -526,7 +526,7 @@
       "З паливних магістралей.",
       "З паливного фільтра-відстійника."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 511,
@@ -543,7 +543,7 @@
       "Тільки клапанний механізм.",
       "Кулачковий вал (вали) і клапанні механізми."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 511,
@@ -560,7 +560,7 @@
       "Блок циліндрів з кривошипно-шатунним механізмом і оливним піддоном.",
       "З наведених вище частин."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 511,
@@ -577,7 +577,7 @@
       "Потрібна частково.",
       "Не потрібна."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 511,
@@ -595,7 +595,7 @@
       "Для згладжування вібрацій.",
       "Усі перелічені вище варіанти."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 511,
@@ -612,7 +612,7 @@
       "Для зменшення витрати палива.",
       "Для покращення аеродинамічних показників автомобіля."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 511,
@@ -629,7 +629,7 @@
       "Дискові та бездискові.",
       "Камерні і безкамерні. 491"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 511,
@@ -646,7 +646,7 @@
       "Якщо знову використовувати злиту оливу, можна не заміняти фільтр.",
       "Можна не замінювати оливний фільтр під час заміни моторної оливи."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 512,
@@ -664,7 +664,7 @@
       "Може пошкодитися оливний насос.",
       "Через спінювання оливи може впасти її тиск і виникнути оливне голодування."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 512,
@@ -681,7 +681,7 @@
       "5W30.",
       "3V15."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 512,
@@ -698,7 +698,7 @@
       "Так, можна але в певних пропорціях.",
       "Ні, не можна."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 512,
@@ -715,7 +715,7 @@
       "Для того, щоб колеса під час повороту могли обертатися з різною швидкістю.",
       "Для того, щоб колеса під час повороту могли обертатися з однаковою швидкістю."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 512,
@@ -732,7 +732,7 @@
       "Надмірним зношенням зубчастих коліс у коробці передач.",
       "Надмірним зношенням синхронізаторів і зубчастих коліс, якщо вони не синхронізовані."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 512,
@@ -749,7 +749,7 @@
       "Нахил зчеплення.",
       "Відведення автомобіля через зчеплення."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 512,
@@ -767,7 +767,7 @@
       "Механічний транспортний засіб, поєднаний з одним або кількома причепами за допомогою зчіпного пристрою.",
       "Відповіді 2 і 3. 492"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 512,

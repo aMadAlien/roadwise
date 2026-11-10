@@ -10,7 +10,7 @@
       "Дозволяють рух маршрутних транспортних засобів.",
       "Після цих знаків починається зустрічний рух."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 492,
@@ -29,7 +29,7 @@
       "Знак 4.",
       "Знак 5."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 492,
@@ -48,7 +48,7 @@
       "100 км/год.",
       "110 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 492,
@@ -67,7 +67,7 @@
       "100 км/год.",
       "130 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 493,
@@ -86,7 +86,7 @@
       "110 км/год.",
       "130 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 493,
@@ -104,7 +104,7 @@
       "110 км/год.",
       "130 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 495,
@@ -122,7 +122,7 @@
       "110 км/год.",
       "130 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 495,
@@ -141,7 +141,7 @@
       "100 км/год. 475",
       "110 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 495,
@@ -159,7 +159,7 @@
       "Водії всіх транспортних засобів.",
       "Ніхто не порушує."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 496,
@@ -175,7 +175,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 496,
@@ -193,7 +193,7 @@
       "110 км/год.",
       "130 км/год. 476"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 496,
@@ -211,7 +211,7 @@
       "90 км/год.",
       "80 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 497,
@@ -228,7 +228,7 @@
       "90 км/год.",
       "80 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 497,
@@ -244,7 +244,7 @@
       "Дозволено.",
       "Заборонено. 477"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 497,
@@ -260,7 +260,7 @@
       "Заборонено.",
       "Дозволено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 498,
@@ -276,7 +276,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 498,
@@ -292,7 +292,7 @@
       "Заборонено.",
       "Дозволено. 478"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 498,
@@ -308,7 +308,7 @@
       "Дозволено.",
       "Заборонено."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 499,
@@ -325,7 +325,7 @@
       "Тахограф можна не використовувати.",
       "Забезпечувати його надійне встановлення у транспортному засобі."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 499,
@@ -342,7 +342,7 @@
       "Не менше 45 годин поспіль.",
       "Не менше 47 годин поспіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 499,
@@ -359,7 +359,7 @@
       "Не менше 12 годин поспіль.",
       "Не менше 6 годин."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 499,
@@ -376,7 +376,7 @@
       "Мають відпочивати не покидаючи транспортний засіб.",
       "На свій розсуд."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 499,
@@ -393,7 +393,7 @@
       "Не зараховується.",
       "На розсуд роботодавця."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 499,
@@ -410,7 +410,7 @@
       "Не менше 1 години.",
       "Не менше 2 годин. 479"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 499,
@@ -428,7 +428,7 @@
       "70 годин.",
       "90 годин."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 500,
@@ -445,7 +445,7 @@
       "Після 4 годин.",
       "Після 5 годин."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 500,
@@ -462,7 +462,7 @@
       "Двох.",
       "Не менше трьох."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 500,
@@ -478,7 +478,7 @@
       "Затягнути болти/гайки на колесі, що спирається на поверхню.",
       "Затягнути болти/гайки на підвішеному колесі, дотягнути з необхідним моментом затягування на колесі, що спирається на поверхню."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 500,
@@ -495,7 +495,7 @@
       "Трьох років.",
       "П’яти років."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 500,
@@ -512,7 +512,7 @@
       "Не менше 8 годин поспіль.",
       "Не менше 10 годин поспіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 500,
@@ -530,7 +530,7 @@
       "56 годин.",
       "60 годин. 480"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 500,
@@ -547,7 +547,7 @@
       "18 пасажирів на сидіннях, крім водія.",
       "20 пасажирів на сидіннях, крім водія."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 501,
@@ -564,7 +564,7 @@
       "Не менше 12 годин поспіль.",
       "Не менше 8 годин поспіль."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 501,
@@ -581,7 +581,7 @@
       "Два рази.",
       "Три рази."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 501,
@@ -598,7 +598,7 @@
       "9 годин.",
       "10 годин."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 501,
@@ -616,7 +616,7 @@
       "Щодобовий час відпочинку водіїв.",
       "Усі перелічені параметри."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 501,
@@ -634,7 +634,7 @@
       "Системою глобального позиціонування (GPS).",
       "Усіма переліченими приладами."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 501,
@@ -644,10 +644,14 @@
   {
     "id": "PDF-2106",
     "topic": "52. ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ D1, D (ЗАГАЛЬНІ)",
-    "question": "Поза населеними пунктами на дорогах, не позначених знаком",
+    "question": "Поза населеними пунктами на дорогах, не позначених знаком 5.3 «Дорога для автомобілів», дозволена максимальна швидкість автобусів, крім мікроавтобусів, не перевищує:",
     "image": null,
-    "answers": [],
-    "correctAnswer": null,
+    "answers": [
+      "70 км/год.",
+      "90 км/год.",
+      "110 км/год."
+    ],
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 501,
@@ -655,50 +659,20 @@
     }
   },
   {
-    "id": "PDF-2107",
-    "topic": "52. ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ D1, D (ЗАГАЛЬНІ)",
-    "question": "3 «Дорога для автомобілів», дозволена максимальна швидкість автобусів, крім мікроавтобусів, не перевищує:",
-    "image": "/images/additional/52/5.jpg",
-    "answers": [
-      "70 км/год.",
-      "90 км/год. 481",
-      "110 км/год. 482"
-    ],
-    "correctAnswer": null,
-    "source": {
-      "file": "questions.pdf",
-      "page": 501,
-      "number": 5
-    }
-  },
-  {
     "id": "PDF-2108",
     "topic": "52. ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ D1, D (ЗАГАЛЬНІ)",
-    "question": "Поза населеними пунктами на дорогах, позначених знаком",
+    "question": "Поза населеними пунктами на дорогах, позначених знаком 5.3«Дорога для автомобілів», дозволена максимальна швидкість автобусів, крім мікроавтобусів, не перевищує:",
     "image": null,
-    "answers": [],
-    "correctAnswer": null,
-    "source": {
-      "file": "questions.pdf",
-      "page": 503,
-      "number": 39
-    }
-  },
-  {
-    "id": "PDF-2109",
-    "topic": "52. ДОДАТКОВІ ПИТАННЯ ЩОДО КАТЕГОРІЙ D1, D (ЗАГАЛЬНІ)",
-    "question": "3 «Дорога для автомобілів», дозволена максимальна швидкість автобусів, крім мікроавтобусів, не перевищує:",
-    "image": "/images/additional/52/5.jpg",
     "answers": [
       "70 км/год.",
       "90 км/год.",
       "110 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 503,
-      "number": 5
+      "number": 39
     }
   },
   {
@@ -712,7 +686,7 @@
       "У випадку виходу тахографа з ладу не вживати ніяких заходів, доки прилад не буде відремонтовано.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 503,
@@ -728,7 +702,7 @@
       "Забезпечувати правильну експлуатацію тахографа та управління режимами його роботи відповідно до інструкції виробника.",
       "У випадку виходу тахографа з ладу не вживати ніяких дій, доки прилад не буде відремонтовано."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 503,
@@ -745,7 +719,7 @@
       "48 годин.",
       "49 годин."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 503,
@@ -764,7 +738,7 @@
       "Відповіді 1, 2, 3.",
       "Відповіді 1 і 2."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 503,
@@ -781,7 +755,7 @@
       "Два.",
       "Три."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 503,
@@ -798,7 +772,7 @@
       "48 годин.",
       "50 годин. 483"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 503,
@@ -815,7 +789,7 @@
       "45 годин на тиждень.",
       "40 годин на тиждень."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 504,
@@ -832,7 +806,7 @@
       "Безперервний період часу, який водій використовує для заповнення необхідних супровідних документів.",
       "Безперервний період часу, який водій використовує виключно для сну."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 504,
@@ -849,7 +823,7 @@
       "Маршрут руху.",
       "Те, що через габарити транспортного засобу сигналів світлофора може бути не видно іншим учасникам дорожнього руху."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 504,
@@ -866,7 +840,7 @@
       "Якнайдалі від колеса.",
       "Місце встановлення не має значення."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 504,
@@ -883,7 +857,7 @@
       "Затягнути болти/гайки на колесі, що стоїть на поверхні.",
       "Затягнути болти/гайки на підвішеному колесі, дотягнути з необхідним моментом затягування на колесі, що стоїть на поверхні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 504,
@@ -902,7 +876,7 @@
       "80 км/год.",
       "90 км/год."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 504,
@@ -921,7 +895,7 @@
       "30 м.",
       "35 м. 484"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 3,
     "source": {
       "file": "questions.pdf",
       "page": 504,
@@ -940,7 +914,7 @@
       "Понад 24 м.",
       "Понад 25 м."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 4,
     "source": {
       "file": "questions.pdf",
       "page": 505,
@@ -957,7 +931,7 @@
       "Після 4 годин.",
       "Після 5 годин."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 505,
@@ -974,7 +948,7 @@
       "Не менше 50 хвилин.",
       "Не менше 1 години."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 505,
@@ -991,7 +965,7 @@
       "Записувати від руки дані про режим роботи і відпочинку.",
       "Використання тахографа не обов’язкове."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 505,
@@ -1008,7 +982,7 @@
       "Своєчасно встановлювати, змінювати й заповнювати тахокарти і забезпечувати їх належне зберігання.",
       "Обидві відповіді правильні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 505,
@@ -1025,7 +999,7 @@
       "У разі поломки тахографа не вдаватися ні до яких дій, доки прилад не буде відремонтовано.",
       "Обидві відповіді правильні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 505,
@@ -1042,7 +1016,7 @@
       "Контрольний пристрій, що встановлюється на борту автотранспортних засобів. Призначений для реєстрації швидкості, режиму праці, відпочинку водіїв і членів екіпажу.",
       "Обидві відповіді правильні."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 505,
@@ -1059,7 +1033,7 @@
       "250 км.",
       "500 км і більше."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 2,
     "source": {
       "file": "questions.pdf",
       "page": 506,
@@ -1076,7 +1050,7 @@
       "Не менше 45 послідовних годин.",
       "Не менше 50 послідовних годин."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 506,
@@ -1093,7 +1067,7 @@
       "Не менше 10 послідовних годин.",
       "Не менше 12 послідовних годин."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 0,
     "source": {
       "file": "questions.pdf",
       "page": 506,
@@ -1110,7 +1084,7 @@
       "Не менше 10 послідовних годин.",
       "Не менше 12 послідовних годин."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 506,
@@ -1126,7 +1100,7 @@
       "Повинні відпочивати, не залишаючи транспортного засобу.",
       "Використовують час перерви на свій розсуд."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 506,
@@ -1142,7 +1116,7 @@
       "Входить.",
       "Не входить."
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 506,
@@ -1159,7 +1133,7 @@
       "Заборонено.",
       "Дозволено тільки в населених пунктах. 486"
     ],
-    "correctAnswer": null,
+    "correctAnswer": 1,
     "source": {
       "file": "questions.pdf",
       "page": 506,
