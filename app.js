@@ -1363,6 +1363,27 @@ function renderWeeklyStats() {
 }
 
 function init() {
+  const bugReportThanksModal = $("#bug-report-thanks-modal");
+  const bugReportThanksDismissed = new Promise((resolve) => {
+    if (bugReportThanksModal.dataset.eligible !== "true" || localStorage.getItem("roadwise-bug-report-thanks-seen")) {
+      resolve();
+      return;
+    }
+    const close = () => {
+      localStorage.setItem("roadwise-bug-report-thanks-seen", "1");
+      bugReportThanksModal.classList.add("hidden");
+      resolve();
+    };
+    $("#bug-report-thanks-close").addEventListener("click", close);
+    bugReportThanksModal.addEventListener("click", (event) => {
+      if (event.target === bugReportThanksModal) close();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !bugReportThanksModal.classList.contains("hidden")) close();
+    });
+    bugReportThanksModal.classList.remove("hidden");
+    $("#bug-report-thanks-close").focus();
+  });
   document.querySelectorAll("[data-thanks-action]").forEach((button) => {
     button.addEventListener("click", () => {
       reportVisitorThanksReaction(button.dataset.thanksAction);
@@ -1463,7 +1484,7 @@ function init() {
   });
   window.addEventListener("error", (event) => reportClientError(event.error || new Error(event.message)));
   window.addEventListener("unhandledrejection", (event) => reportClientError(event.reason || new Error("Unhandled promise rejection")));
-  loadQuestions().then(() => pageViewTracked).then(() => { showTicketsIntroPrompt(); showRatingPrompt(); showTargetedFeedbackPrompt(); showResumeToast(); }).catch(handleInitialLoadError);
+  loadQuestions().then(() => pageViewTracked).then(() => bugReportThanksDismissed).then(() => { showTicketsIntroPrompt(); showRatingPrompt(); showTargetedFeedbackPrompt(); showResumeToast(); }).catch(handleInitialLoadError);
 }
 
 function handleInitialLoadError(error) {

@@ -23,6 +23,7 @@ const analyticsRateLimitWindowMs = Number(process.env.ANALYTICS_RATE_LIMIT_WINDO
 const visitorCookieName = "roadwise_visitor";
 const visitorThanksReactionCookieName = "roadwise_thanks_reacted";
 const thankedVisitorId = "";
+const bugReportThankedVisitorId = "ecbde032cdad6b5f78f715ccc54b03ba";
 const targetedSurveyVersion = 2;
 const targetedSurveyQuestions = [
   { title: "З якою метою ти найчастіше заходиш на Roadwise?", options: ["Готуюся до теоретичного іспиту", "Вчу окремі теми", "Повторюю складні питання", "Тренуюсь для себе", "Все одразу"] },
@@ -949,9 +950,12 @@ function serveStatic(request, response) {
   if (path.basename(filePath) === "index.html") {
     const html = fs.readFileSync(filePath, "utf8");
     const hasThanksReaction = parseCookies(request)[visitorThanksReactionCookieName] === "1";
-    const personalizedHtml = visitorId === thankedVisitorId && !hasThanksReaction
+    let personalizedHtml = visitorId === thankedVisitorId && !hasThanksReaction
       ? html.replace('class="visitor-thanks hidden"', 'class="visitor-thanks"')
       : html;
+    if (visitorId === bugReportThankedVisitorId) {
+      personalizedHtml = personalizedHtml.replace('id="bug-report-thanks-modal"', 'id="bug-report-thanks-modal" data-eligible="true"');
+    }
     response.end(personalizedHtml);
     return;
   }
