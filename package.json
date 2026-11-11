@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "start": "node --env-file=.env server.mjs",
+    "dev": "vite --open /react.html",
+    "build:client": "tsc --noEmit -p tsconfig.client.json && vite build",
     "parse:questions": "node parse-questions.mjs",
     "parse": "tsx src/parser.ts",
     "import:answers": "tsx src/import-answers.ts",
@@ -12,11 +14,17 @@
   "dependencies": {
     "@napi-rs/canvas": "^0.1.68",
     "pdfjs-dist": "^5.4.149",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "tesseract.js": "^7.0.0"
   },
   "devDependencies": {
     "@types/node": "^26.4.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
     "tsx": "^4.23.13",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
   }
 }
