@@ -475,6 +475,14 @@ button.client-mode-card:hover {
   border-color: #bdd2c1;
 }
 
+.client-topic-card.is-started {
+  border-color: #dfc98f;
+}
+
+.client-topic-card.is-last-opened {
+  box-shadow: inset 3px 0 #62816a;
+}
+
 .client-topic-card.is-unavailable {
   color: #87918b;
   cursor: not-allowed;
@@ -1356,6 +1364,50 @@ button.client-mode-card:hover {
   font-size: 1.25rem;
 }
 
+.client-alert .client-alert-retry {
+  flex: 0 0 auto;
+  padding: 7px 12px;
+  border: 1px solid currentColor;
+  border-radius: 7px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.client-alert .client-alert-retry:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.client-visitor-thanks {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 20px;
+  padding: 14px 18px;
+  border: 1px solid #d6e2d7;
+  border-radius: 12px;
+  background: #edf4ee;
+  color: #315a3d;
+}
+
+.client-visitor-thanks > div {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.client-visitor-thanks button {
+  padding: 7px 10px;
+  border: 1px solid #bdd2c1;
+  border-radius: 7px;
+  background: #fff;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+}
+
 .client-resume-banner {
   display: flex;
   align-items: center;
@@ -1516,6 +1568,11 @@ button:focus-visible {
 
   .client-stats article {
     min-height: 110px;
+  }
+
+  .client-visitor-thanks {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .client-results-stats {

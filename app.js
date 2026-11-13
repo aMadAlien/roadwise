@@ -1,59 +1,26 @@
-import { AVAILABLE_TOPICS, RANDOM_TEST_CATEGORIES } from "./available-topics.js";
+import { AVAILABLE_TOPICS } from "./available-topics.js";
 
-const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), ticketCache: null, currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, ticket: null, randomCategory: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), ticketProgress: JSON.parse(localStorage.getItem("roadwise-ticket-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null, timerInterval: null, timerStartedAt: null, savedQuestions: JSON.parse(localStorage.getItem("roadwise-saved") || "[]") };
-const isReturningVisitor = localStorage.getItem("roadwise_visited") === "1";
-localStorage.setItem("roadwise_visited", "1");
+const state = { questions: [], topicCatalog: [], topicIds: {}, topicCache: new Map(), currentTest: [], currentIndex: 0, selectedAnswer: null, mode: "random", topic: null, lastResult: null, examFailed: false, errors: JSON.parse(localStorage.getItem("roadwise-errors") || "[]"), history: JSON.parse(localStorage.getItem("roadwise-history") || "[]"), topicProgress: JSON.parse(localStorage.getItem("roadwise-topic-progress") || "{}"), lastOpenedTopic: localStorage.getItem("roadwise-last-topic") || null, timerInterval: null, timerStartedAt: null, savedQuestions: JSON.parse(localStorage.getItem("roadwise-saved") || "[]") };
+const isReturningVisitor = localStorage.getItem("roadwise-visited") === "1";
+localStorage.setItem("roadwise-visited", "1");
 let pendingRating = null;
 let pendingTestStart = null;
-let pendingCategoryTest = null;
-let answerAdvanceTimeout = null;
-let appStatusTimeout = null;
 const $ = (selector) => document.querySelector(selector);
 const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
 const dataRequestVersion = Date.now().toString(36);
 let lastClientErrorAt = 0;
-const ANSWER_MODE_STORAGE_KEY = "roadwise-answer-mode";
 
-function getAnswerMode() {
-  const savedMode = localStorage.getItem(ANSWER_MODE_STORAGE_KEY);
-  if (savedMode === "auto") return "auto-correct";
-  return ["check", "instant", "auto-correct"].includes(savedMode) ? savedMode : "instant";
-}
-
-function clearAnswerAdvanceTimeout() {
-  if (answerAdvanceTimeout) {
-    window.clearTimeout(answerAdvanceTimeout);
-    answerAdvanceTimeout = null;
-  }
-}
-
-function showAppError(message, retry = null, floating = false) {
-  if (appStatusTimeout) {
-    window.clearTimeout(appStatusTimeout);
-    appStatusTimeout = null;
-  }
+function showAppError(message, retry = null) {
   const status = $("#app-status");
   $("#app-status-message").textContent = message;
   $("#app-status-retry").classList.toggle("hidden", !retry);
-  status.classList.toggle("resume-toast", floating);
   status.classList.remove("hidden");
   status.dataset.retry = retry ? "available" : "none";
   state.retryAction = retry;
-  if (floating) {
-    appStatusTimeout = window.setTimeout(() => {
-      appStatusTimeout = null;
-      clearAppError();
-    }, 2000);
-  }
 }
 
 function clearAppError() {
-  if (appStatusTimeout) {
-    window.clearTimeout(appStatusTimeout);
-    appStatusTimeout = null;
-  }
   $("#app-status").classList.add("hidden");
-  $("#app-status").classList.remove("resume-toast");
   state.retryAction = null;
 }
 
@@ -97,7 +64,7 @@ function reportImageLoadError(question) {
   fetch("api/client-error", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), keepalive: true }).catch(() => { });
 }
 function trackAnalyticsEvent(event, details = {}) {
-  return fetch("api/analytics/event", {
+  fetch("api/analytics/event", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ event, ...details }),
@@ -105,16 +72,7 @@ function trackAnalyticsEvent(event, details = {}) {
   }).catch(() => { });
 }
 
-function reportVisitorThanksReaction(action) {
-  fetch("api/visitor-thanks", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ action }),
-    keepalive: true
-  }).catch(() => { });
-}
-
-const pageViewTracked = trackAnalyticsEvent("page_view", { mode: "none", topic: "all", total: 0 });
+trackAnalyticsEvent("page_view", { mode: "none", topic: "all", total: 0 });
 
 async function loadQuestions() {
   clearAppError();
@@ -133,20 +91,6 @@ function isTopicAvailable(topic) { return AVAILABLE_TOPICS.length === 0 || AVAIL
 function availableTopicCatalog() { return state.topicCatalog.filter((topic) => isTopicAvailable(topic.topic)); }
 function topicEntry(topic) { return state.topicCatalog.find((item) => item.topic === topic); }
 
-const DAILY_TOPIC_TEST_LIMIT = 3;
-
-function getLocalDateKey(date = new Date()) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
-
-function countTopicTestsToday(topic) {
-  const today = getLocalDateKey();
-  return state.history.filter((item) => item.mode === "topic" && item.topic === topic && getLocalDateKey(new Date(item.date)) === today).length;
-}
-
 async function loadTopicQuestions(topicEntry) {
   if (state.topicCache.has(topicEntry.file)) return state.topicCache.get(topicEntry.file);
   const response = await fetch(`questions.by-topic/${encodeURIComponent(topicEntry.file)}?v=${dataRequestVersion}`, { cache: "no-store" });
@@ -161,27 +105,8 @@ async function loadQuestionsForTopics(topicEntries) {
   return questionGroups.flat();
 }
 
-async function loadTickets() {
-  if (state.ticketCache) return state.ticketCache;
-  const questions = await loadQuestionsForTopics(availableTopicCatalog());
-  const questionsByTopic = new Map();
-  questions.forEach((question) => {
-    if (!questionsByTopic.has(question.topic)) questionsByTopic.set(question.topic, []);
-    questionsByTopic.get(question.topic).push(question);
-  });
-  const ticketCount = Math.ceil(questions.length / 20);
-  const tickets = Array.from({ length: ticketCount }, () => []);
-  let ticketIndex = 0;
-  questionsByTopic.forEach((topicQuestions) => topicQuestions.forEach((question) => {
-    tickets[ticketIndex].push(question);
-    ticketIndex = (ticketIndex + 1) % ticketCount;
-  }));
-  state.ticketCache = tickets;
-  return tickets;
-}
-
-async function loadRandomQuestions(count, category) {
-  const response = await fetch(`api/questions/random?count=${count}&category=${encodeURIComponent(category)}&v=${dataRequestVersion}`, { cache: "no-store" });
+async function loadRandomQuestions(count) {
+  const response = await fetch(`api/questions/random?count=${count}&v=${dataRequestVersion}`, { cache: "no-store" });
   if (!response.ok) throw new Error(`Не вдалося завантажити питання: ${response.status}`);
   const data = await response.json();
   return Array.isArray(data.questions) ? data.questions : [];
@@ -190,13 +115,12 @@ function saveProgress() {
   localStorage.setItem("roadwise-errors", JSON.stringify(state.errors));
   localStorage.setItem("roadwise-history", JSON.stringify(state.history));
   localStorage.setItem("roadwise-topic-progress", JSON.stringify(state.topicProgress));
-  localStorage.setItem("roadwise-ticket-progress", JSON.stringify(state.ticketProgress));
   localStorage.setItem("roadwise-last-topic", state.lastOpenedTopic || "");
   localStorage.setItem("roadwise-saved", JSON.stringify(state.savedQuestions));
 }
 
 function saveCurrentTestProgress() {
-  if (!['topic', 'ticket'].includes(state.mode) || !state.currentTest.length) return;
+  if (state.mode !== "topic" || !state.currentTest.length) return;
   const hasAnsweredQuestion = state.currentTest.some((question) => question.userAnswer !== undefined);
   if (!hasAnsweredQuestion) {
     clearCurrentTestProgress();
@@ -205,7 +129,6 @@ function saveCurrentTestProgress() {
   localStorage.setItem("roadwise-test-progress", JSON.stringify({
     mode: state.mode,
     topic: state.topic,
-    ticket: state.ticket,
     currentIndex: state.currentIndex,
     questions: state.currentTest
   }));
@@ -218,14 +141,13 @@ function clearCurrentTestProgress() {
 function loadCurrentTestProgress() {
   try {
     const saved = JSON.parse(localStorage.getItem("roadwise-test-progress") || "null");
-    if (!saved || !['topic', 'ticket'].includes(saved.mode) || !Array.isArray(saved.questions) || !saved.questions.length) {
+    if (!saved || saved.mode !== "topic" || !Array.isArray(saved.questions) || !saved.questions.length) {
       clearCurrentTestProgress();
       return false;
     }
     state.currentTest = saved.questions;
     state.mode = saved.mode || "random";
     state.topic = saved.topic || null;
-    state.ticket = saved.ticket || null;
     state.currentIndex = Math.min(Math.max(Number(saved.currentIndex) || 0, 0), state.currentTest.length - 1);
     return true;
   } catch {
@@ -235,14 +157,7 @@ function loadCurrentTestProgress() {
 }
 
 function testModeLabel(mode, topic) {
-  return mode === "mistakes" ? "Мої помилки" : mode === "saved" ? "Збережені питання" : mode === "ticket" ? `Білет ${state.ticket}` : topic ? topic : "Випадковий тест";
-}
-
-function ticketProgressLabel(progress) {
-  if (!progress) return "";
-  const status = progress.passed ? "✓ Складено" : "Не складено";
-  const mistakes = progress.mistakes > 0 ? ` · ${progress.mistakes} ${pluralizeUk(progress.mistakes, "помилка", "помилки", "помилок")}` : "";
-  return `${status}${mistakes}`;
+  return mode === "mistakes" ? "Мої помилки" : mode === "saved" ? "Збережені питання" : topic ? topic : "Випадковий тест";
 }
 function updateBackButtonLabel(label) {
   $(".back-button span").textContent = label;
@@ -258,11 +173,6 @@ function showResumeToast() {
   $("#resume-toast").classList.remove("hidden");
 }
 
-function showTopicLimitToast(topic) {
-  $("#topic-limit-toast-details").textContent = `Тему «${topic}» вже пройдено 3 рази. Спробуй її завтра, а сьогодні обери іншу.`;
-  $("#topic-limit-toast").classList.remove("hidden");
-}
-
 function resumeSavedTest() {
   $("#resume-toast").classList.add("hidden");
   $("#restart-modal").classList.add("hidden");
@@ -272,13 +182,13 @@ function resumeSavedTest() {
   $("#test-empty-state").classList.add("hidden");
   $("#test-result").classList.add("hidden");
   $("#test-mode-label").textContent = testModeLabel(state.mode, state.topic);
-  updateBackButtonLabel(state.mode === "ticket" ? "Список білетів" : "Список тем");
+  updateBackButtonLabel("До тем");
   $(".question-nav").classList.remove("hidden");
   $(".progress-track").classList.remove("hidden");
   $(".test-progress-label").classList.remove("hidden");
   $("#topic-picker").classList.add("hidden");
   $("#question-layout").classList.remove("hidden");
-  if (state.mode === "random" || state.mode === "ticket") startExamTimer();
+  if (state.mode === "random") startExamTimer();
   showView("test");
   renderQuestion();
 }
@@ -295,33 +205,6 @@ function requestTestStart(mode, topic) {
   startTest(mode, topic, { skipPrompt: true });
 }
 
-function getSavedRandomCategory() {
-  const category = localStorage.getItem("roadwise-random-category");
-  return Object.hasOwn(RANDOM_TEST_CATEGORIES, category) ? category : null;
-}
-
-function showRandomCategoryPrompt(mode, topic, options) {
-  pendingCategoryTest = { mode, topic, options };
-  $("#random-category-select").value = "";
-  $("#random-category-remember").checked = false;
-  $("#random-category-start").disabled = true;
-  $("#random-category-modal").classList.remove("hidden");
-}
-
-function closeRandomCategoryPrompt() {
-  pendingCategoryTest = null;
-  $("#random-category-modal").classList.add("hidden");
-}
-
-function startRandomTestWithCategory() {
-  const category = $("#random-category-select").value;
-  if (!Object.hasOwn(RANDOM_TEST_CATEGORIES, category) || !pendingCategoryTest) return;
-  const { mode, topic, options } = pendingCategoryTest;
-  if ($("#random-category-remember").checked) localStorage.setItem("roadwise-random-category", category);
-  closeRandomCategoryPrompt();
-  startTest(mode, topic, { ...options, category, skipPrompt: true });
-}
-
 function closeRestartModal() {
   pendingTestStart = null;
   $("#restart-modal").classList.add("hidden");
@@ -331,6 +214,7 @@ function startPendingTest(restart) {
   const nextTest = pendingTestStart;
   if (!nextTest) return;
   closeRestartModal();
+  clearCurrentTestProgress();
   startTest(nextTest.mode, nextTest.topic, { skipPrompt: true, restart });
 }
 
@@ -356,16 +240,6 @@ function clearSavedQuestions() {
   saveProgress();
   renderSavedView();
   updateNavBadge();
-}
-
-function openSavedClearConfirmation() {
-  $("#saved-clear-description").textContent = `Буде видалено ${state.savedQuestions.length} ${pluralizeUk(state.savedQuestions.length, "збережене питання", "збережені питання", "збережених питань")}. Відновити їх не вдасться.`;
-  $("#saved-clear-modal").classList.remove("hidden");
-  $("#saved-clear-cancel").focus();
-}
-
-function closeSavedClearConfirmation() {
-  $("#saved-clear-modal").classList.add("hidden");
 }
 
 function updateNavBadge() {
@@ -439,26 +313,8 @@ function renderHome() {
   $("#question-count").textContent = availableTopicCatalog().reduce((total, topic) => total + topic.count, 0);
   $("#topic-count").textContent = `${topics().length} тем`;
   $("#tests-count").textContent = state.history.length;
-  const topicsPassedAtNinety = availableTopicCatalog().filter((topic) => {
-    const progress = state.topicProgress[topicId(topic.topic)];
-    return progress?.status === "completed" && Number(progress.percent) >= 90;
-  }).length;
-  if ($("#tests-passed-count")) {
-    $("#tests-passed-count").textContent = topicsPassedAtNinety;
-  }
-  if ($("#topics-not-started-count")) {
-    $("#topics-not-started-count").textContent = availableTopicCatalog().filter((topic) => !state.topicProgress[topicId(topic.topic)]?.status).length;
-  }
   const average = state.history.length ? Math.round(state.history.reduce((sum, item) => sum + item.percent, 0) / state.history.length) : null;
   $("#average-score").textContent = average === null ? "—" : `${average}%`;
-  const todayKey = new Date().toISOString().slice(0, 10);
-  const weekStart = new Date();
-  weekStart.setUTCHours(0, 0, 0, 0);
-  weekStart.setUTCDate(weekStart.getUTCDate() - 6);
-  const weekStartKey = weekStart.toISOString().slice(0, 10);
-  const averageFor = (history) => history.length ? `${Math.round(history.reduce((sum, item) => sum + item.percent, 0) / history.length)}%` : "—";
-  $("#average-score-week").textContent = averageFor(state.history.filter((item) => item.date.slice(0, 10) >= weekStartKey));
-  $("#average-score-today").textContent = averageFor(state.history.filter((item) => item.date.slice(0, 10) === todayKey));
   $("#mistakes-description").textContent = state.errors.length ? `${state.errors.length} питань для повторення` : "Поки що помилок немає";
   $("#streak-count").textContent = calculateStreak();
   topicList.innerHTML = topics().map((topic) => `<div class="topic-row"><span class="topic-bullet"></span><span class="topic-name">${topic}</span><span class="topic-questions">${counts[topic]} питань</span></div>`).join("");
@@ -497,161 +353,14 @@ function confirmRating() {
   window.setTimeout(closeRatingPrompt, 700);
 }
 
-const targetedSurveyQuestions = [
-  { title: "З якою метою ти найчастіше заходиш на Roadwise?", type: "choice", options: ["Готуюся до теоретичного іспиту", "Вчу окремі теми", "Повторюю складні питання", "Тренуюсь для себе", "Все одразу"] },
-  { title: "Який формат тренування тобі подобається найбільше?", type: "choice", options: ["За темами", "За білетами", "Випадковий іспит", "Мої помилки"] },
-  { title: "Чого тобі найбільше бракує або що варто покращити?", type: "choice-other", options: ["Пояснень до відповідей", "Більше різних режимів тренування", "Зручнішого повторення помилок", "Можливості зберігати питання по категоріях", "Нічого, усе необхідне є"], other: true },
-  { title: "Наскільки вам зручно користуватися сайтом?", type: "stars", options: ["1", "2", "3", "4", "5"] },
-  { title: "Наскільки ймовірно, що порадиш Roadwise друзям?", type: "slider" }
-];
-const isTargetedSurveyPreview = ["localhost", "127.0.0.1"].includes(window.location.hostname) && new URLSearchParams(window.location.search).get("survey-test") === "1";
-const targetedSurveyPreviewSession = isTargetedSurveyPreview ? crypto.randomUUID() : null;
-
-function targetedSurveyEndpoint(path) {
-  return isTargetedSurveyPreview
-    ? `${path}?survey-test=1&session=${encodeURIComponent(targetedSurveyPreviewSession)}`
-    : path;
-}
-
-async function showTargetedFeedbackPrompt() {
-  try {
-    const response = await fetch(targetedSurveyEndpoint("api/targeted-feedback-prompt"), { cache: "no-store" });
-    const payload = await response.json();
-    if (!response.ok || !payload.show) return;
-    $("#targeted-feedback-modal").classList.remove("hidden");
-    if (isTargetedSurveyPreview) $("#targeted-feedback-content .eyebrow").textContent = "Тестовий режим · відповіді надсилаються в Telegram";
-    if (payload.questionIndex > 0) renderTargetedSurveyQuestion(payload.questionIndex);
-  } catch { }
-}
-
-function closeTargetedFeedbackPrompt() {
-  fetch(targetedSurveyEndpoint("api/targeted-feedback-dismiss"), { method: "POST", keepalive: true }).catch(() => { });
-  $("#targeted-feedback-modal").classList.add("hidden");
-}
-
-function startTargetedSurvey() {
-  renderTargetedSurveyQuestion(0);
-}
-
-function renderTargetedSurveyQuestion(questionIndex) {
-  const question = targetedSurveyQuestions[questionIndex];
-  if (!question) return;
-  const content = $("#targeted-feedback-content");
-  const choices = question.type === "choice" || question.type === "choice-other"
-    ? `<div class="targeted-survey-choices" role="group" aria-label="${question.title}">${question.options.map((option, index) => `<button type="button" class="targeted-survey-choice" data-choice-index="${index}">${option}</button>`).join("")}${question.other ? `<button type="button" class="targeted-survey-choice" data-choice-index="${question.options.length}">Інше</button>` : ""}</div>${question.other ? '<label class="targeted-survey-label hidden" id="targeted-survey-other-label" for="targeted-survey-other">Уточни, будь ласка</label><textarea class="hidden" id="targeted-survey-other" rows="3" maxlength="1000" placeholder="Твій варіант"></textarea>' : ""}`
-    : question.type === "stars"
-      ? `<div class="targeted-survey-stars" role="radiogroup" aria-label="${question.title}">${question.options.map((option, index) => `<button type="button" class="targeted-survey-choice targeted-survey-star" data-choice-index="${index}" role="radio" aria-checked="false" aria-label="${option} з 5 зірок">★</button>`).join("")}</div><p class="targeted-survey-stars-labels"><span>⭐ 1 — зовсім незручно</span><span>⭐ 5 — дуже зручно</span></p><p class="targeted-survey-star-value" id="targeted-survey-star-value" aria-live="polite">Обери оцінку</p>`
-      : question.type === "slider"
-        ? '<div class="targeted-survey-scale"><output class="targeted-survey-score" id="targeted-survey-score" for="targeted-survey-slider" aria-live="polite">5</output><input class="targeted-survey-slider" id="targeted-survey-slider" type="range" min="0" max="10" step="1" value="5" aria-label="Оцінка від 0 до 10"><div class="targeted-survey-scale-labels"><span>Зовсім ні</span><span>Точно так</span></div></div>'
-        : '<label class="targeted-survey-label" for="targeted-survey-answer">Твоя відповідь</label><textarea id="targeted-survey-answer" name="answer" rows="4" maxlength="1000" required placeholder="Можна коротко, своїми словами"></textarea>';
-  content.innerHTML = `<p class="eyebrow">Питання ${questionIndex + 1} з ${targetedSurveyQuestions.length}</p><h2 id="targeted-feedback-title">${question.title}</h2><form id="targeted-survey-form">${choices}<p class="rating-hint" id="targeted-survey-status" role="status"></p><button type="submit" class="rating-confirm" id="targeted-survey-submit" disabled>Надіслати відповідь</button></form>`;
-  const form = $("#targeted-survey-form");
-  const submit = $("#targeted-survey-submit");
-  form.querySelectorAll(".targeted-survey-choice").forEach((button) => button.addEventListener("click", () => {
-    const isStars = question.type === "stars";
-    const selectedIndex = Number(button.dataset.choiceIndex);
-    form.querySelectorAll(".targeted-survey-choice").forEach((choice) => {
-      const isSelected = isStars ? Number(choice.dataset.choiceIndex) <= selectedIndex : choice === button;
-      choice.classList.toggle("is-selected", isSelected);
-      choice.classList.toggle("is-current", isStars && choice === button);
-      if (isStars) choice.setAttribute("aria-checked", choice === button ? "true" : "false");
-    });
-    if (question.type === "choice-other") {
-      const isOther = selectedIndex === question.options.length;
-      const otherLabel = $("#targeted-survey-other-label");
-      const otherField = $("#targeted-survey-other");
-      otherLabel.classList.toggle("hidden", !isOther);
-      otherField.classList.toggle("hidden", !isOther);
-      otherField.required = isOther;
-      submit.disabled = isOther && !otherField.value.trim();
-      if (isOther) otherField.focus();
-    } else {
-      submit.disabled = false;
-    }
-    if (isStars) $("#targeted-survey-star-value").textContent = `${selectedIndex + 1} з 5`;
-  }));
-  const answerField = $("#targeted-survey-answer");
-  if (answerField) answerField.addEventListener("input", () => { submit.disabled = !answerField.value.trim(); });
-  const otherField = $("#targeted-survey-other");
-  if (otherField) otherField.addEventListener("input", () => {
-    const otherButton = form.querySelector(`.targeted-survey-choice[data-choice-index="${question.options.length}"]`);
-    submit.disabled = otherButton.classList.contains("is-selected") && !otherField.value.trim();
-  });
-  const slider = $("#targeted-survey-slider");
-  if (slider) {
-    submit.disabled = false;
-    slider.addEventListener("input", () => { $("#targeted-survey-score").value = slider.value; });
-  }
-  form.addEventListener("submit", (event) => submitTargetedSurveyAnswer(event, questionIndex));
-}
-
-async function submitTargetedSurveyAnswer(event, questionIndex) {
-  event.preventDefault();
-  const question = targetedSurveyQuestions[questionIndex];
-  const form = event.currentTarget;
-  const selectedChoice = form.querySelector(".targeted-survey-choice.is-selected");
-  const answerField = $("#targeted-survey-answer");
-  const otherField = $("#targeted-survey-other");
-  const slider = $("#targeted-survey-slider");
-  const selectedOption = question.type === "stars" ? form.querySelector(".targeted-survey-star.is-current") : selectedChoice;
-  const selectedIndex = Number(selectedOption?.dataset.choiceIndex);
-  const answer = question.type === "choice" || question.type === "stars"
-    ? question.options[selectedIndex]
-    : question.type === "choice-other"
-      ? selectedIndex === question.options.length ? `Інше: ${otherField?.value.trim()}` : question.options[selectedIndex]
-      : question.type === "slider" ? slider?.value : answerField?.value.trim();
-  const submit = $("#targeted-survey-submit");
-  const status = $("#targeted-survey-status");
-  if (!answer) return;
-  submit.disabled = true;
-  status.textContent = "Надсилаємо відповідь...";
-  try {
-    const response = await fetch(targetedSurveyEndpoint("api/targeted-feedback"), {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ questionIndex, answer })
-    });
-    const payload = await response.json();
-    if (!response.ok) throw new Error(payload.error || "Не вдалося надіслати відповідь");
-    if (payload.complete) {
-      $("#targeted-feedback-content").innerHTML = '<p class="eyebrow">Дякуємо за чесність</p><h2 id="targeted-feedback-title">Тепер знаємо, куди їхати далі</h2><p>Твої відповіді вже допомагають зробити Roadwise кращим.</p>';
-      return;
-    }
-    renderTargetedSurveyQuestion(payload.questionIndex);
-  } catch (error) {
-    status.textContent = error.message;
-    submit.disabled = false;
-  }
-}
-
-function showTicketsIntroPrompt() {
-  if (isReturningVisitor || localStorage.getItem("roadwise-tickets-intro-seen")) return;
-  window.setTimeout(() => $("#tickets-intro-modal").classList.remove("hidden"), 500);
-}
-
-function closeTicketsIntroPrompt() {
-  localStorage.setItem("roadwise-tickets-intro-seen", "1");
-  $("#tickets-intro-modal").classList.add("hidden");
-}
-
-function tryTicketsFromIntro() {
-  closeTicketsIntroPrompt();
-  showView("tickets");
-}
-
 function showView(viewName) {
-  $(".app-shell").classList.toggle("is-test-view", viewName === "test");
   document.querySelectorAll(".view").forEach((view) => view.classList.toggle("is-visible", view.id === `${viewName}-view`));
   document.querySelectorAll("[data-view]").forEach((link) => link.classList.toggle("is-active", link.dataset.view === viewName));
-  if (viewName !== "test") {
-    stopExamTimer();
-    clearAnswerAdvanceTimeout();
-  }
+  if (viewName !== "test") stopExamTimer();
   if (viewName === "home" && state.topicCatalog.length) renderHome();
   if (viewName === "results") renderResultsView();
   if (viewName === "saved") renderSavedView();
   if (viewName === "errors") renderErrorsView().catch((error) => { reportClientError(error); showAppError("Не вдалося завантажити список помилок."); });
-  if (viewName === "tickets") renderTicketsView();
 }
 
 function formatTimerDuration(ms) {
@@ -689,11 +398,6 @@ async function startTest(mode = "random", topic = null, options = {}) {
     requestTestStart(mode, topic);
     return;
   }
-  const randomCategory = mode === "random" ? options.category || getSavedRandomCategory() : null;
-  if (mode === "random" && !randomCategory) {
-    showRandomCategoryPrompt(mode, topic, options);
-    return;
-  }
   if (mode === "topic" && !topic) {
     state.mode = mode; state.topic = null; state.currentIndex = 0; state.selectedAnswer = null; state.examFailed = false;
     $("#test-empty-state").classList.add("hidden");
@@ -708,37 +412,23 @@ async function startTest(mode = "random", topic = null, options = {}) {
     showView("test");
     return;
   }
-  if (mode === "topic" && topic && countTopicTestsToday(topic) >= DAILY_TOPIC_TEST_LIMIT) {
-    showTopicLimitToast(topic);
-    return;
-  }
   clearCurrentTestProgress();
-  state.mode = mode; state.topic = topic; state.ticket = mode === "ticket" ? Number(topic) : null; state.randomCategory = randomCategory; state.currentIndex = 0; state.selectedAnswer = null; state.examFailed = false;
+  state.mode = mode; state.topic = topic; state.currentIndex = 0; state.selectedAnswer = null; state.examFailed = false;
   $("#test-empty-state").classList.add("hidden");
   $("#test-result").classList.add("hidden");
   if (mode === "topic" && topic && !isTopicAvailable(topic)) return;
   let testSize;
   if (mode === "random") {
     try {
-      state.currentTest = await loadRandomQuestions(20, randomCategory);
+      state.currentTest = await loadRandomQuestions(20);
     } catch (error) {
       reportClientError(error);
-      showAppError("Не вдалося завантажити питання. Перевір з'єднання та спробуй ще раз.", () => startTest(mode, topic, { category: randomCategory }));
+      showAppError("Не вдалося завантажити питання. Перевір з'єднання та спробуй ще раз.", () => startTest(mode, topic));
       return;
     }
     testSize = state.currentTest.length;
   } else if (mode === "saved") {
     state.currentTest = shuffle(state.savedQuestions.map((question) => ({ ...question })));
-    testSize = state.currentTest.length;
-  } else if (mode === "ticket") {
-    try {
-      const tickets = await loadTickets();
-      state.currentTest = tickets[state.ticket - 1]?.map((question) => ({ ...question })) || [];
-    } catch (error) {
-      reportClientError(error);
-      showAppError("Не вдалося завантажити білети. Перевір з'єднання та спробуй ще раз.", () => startTest(mode, topic));
-      return;
-    }
     testSize = state.currentTest.length;
   } else {
     const topicEntries = topic ? [topicEntry(topic)] : availableTopicCatalog();
@@ -753,22 +443,21 @@ async function startTest(mode = "random", topic = null, options = {}) {
     testSize = mode === "topic" ? pool.length : Math.min(20, pool.length);
     state.currentTest = shuffle(pool).slice(0, testSize);
   }
-  state.currentTest.forEach((question) => { delete question.userAnswer; delete question.pendingAnswer; delete question.showCorrectAnswer; });
-  if (!state.currentTest.length) { showAppError("Тут поки немає питань для цього режиму.", null, true); return; }
-  $("#test-mode-label").textContent = testModeLabel(mode, topic);
-  updateBackButtonLabel(mode === "topic" && topic ? "Список тем" : mode === "ticket" ? "Список білетів" : "До меню");
+  state.currentTest.forEach((question) => { delete question.userAnswer; delete question.showCorrectAnswer; });
+  if (!state.currentTest.length) { showAppError("Тут поки немає питань для цього режиму."); return; }
+  $("#test-mode-label").textContent = mode === "mistakes" ? "Мої помилки" : mode === "saved" ? "Збережені питання" : topic ? '' : "Випадковий тест";
+  updateBackButtonLabel(mode === "topic" && topic ? "До тем" : "До меню");
   $(".question-nav").classList.remove("hidden");
   $(".progress-track").classList.remove("hidden");
   $(".test-progress-label").classList.remove("hidden");
   $("#topic-picker").classList.add("hidden");
   $("#question-layout").classList.remove("hidden");
   trackAnalyticsEvent("test_started", { mode, topic: topic || "all", total: testSize });
-  if (mode === "random" || mode === "ticket") startExamTimer();
+  if (mode === "random") startExamTimer();
   showView("test"); renderQuestion();
 }
 
 function showTestResult() {
-  setQuestionActionBarVisible(false);
   $("#test-empty-state").classList.add("hidden");
   $("#topic-picker").classList.add("hidden");
   $("#question-layout").classList.add("hidden");
@@ -777,42 +466,9 @@ function showTestResult() {
   $(".test-progress-label").classList.add("hidden");
   $("#test-result").classList.remove("hidden");
   $("#test-mode-label").textContent = "Результат тесту";
-  const resultBackButton = $("#result-back-button");
-  const resultBackLabel = state.mode === "ticket" ? "Список білетів" : state.mode === "topic" && state.topic ? "Список тем" : "До меню";
-  resultBackButton.innerHTML = `<span></span>${resultBackLabel}<span></span>`;
-  resultBackButton.dataset.returnTo = state.mode === "ticket" ? "tickets" : state.mode === "topic" && state.topic ? "topics" : "home";
-  updateBackButtonLabel(resultBackLabel);
+  updateBackButtonLabel("До меню");
   renderResults();
   showView("test");
-}
-
-function topicCompletionDate(progress) {
-  if (!progress?.completedAt) return "";
-
-  const completedAt = new Date(progress.completedAt);
-
-  if (!Number.isFinite(completedAt.getTime())) return "";
-
-  const age = Date.now() - completedAt.getTime();
-  const days = Math.floor(age / (24 * 60 * 60 * 1000));
-
-  if (days === 0) return "сьогодні";
-  if (days === 1) return "вчора";
-
-  const lastTwo = days % 100;
-  const last = days % 10;
-
-  let word = "днів";
-
-  if (lastTwo < 11 || lastTwo > 14) {
-    if (last === 1) word = "день";
-    else if (last >= 2 && last <= 4) word = "дні";
-  }
-
-  // return `${days} ${word} тому`;
-  const daysAgo = 3;
-  const dateClass = age > daysAgo * 24 * 60 * 60 * 1000 ? " is-old" : "";
-  return `<span class="topic-progress-date${dateClass}">${days} ${word} тому</span>`;
 }
 
 function renderTopicPicker() {
@@ -822,40 +478,17 @@ function renderTopicPicker() {
     const developmentNote = available ? "" : "<small>Ми вже працюємо над цією темою.</small>";
     const topicProgress = state.topicProgress[topicId(topic)];
     const progress = topicProgress?.status;
-    const completionPercent = Number(topicProgress?.percent);
-    const isPerfect = progress === "completed" && completionPercent >= 90;
+    const isPerfect = progress === "completed" && !topicProgress.mistakes;
     const progressClass = progress === "completed" ? (isPerfect ? "is-completed-perfect" : "is-completed") : progress === "started" ? "is-started" : "";
     const isLastOpened = available && topic === state.lastOpenedTopic;
-    const progressBadge = progress === "completed" ? `<span class="topic-progress-badge ${isPerfect ? "perfect" : "completed"}">Завершено ${topicCompletionDate(topicProgress)} ${topicProgress.percent ? topicProgress.percent + '%' : ''}</span>` : progress === "started" ? '<span class="topic-progress-badge started">Почато</span>' : "";
-    const completedTopicMeta = isPerfect ? topicMeta : progress === "completed" ? `<span><span style="color: var(--red);">${topicProgress.mistakes}</span>/${topicMeta}</span>` : topicMeta;
-    return `<button type="button" class="${topic === state.topic ? "is-selected" : ""} ${available ? "" : "is-unavailable"} ${progressClass} ${isLastOpened ? "is-last-opened" : ""}" data-topic="${topic}" ${available ? "" : "disabled"}><span class="topic-picker-name">${topic}${developmentNote}${progressBadge}</span><span class="locked-dev" style="flex-shrink: 0;">${completedTopicMeta}</span></button>`;
+    const completedPercent = Number.isFinite(topicProgress?.percent) ? ` · ${topicProgress.percent}%` : "";
+    const progressBadge = progress === "completed" ? `<span class="topic-progress-badge ${isPerfect ? "perfect" : "completed"}">${isPerfect ? "Відмінно" : `Завершено · ${topicProgress.mistakes} помилок${completedPercent}`}</span>` : progress === "started" ? '<span class="topic-progress-badge started">Почато</span>' : "";
+    return `<button type="button" class="${topic === state.topic ? "is-selected" : ""} ${available ? "" : "is-unavailable"} ${progressClass} ${isLastOpened ? "is-last-opened" : ""}" data-topic="${topic}" ${available ? "" : "disabled"}><span class="topic-picker-name">${topic}${developmentNote}${progressBadge}</span><span class="locked-dev" style="flex-shrink: 0;">${topicMeta}</span></button>`;
   }).join("")}`;
   $("#topic-picker").querySelectorAll("button:not(:disabled)").forEach((button) => button.addEventListener("click", () => requestTestStart("topic", button.dataset.topic)));
 }
 
-function renderTicketsView() {
-  const list = $("#ticket-list");
-  if (!state.ticketCache) {
-    loadTickets().then(renderTicketsView).catch((error) => {
-      reportClientError(error);
-      $("#tickets-status").textContent = "Не вдалося завантажити білети. Спробуй оновити сторінку.";
-    });
-    return;
-  }
-  const tickets = state.ticketCache;
-  $("#tickets-count").textContent = tickets.length;
-  $("#tickets-status").textContent = `У базі ${tickets.reduce((total, ticket) => total + ticket.length, 0)} питань. У кожному білеті 19–20 питань.`;
-  list.innerHTML = tickets.map((ticket, index) => {
-    const progress = state.ticketProgress[index + 1];
-    const isPassed = progress?.passed === true;
-    const status = ticketProgressLabel(progress);
-    return `<button type="button" class="ticket-card ${isPassed ? "is-passed" : progress ? "is-attempted" : ""}" data-ticket="${index + 1}"><span class="ticket-number">${String(index + 1).padStart(2, "0")}</span><span class="ticket-title">Білет ${index + 1}</span><span class="ticket-meta">${ticket.length} питань</span>${status ? `<span class="ticket-status">${status}</span>` : ""}<span class="ticket-arrow">↗</span></button>`;
-  }).join("");
-  list.querySelectorAll("[data-ticket]").forEach((button) => button.addEventListener("click", () => requestTestStart("ticket", button.dataset.ticket)));
-}
-
 function returnToTopicPicker() {
-  setQuestionActionBarVisible(false);
   $("#question-layout").classList.add("hidden");
   $("#topic-picker").classList.remove("hidden");
   $(".question-nav").classList.add("hidden");
@@ -868,20 +501,8 @@ function returnToTopicPicker() {
   updateBackButtonLabel("До меню");
 }
 
-function returnToTickets() {
-  setQuestionActionBarVisible(false);
-  $("#question-layout").classList.add("hidden");
-  $("#topic-picker").classList.add("hidden");
-  $(".question-nav").classList.add("hidden");
-  $(".progress-track").classList.add("hidden");
-  $(".test-progress-label").classList.add("hidden");
-  $("#test-empty-state").classList.add("hidden");
-  showView("tickets");
-}
-
 function renderQuestion() {
   const question = state.currentTest[state.currentIndex];
-  const answerMode = getAnswerMode();
   state.selectedAnswer = null;
   const elements = {
     progressBar: $("#progress-bar"),
@@ -896,10 +517,8 @@ function renderQuestion() {
     questionImageFallbackText: $("#question-image-fallback-text"),
     questionImageRetryButton: $("#question-image-retry"),
     answersList: $("#answers-list"),
-    checkAnswerButton: $("#check-answer-button"),
     showCorrectButton: $("#show-correct-button"),
     nextButton: $("#next-button"),
-    previousButton: $("#previous-button"),
     reportButton: $("#report-button"),
     saveButton: $("#save-question-button"),
     saveButtonLabel: $("#save-button-label")
@@ -935,39 +554,22 @@ function renderQuestion() {
     elements.saveButtonLabel.textContent = nowSaved ? "Збережено" : "Зберегти";
   };
   elements.answersList.innerHTML = question.answers.map((answer, index) => {
+    const isSelected = question.userAnswer === index;
+    const isCorrectAnswerRevealed = question.showCorrectAnswer && index === question.correctAnswer;
+    const answerState = isSelected ? question.userAnswer === question.correctAnswer ? "selected answer-correct" : "selected answer-wrong" : isCorrectAnswerRevealed ? "answer-correct answer-revealed" : "";
     const answered = question.userAnswer !== undefined;
-    const selectedAnswer = answered ? question.userAnswer : question.pendingAnswer;
-    const isSelected = selectedAnswer === index;
-    const isCorrectAnswerRevealed = answered && question.showCorrectAnswer && index === question.correctAnswer;
-    const answerState = answered
-      ? isSelected ? question.userAnswer === question.correctAnswer ? "selected answer-correct" : "selected answer-wrong" : isCorrectAnswerRevealed ? "answer-correct answer-revealed" : ""
-      : isSelected ? "selected is-pending" : "";
     return `<button class="answer-option ${answerState}" type="button" data-answer="${index}" ${answered ? "disabled" : ""} aria-pressed="${isSelected}"><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${answer}</span></button>`;
   }).join("");
-  const hasPendingAnswer = question.pendingAnswer !== undefined;
-  const hasAnswer = question.userAnswer !== undefined;
-  elements.checkAnswerButton.classList.toggle("is-active", answerMode === "check" && !hasAnswer && hasPendingAnswer);
-  elements.checkAnswerButton.disabled = !hasPendingAnswer;
   const answeredIncorrectly = question.userAnswer !== undefined && question.userAnswer !== question.correctAnswer;
   elements.showCorrectButton.classList.toggle("hidden", !answeredIncorrectly || question.showCorrectAnswer);
-  elements.nextButton.classList.toggle("is-active", hasAnswer && (answerMode !== "auto-correct" || answeredIncorrectly));
-  elements.nextButton.disabled = !hasAnswer;
-  elements.previousButton.disabled = state.currentIndex === 0;
-  $("#question-action-bar").classList.toggle("is-checked", hasAnswer);
-  setQuestionActionBarVisible(answerMode === "auto-correct" ? answeredIncorrectly : hasAnswer || answerMode === "check" && hasPendingAnswer);
+  elements.nextButton.disabled = question.userAnswer === undefined;
   elements.nextButton.innerHTML = state.currentIndex === state.currentTest.length - 1 ? "<span></span> Завершити тест <span>✓</span>" : `<span></span> Наступне питання <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><title>arrow-next-ltr</title><path fill="currentColor" d="M18 9.804v1.392l-5.688 5.883l-1.436-1.39L14.93 11.5H1v-2h13.923l-4.047-4.165l1.434-1.394z"/></svg>`;
-  elements.questionNav.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => { clearAnswerAdvanceTimeout(); state.currentIndex = Number(button.dataset.questionIndex); saveCurrentTestProgress(); renderQuestion(); }));
+  elements.questionNav.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => { state.currentIndex = Number(button.dataset.questionIndex); saveCurrentTestProgress(); renderQuestion(); }));
   elements.answersList.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => {
     if (question.userAnswer !== undefined) return;
     const answer = Number(button.dataset.answer);
-    if (answerMode === "check") {
-      question.pendingAnswer = answer;
-      renderQuestion();
-      return;
-    }
     question.userAnswer = answer;
     state.selectedAnswer = answer;
-    question.showCorrectAnswer = false;
     elements.answersList.querySelectorAll("button").forEach((item) => item.classList.remove("selected", "answer-correct", "answer-wrong"));
     button.classList.add("selected", answer === question.correctAnswer ? "answer-correct" : "answer-wrong");
     elements.nextButton.disabled = false;
@@ -976,72 +578,12 @@ function renderQuestion() {
     elements.showCorrectButton.classList.toggle("hidden", answer === question.correctAnswer);
     renderQuestionNav();
     maybeShowExamFailedNotice();
-    renderQuestion();
-    if (answerMode === "auto-correct" && answer === question.correctAnswer && $("#exam-failed-modal").classList.contains("hidden")) {
-      clearAnswerAdvanceTimeout();
-      const answeredIndex = state.currentIndex;
-      answerAdvanceTimeout = window.setTimeout(() => {
-        answerAdvanceTimeout = null;
-        if (state.currentIndex === answeredIndex && state.currentTest[answeredIndex]?.userAnswer !== undefined) advanceToNextQuestion();
-      }, 350);
-    }
   }));
   elements.showCorrectButton.onclick = () => {
     if (question.userAnswer === undefined || question.userAnswer === question.correctAnswer) return;
     question.showCorrectAnswer = true;
     renderQuestion();
   };
-}
-
-function setQuestionActionBarVisible(visible) {
-  const actionBar = $("#question-action-bar");
-  if (!visible) {
-    actionBar.classList.remove("is-visible");
-    actionBar.classList.add("hidden");
-    return;
-  }
-  if (!actionBar.classList.contains("hidden")) return;
-  actionBar.classList.remove("hidden");
-  window.requestAnimationFrame(() => actionBar.classList.add("is-visible"));
-}
-
-function checkCurrentAnswer() {
-  const question = state.currentTest[state.currentIndex];
-  if (!question || question.userAnswer !== undefined || question.pendingAnswer === undefined) return;
-  question.userAnswer = question.pendingAnswer;
-  delete question.pendingAnswer;
-  question.showCorrectAnswer = false;
-  if (state.mode === "topic" && state.topic) markTopicStarted(state.topic);
-  saveCurrentTestProgress();
-  renderQuestionNav();
-  renderQuestion();
-  maybeShowExamFailedNotice();
-}
-
-function advanceToNextQuestion() {
-  clearAnswerAdvanceTimeout();
-  if (state.currentTest[state.currentIndex]?.userAnswer === undefined) return;
-  if (state.currentIndex === state.currentTest.length - 1) {
-    finishTest();
-    return;
-  }
-  state.currentIndex += 1;
-  saveCurrentTestProgress();
-  renderQuestion();
-}
-
-function initializeAnswerModeSettings() {
-  document.querySelectorAll("input[name='answer-mode']").forEach((input) => {
-    input.checked = input.value === getAnswerMode();
-    input.addEventListener("change", () => {
-      if (!input.checked) return;
-      clearAnswerAdvanceTimeout();
-      localStorage.setItem(ANSWER_MODE_STORAGE_KEY, input.value);
-      const question = state.currentTest[state.currentIndex];
-      if (question?.pendingAnswer !== undefined) delete question.pendingAnswer;
-      if (state.currentTest.length && !$("#question-layout").classList.contains("hidden")) renderQuestion();
-    });
-  });
 }
 
 const EXAM_PASS_PERCENT = 90;
@@ -1134,13 +676,8 @@ async function submitFeedback(event) {
 }
 
 function scrollActiveQuestionNavIntoView() {
-  const questionNav = $("#question-nav");
   const activeButton = $("#question-nav .question-nav-item.active");
-  if (!activeButton) return;
-  const navRect = questionNav.getBoundingClientRect();
-  const activeRect = activeButton.getBoundingClientRect();
-  const left = questionNav.scrollLeft + activeRect.left - navRect.left - (questionNav.clientWidth - activeRect.width) / 2;
-  questionNav.scrollTo({ left, behavior: "smooth" });
+  if (activeButton) activeButton.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
 }
 
 function renderQuestionNav() {
@@ -1149,6 +686,7 @@ function renderQuestionNav() {
     const question = state.currentTest[index];
     button.className = `question-nav-item ${question.userAnswer === undefined ? "" : question.userAnswer === question.correctAnswer ? "correct" : "wrong"} ${index === state.currentIndex ? "active" : ""}`;
   });
+  scrollActiveQuestionNavIntoView();
 }
 
 function finishTest() {
@@ -1160,25 +698,15 @@ function finishTest() {
   wrongQuestions.forEach((question) => { if (!state.errors.includes(question.id)) state.errors.push(question.id); });
   const percent = Math.round((correct / state.currentTest.length) * 100);
   const passed = isExamPassed(correct, state.currentTest.length);
-  const durationMs = ["random", "ticket"].includes(state.mode) && state.timerStartedAt ? Date.now() - state.timerStartedAt : null;
-  state.lastResult = { correct, total: state.currentTest.length, percent, wrongQuestions, passed, durationMs };
-  state.history.push({ percent, correct, total: state.currentTest.length, passed, mode: state.mode, topic: state.topic, durationMs, date: new Date().toISOString() });
+  state.lastResult = { correct, total: state.currentTest.length, percent, wrongQuestions, passed };
+  state.history.push({ percent, correct, total: state.currentTest.length, passed, date: new Date().toISOString() });
   if (state.mode === "topic" && state.topic) markTopicCompleted(state.topic, wrongQuestions.length, percent);
-  if (state.mode === "ticket" && state.ticket) {
-    state.ticketProgress[state.ticket] = {
-      correct,
-      mistakes: wrongQuestions.length,
-      passed: correct >= 18,
-      completedAt: new Date().toISOString()
-    };
-  }
-  trackAnalyticsEvent("test_completed", { mode: state.mode, topic: state.topic || "all", total: state.currentTest.length, correct }).then(showTargetedFeedbackPrompt);
+  trackAnalyticsEvent("test_completed", { mode: state.mode, topic: state.topic || "all", total: state.currentTest.length, correct });
   stopExamTimer();
   clearCurrentTestProgress();
   saveProgress();
   updateNavBadge();
   renderHome();
-  if (state.mode === "ticket") renderTicketsView();
   showTestResult();
 }
 
@@ -1186,114 +714,9 @@ function renderResults() {
   const result = state.lastResult; $("#result-percent").textContent = `${result.percent}%`; $("#correct-count").textContent = result.correct; $("#wrong-count").textContent = result.total - result.correct; $("#result-total").textContent = result.total;
   $("#result-percent-label").textContent = "результат";
   $("#result-breakdown").classList.remove("hidden");
-  const durationStat = $("#result-duration");
-  const hasDuration = Number.isFinite(result.durationMs);
-  durationStat.classList.toggle("hidden", !hasDuration);
-  if (hasDuration) $("#result-duration-value").textContent = formatTimerDuration(result.durationMs);
   $("#results-title").textContent = !result.passed ? "Іспит не складено." : result.percent >= 80 ? "Відмінний результат." : result.percent >= 50 ? "Гарний старт." : "Є над чим попрацювати.";
   $("#results-subtitle").textContent = result.passed ? `Правильних відповідей: ${result.correct} з ${result.total}. Результат збережено локально.` : `Правильних відповідей: ${result.correct} з ${result.total}. Допущено ${result.total - result.correct} помилок (для складання іспиту потрібно щонайменше ${EXAM_PASS_PERCENT}% правильних відповідей). Результат збережено локально.`;
   $("#mistakes-preview").innerHTML = result.wrongQuestions.length ? `<p class="eyebrow">Питання для повторення</p>${result.wrongQuestions.map((question) => `<div class="mistake-item"><strong>${question.question}</strong><span>${question.topic}</span></div>`).join("")}` : `<p class="eyebrow">Без помилок</p><p>Усі відповіді правильні. Так тримати.</p>`;
-}
-
-function createResultShareCard(result) {
-  return new Promise((resolve, reject) => {
-    const canvas = document.createElement("canvas");
-    canvas.width = 1200;
-    canvas.height = 630;
-    const context = canvas.getContext("2d");
-    if (!context) {
-      reject(new Error("Не вдалося створити картку результату"));
-      return;
-    }
-    context.fillStyle = "#f4f8f7";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = "#17231f";
-    context.fillRect(0, 0, canvas.width, 150);
-    context.fillStyle = "#ffffff";
-    context.font = '700 34px "Arsenal", sans-serif';
-    context.fillText("ROADWISE", 72, 94);
-    context.fillStyle = "#deeff5";
-    context.font = '600 20px "DM Sans", sans-serif';
-    context.fillText("МОЇ РЕЗУЛЬТАТИ ПДР", 870, 91);
-    context.fillStyle = result.passed ? "#449e48" : "#ff805b";
-    context.font = '700 150px "Arsenal", sans-serif';
-    context.fillText(`${result.percent}%`, 72, 358);
-    context.fillStyle = "#17231f";
-    context.font = '700 34px "Arsenal", sans-serif';
-    context.fillText(result.passed ? "Іспит складено" : "Є до чого прагнути", 78, 422);
-    context.fillStyle = "#718078";
-    context.font = '500 24px "DM Sans", sans-serif';
-    context.fillText(`Правильних відповідей: ${result.correct} із ${result.total}`, 80, 480);
-    const modeLabel = resultShareModeLabel();
-    context.fillText(modeLabel, 80, 524);
-    if (Number.isFinite(result.durationMs)) context.fillText(`Час: ${formatTimerDuration(result.durationMs)}`, 80, 568);
-    context.fillStyle = "#449e48";
-    context.fillRect(850, 205, 270, 270);
-    context.fillStyle = "#ffffff";
-    context.font = '700 52px "Arsenal", sans-serif';
-    context.textAlign = "center";
-    context.fillText(`${result.correct}/${result.total}`, 985, 330);
-    context.font = '500 22px "DM Sans", sans-serif';
-    context.fillText("правильних", 985, 378);
-    context.textAlign = "left";
-    const shareUrl = new URL(window.location.pathname, window.location.origin).href;
-    context.fillStyle = "#718078";
-    context.font = '500 18px "DM Sans", sans-serif';
-    context.fillText(new URL(shareUrl).host, 80, 606);
-    canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error("Не вдалося зберегти картку результату")), "image/png");
-  });
-}
-
-function resultShareModeLabel() {
-  if (state.mode === "ticket") return `Білет ${state.ticket}`;
-  if (state.mode === "random") return "Випадковий іспит";
-  if (state.mode === "topic") return "Тренування за темою";
-  if (state.mode === "mistakes") return "Мої помилки";
-  if (state.mode === "saved") return "Збережені питання";
-  return "Тест ПДР";
-}
-
-async function shareTestResult() {
-  const result = state.lastResult;
-  const button = $("#share-result-button");
-  const status = $("#share-result-status");
-  if (!result || button.disabled) return;
-  button.disabled = true;
-  status.textContent = "Готуємо картку...";
-  const shareUrl = new URL(window.location.pathname, window.location.origin).href;
-  const modeLabel = resultShareModeLabel().toLowerCase();
-  const caption = `Мій результат: ${result.correct} з ${result.total} правильних у форматі «${modeLabel}» (${result.percent}%).`;
-  try {
-    const blob = await createResultShareCard(result);
-    const file = typeof File === "undefined" ? null : new File([blob], "roadwise-result.png", { type: "image/png" });
-    let canShareFile = false;
-    if (file && navigator.canShare) {
-      try {
-        canShareFile = navigator.canShare({ files: [file] });
-      } catch { }
-    }
-    if (navigator.share) {
-      await navigator.share({ title: "Мій результат Roadwise", text: caption, url: shareUrl, ...(canShareFile ? { files: [file] } : {}) });
-      status.textContent = "Результатом поділилися.";
-    } else {
-      const downloadUrl = URL.createObjectURL(blob);
-      const downloadLink = document.createElement("a");
-      downloadLink.href = downloadUrl;
-      downloadLink.download = "roadwise-result.png";
-      downloadLink.click();
-      window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
-      let captionCopied = false;
-      try {
-        await navigator.clipboard.writeText(`${caption} ${shareUrl}`);
-        captionCopied = true;
-      } catch { }
-      status.textContent = captionCopied ? "Картку завантажено, текст результату скопійовано." : "Картку завантажено. Її можна додати до допису в соцмережі.";
-    }
-  } catch (error) {
-    status.textContent = error.name === "AbortError" ? "Поширення скасовано." : error.message || "Не вдалося підготувати результат.";
-  } finally {
-    button.disabled = false;
-  }
 }
 
 function pluralizeUk(count, one, few, many) {
@@ -1308,15 +731,13 @@ function renderResultsView() {
   const showEmpty = !hasHistory;
   $("#results-empty-state").classList.toggle("hidden", !showEmpty);
   $("#results-stats").classList.toggle("hidden", showEmpty);
-  $("#weekly-stats").classList.toggle("hidden", showEmpty);
   if (showEmpty) return;
   $("#results-actions").classList.add("hidden");
   const totalTests = state.history.length;
   const totalQuestions = state.history.reduce((sum, item) => sum + (item.total || 0), 0);
   const totalCorrect = state.history.reduce((sum, item) => sum + (item.correct || 0), 0);
-  const examHistory = state.history.filter((item) => item.mode === "random" || !item.mode);
-  const passedExams = examHistory.filter((item) => item.passed !== undefined ? item.passed : item.percent >= 90).length;
-  const failedExams = examHistory.length - passedExams;
+  const passedExams = state.history.filter((item) => item.passed !== undefined ? item.passed : item.percent >= 90).length;
+  const failedExams = totalTests - passedExams;
   const totalErrors = totalQuestions - totalCorrect;
   const testsWord = pluralizeUk(totalTests, "тест", "тести", "тестів");
   $("#results-title").textContent = "Твоя статистика";
@@ -1327,118 +748,31 @@ function renderResultsView() {
   $("#stat-exams-passed-failed").innerHTML = `<span style="color: #449E48;">${passedExams}</span> / <span style="color: #E64444;">${failedExams}</span>`;
   $("#stat-total-errors").textContent = totalErrors;
   $("#stat-errors-review").textContent = state.errors.length;
-  renderWeeklyStats();
   $("#mistakes-preview").innerHTML = state.errors.length ? `<p class="eyebrow">Незавершені помилки</p><p>У тебе ${state.errors.length} питань для повторення.</p>` : `<p class="eyebrow">Без помилок</p><p>Немає збережених помилок для повторення.</p>`;
 }
 
-function renderWeeklyStats() {
-  const chart = $("#weekly-stats-chart");
-  const today = new Date();
-  const days = Array.from({ length: 7 }, (_, index) => {
-    const date = new Date(today);
-    date.setHours(12, 0, 0, 0);
-    date.setDate(today.getDate() - (6 - index));
-    return date;
-  });
-  const dayFormatter = new Intl.DateTimeFormat("uk-UA", { weekday: "short" });
-  const dateFormatter = new Intl.DateTimeFormat("uk-UA", { day: "numeric", month: "short" });
-  const dailyStats = days.map((date) => {
-    const key = date.toISOString().slice(0, 10);
-    const tests = state.history.filter((item) => item.date.slice(0, 10) === key);
-    const topicTests = tests.filter((item) => item.mode === "topic");
-    const ticketTests = tests.filter((item) => item.mode === "ticket");
-    const exams = tests.filter((item) => item.mode === "random" || !item.mode);
-    const failed = exams.filter((item) => (item.passed !== undefined ? item.passed : item.percent >= EXAM_PASS_PERCENT) === false);
-    return { date, topic: topicTests.length, tickets: ticketTests.length, exams: exams.length, total: tests.length, failed: failed.length };
-  });
-  const maximum = Math.max(1, ...dailyStats.map((item) => item.total));
-  chart.innerHTML = dailyStats.map((item) => {
-    const label = `${dayFormatter.format(item.date)}, ${dateFormatter.format(item.date)}`;
-    return `<div class="weekly-chart-day" aria-label="${label}: ${item.topic} тестів за темами, ${item.tickets} білетів, ${item.exams} іспитів, ${item.total} загалом, ${item.failed} іспитів не складено">
-      <div class="weekly-chart-bars"><span class="weekly-bar weekly-bar-topic" style="height: ${Math.max(item.topic ? 8 : 2, item.topic / maximum * 100)}%" title="За темами: ${item.topic}"></span><span class="weekly-bar weekly-bar-ticket" style="height: ${Math.max(item.tickets ? 8 : 2, item.tickets / maximum * 100)}%" title="Білети: ${item.tickets}"></span><span class="weekly-bar weekly-bar-exams" style="height: ${Math.max(item.exams ? 8 : 2, item.exams / maximum * 100)}%" title="Іспити: ${item.exams}"></span><span class="weekly-bar weekly-bar-total" style="height: ${Math.max(item.total ? 8 : 2, item.total / maximum * 100)}%" title="Усього: ${item.total}"></span><span class="weekly-bar weekly-bar-failed" style="height: ${Math.max(item.failed ? 8 : 2, item.failed / maximum * 100)}%" title="Не складено: ${item.failed}"></span></div>
-      <div class="weekly-chart-counts" aria-hidden="true"><span>${item.topic}</span><span>${item.tickets}</span><span>${item.exams}</span><span>${item.total}</span><span>${item.failed}</span></div>
-      <span class="weekly-chart-label">${dayFormatter.format(item.date)} ${dateFormatter.format(item.date)}</span>
-    </div>`;
-  }).join("");
-}
-
 function init() {
-  const bugReportThanksModal = $("#bug-report-thanks-modal");
-  const bugReportThanksDismissed = new Promise((resolve) => {
-    if (bugReportThanksModal.dataset.eligible !== "true" || localStorage.getItem("roadwise-bug-report-thanks-seen")) {
-      resolve();
-      return;
-    }
-    const close = () => {
-      localStorage.setItem("roadwise-bug-report-thanks-seen", "1");
-      bugReportThanksModal.classList.add("hidden");
-      resolve();
-    };
-    $("#bug-report-thanks-close").addEventListener("click", close);
-    bugReportThanksModal.addEventListener("click", (event) => {
-      if (event.target === bugReportThanksModal) close();
-    });
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && !bugReportThanksModal.classList.contains("hidden")) close();
-    });
-    bugReportThanksModal.classList.remove("hidden");
-    $("#bug-report-thanks-close").focus();
-  });
-  document.querySelectorAll("[data-thanks-action]").forEach((button) => {
-    button.addEventListener("click", () => {
-      reportVisitorThanksReaction(button.dataset.thanksAction);
-      $("#visitor-thanks").classList.add("hidden");
-    });
-  });
   document.addEventListener("click", (event) => {
     const backButton = event.target.closest(".back-button");
     if (backButton) {
       if (state.mode === "topic" && state.topic && $("#topic-picker").classList.contains("hidden")) returnToTopicPicker();
-      else if (state.mode === "ticket") returnToTickets();
       else showView("home");
       return;
     }
     const modeButton = event.target.closest("[data-mode]");
     if (modeButton) { if (modeButton.dataset.mode === "topic") startTest("topic", null, { skipPrompt: true }); else requestTestStart(modeButton.dataset.mode); }
     const viewLink = event.target.closest("[data-view]");
-    const resultBackButton = event.target.closest("[data-return-to]");
-    if (resultBackButton) {
-      if (resultBackButton.dataset.returnTo === "tickets") returnToTickets();
-      else if (resultBackButton.dataset.returnTo === "topics") returnToTopicPicker();
-      else showView("home");
-      return;
-    }
     if (viewLink && !viewLink.dataset.mode) showView(viewLink.dataset.view);
   });
-  initializeAnswerModeSettings();
-  $("#check-answer-button").addEventListener("click", checkCurrentAnswer);
-  $("#previous-button").addEventListener("click", () => {
-    clearAnswerAdvanceTimeout();
-    if (state.currentIndex === 0) return;
-    state.currentIndex -= 1;
-    saveCurrentTestProgress();
-    renderQuestion();
-  });
-  $("#next-button").addEventListener("click", advanceToNextQuestion);
-  $("#exam-failed-continue").addEventListener("click", () => {
-    $("#exam-failed-modal").classList.add("hidden");
-    if (getAnswerMode() === "auto-correct" && state.currentTest[state.currentIndex]?.userAnswer === state.currentTest[state.currentIndex]?.correctAnswer) advanceToNextQuestion();
-  });
-  $("#retry-button").addEventListener("click", () => startTest(state.mode, state.topic, { category: state.randomCategory }));
-  $("#share-result-button").addEventListener("click", shareTestResult);
+  $("#next-button").addEventListener("click", () => { if (state.currentIndex === state.currentTest.length - 1) finishTest(); else { state.currentIndex += 1; saveCurrentTestProgress(); renderQuestion(); } });
+  $("#retry-button").addEventListener("click", () => startTest(state.mode, state.topic));
   $("#test-timer").addEventListener("click", toggleExamTimerVisibility);
   $("#report-button").addEventListener("click", openReportModal);
   $("#report-close").addEventListener("click", closeReportModal);
   $("#report-form").addEventListener("submit", submitReport);
   $("#feedback-form").addEventListener("submit", submitFeedback);
-  $("#saved-clear-all").addEventListener("click", openSavedClearConfirmation);
-  $("#saved-clear-close").addEventListener("click", closeSavedClearConfirmation);
-  $("#saved-clear-cancel").addEventListener("click", closeSavedClearConfirmation);
-  $("#saved-clear-modal").addEventListener("click", (event) => { if (event.target.id === "saved-clear-modal") closeSavedClearConfirmation(); });
-  $("#saved-clear-confirm").addEventListener("click", () => {
-    clearSavedQuestions();
-    closeSavedClearConfirmation();
-  });
+  $("#exam-failed-continue").addEventListener("click", () => $("#exam-failed-modal").classList.add("hidden"));
+  $("#saved-clear-all").addEventListener("click", clearSavedQuestions);
   $("#app-status-retry").addEventListener("click", () => {
     if (state.retryAction) state.retryAction();
     else loadQuestions().catch(handleInitialLoadError);
@@ -1446,7 +780,6 @@ function init() {
   $("#report-modal").addEventListener("click", (event) => { if (event.target.id === "report-modal") closeReportModal(); });
   $("#resume-toast-button").addEventListener("click", resumeSavedTest);
   $("#resume-toast-close").addEventListener("click", () => $("#resume-toast").classList.add("hidden"));
-  $("#topic-limit-toast-close").addEventListener("click", () => $("#topic-limit-toast").classList.add("hidden"));
   $("#restart-close").addEventListener("click", closeRestartModal);
   $("#restart-cancel").addEventListener("click", closeRestartModal);
   $("#restart-new").addEventListener("click", () => startPendingTest(true));
@@ -1455,36 +788,15 @@ function init() {
   $("#rating-close").addEventListener("click", closeRatingPrompt);
   $("#rating-modal").addEventListener("click", (event) => { if (event.target.id === "rating-modal") closeRatingPrompt(); });
   $("#rating-confirm").addEventListener("click", confirmRating);
-  $("#random-category-select").innerHTML += Object.entries(RANDOM_TEST_CATEGORIES)
-    .map(([category, { label }]) => `<option value="${category}">${label}</option>`).join("");
-  $("#random-category-select").addEventListener("change", (event) => {
-    $("#random-category-start").disabled = !Object.hasOwn(RANDOM_TEST_CATEGORIES, event.target.value);
-  });
-  $("#random-category-start").addEventListener("click", startRandomTestWithCategory);
-  $("#random-category-cancel").addEventListener("click", closeRandomCategoryPrompt);
-  $("#random-category-modal").addEventListener("click", (event) => {
-    if (event.target.id === "random-category-modal") closeRandomCategoryPrompt();
-  });
-  $("#targeted-feedback-close").addEventListener("click", closeTargetedFeedbackPrompt);
-  $("#targeted-feedback-modal").addEventListener("click", (event) => { if (event.target.id === "targeted-feedback-modal") closeTargetedFeedbackPrompt(); });
-  $("#targeted-feedback-start").addEventListener("click", startTargetedSurvey);
-  $("#tickets-intro-try").addEventListener("click", tryTicketsFromIntro);
-  $("#tickets-intro-later").addEventListener("click", closeTicketsIntroPrompt);
   document.querySelectorAll(".rating-star").forEach((star) => {
     star.addEventListener("mouseenter", () => updateRatingStars(Number(star.dataset.rating)));
     star.addEventListener("mouseleave", () => updateRatingStars(pendingRating || 0));
     star.addEventListener("click", () => setRating(Number(star.dataset.rating)));
   });
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeReportModal();
-      closeSavedClearConfirmation();
-      closeRandomCategoryPrompt();
-    }
-  });
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeReportModal(); });
   window.addEventListener("error", (event) => reportClientError(event.error || new Error(event.message)));
   window.addEventListener("unhandledrejection", (event) => reportClientError(event.reason || new Error("Unhandled promise rejection")));
-  loadQuestions().then(() => pageViewTracked).then(() => bugReportThanksDismissed).then(() => { showTicketsIntroPrompt(); showRatingPrompt(); showTargetedFeedbackPrompt(); showResumeToast(); }).catch(handleInitialLoadError);
+  loadQuestions().then(() => { showRatingPrompt(); showResumeToast(); }).catch(handleInitialLoadError);
 }
 
 function handleInitialLoadError(error) {

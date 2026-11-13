@@ -292,6 +292,11 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [loadingTopic, setLoadingTopic] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [errorRetry, setErrorRetry] = useState<(() => void) | null>(null);
+  const [catalogAttempt, setCatalogAttempt] = useState(0);
+  const [lastOpenedTopic, setLastOpenedTopic] = useState(() => localStorage.getItem("roadwise-last-topic") ?? "");
+  const [visitorThanksVisible, setVisitorThanksVisible] = useState(false);
+  const [bugReportThanksOpen, setBugReportThanksOpen] = useState(false);
   const [answerMode, setAnswerMode] = useState(getAnswerMode);
   const [interruptedTest, setInterruptedTest] = useState<SavedTopicTest | null>(null);
   const [pendingTopic, setPendingTopic] = useState<TopicEntry | null>(null);
@@ -304,6 +309,34 @@ function App() {
   const [examFailed, setExamFailed] = useState(false);
   const [timerStartedAt, setTimerStartedAt] = useState<number | null>(null);
   const [timerNow, setTimerNow] = useState(Date.now);
+
+  function showError(message: string, retry?: () => void) {
+    setErrorMessage(message);
+    setErrorRetry(() => retry ?? null);
+  }
+
+  function clearError() {
+    setErrorMessage("");
+    setErrorRetry(null);
+  }
+
+  function retryCatalogLoad() {
+    clearError();
+    setLoading(true);
+    setCatalogAttempt((attempt) => attempt + 1);
+  }
+
+  function reportVisitorThanksReaction(action: "please" | "close") {
+    setVisitorThanksVisible(false);
+    void fetch("/api/visitor-thanks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action }),
+      keepalive: true,
+    }).then((response) => {
+      if (!response.ok) throw new Error(`Visitor thanks reaction failed (${response.status}).`);
+    }).catch((error: unknown) => console.error("Could not record visitor thanks reaction.", error));
+  }
 
   useEffect(() => {
     let active = true;
@@ -322,13 +355,43 @@ function App() {
       .catch((error: unknown) => {
         if (active) {
           reportClientError(error instanceof Error ? error : String(error));
-          setErrorMessage(error instanceof Error ? error.message : "Не вдалося завантажити теми.");
+          showError(error instanceof Error ? error.message : "Не вдалося завантажити теми.", retryCatalogLoad);
         }
       })
       .finally(() => {
         if (active) setLoading(false);
       });
 
+    return () => {
+      active = false;
+    };
+  }, [catalogAttempt]);
+
+  useEffect(() => {
+    void fetch("/api/analytics/event", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ event: "page_view", mode: "none", topic: "all", total: 0 }),
+      keepalive: true,
+    }).then((response) => {
+      if (!response.ok) throw new Error(`Page view analytics failed (${response.status}).`);
+    }).catch((error: unknown) => console.error("Could not record page view.", error));
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    fetch("/", { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) throw new Error(`Could not load visitor personalization (${response.status}).`);
+        return response.text();
+      })
+      .then((html) => {
+        if (!active) return;
+        const document = new DOMParser().parseFromString(html, "text/html");
+        setVisitorThanksVisible(Boolean(document.querySelector("#visitor-thanks:not(.hidden)")));
+        setBugReportThanksOpen(Boolean(document.querySelector('#bug-report-thanks-modal[data-eligible="true"]')));
+      })
+      .catch((error: unknown) => console.error("Could not load visitor personalization.", error));
     return () => {
       active = false;
     };
@@ -662,12 +725,13 @@ function App() {
       if (showCategoryPicker) setShowCategoryPicker(false);
       if (examFailedPrompt) setExamFailedPrompt(false);
       if (ratingOpen) setRatingOpen(false);
+      if (bugReportThanksOpen) setBugReportThanksOpen(false);
       if (ticketsIntroOpen) closeTicketsIntro();
       if (surveyOpen && !surveySending) closeTargetedSurvey();
     }
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
-  }, [showReportModal, reportSending, confirmClearSaved, showCategoryPicker, examFailedPrompt, ratingOpen, ticketsIntroOpen, surveyOpen, surveySending]);
+  }, [showReportModal, reportSending, confirmClearSaved, showCategoryPicker, examFailedPrompt, ratingOpen, bugReportThanksOpen, ticketsIntroOpen, surveyOpen, surveySending]);
 
   useEffect(() => {
     if (!["random", "ticket"].includes(selectedMode) || view !== "quiz" || timerStartedAt === null) return;
@@ -685,12 +749,12 @@ function App() {
         getLocalDateKey(new Date(item.date)) === dateKey,
     ).length;
     if (testsToday >= DAILY_TOPIC_TEST_LIMIT) {
-      setErrorMessage("Цю тему вже пройдено тричі сьогодні. Спробуй знову завтра.");
+      showError("Цю тему вже пройдено тричі сьогодні. Спробуй знову завтра.");
       return;
     }
 
     setLoadingTopic(true);
-    setErrorMessage("");
+    clearError();
     try {
       const response = await fetch(`/questions.by-topic/${encodeURIComponent(topic.file)}`, {
         cache: "no-store",
@@ -711,6 +775,7 @@ function App() {
       setTopicProgress(nextProgress);
       writeStorage(TOPIC_PROGRESS_KEY, nextProgress);
       localStorage.setItem("roadwise-last-topic", topic.topic);
+      setLastOpenedTopic(topic.topic);
       setSelectedTopic(topic);
       setSelectedTicket(null);
       setSelectedMode("topic");
@@ -731,7 +796,8 @@ function App() {
         questions: shuffledQuestions,
       });
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "Не вдалося завантажити питання.");
+      reportClientError(error instanceof Error ? error : String(error));
+      showError(error instanceof Error ? error.message : "Не вдалося завантажити питання.", () => void loadTopic(topic));
     } finally {
       setLoadingTopic(false);
     }
@@ -837,7 +903,7 @@ function App() {
     }
 
     setLoadingTopic(true);
-    setErrorMessage("");
+    clearError();
     try {
       let testQuestions: Question[];
       if (mode === "random") {
@@ -853,7 +919,7 @@ function App() {
         testQuestions = payload.questions;
       } else {
         if (errors.length === 0) {
-          setErrorMessage("Поки немає помилок для повторення. Спершу пройди тест за темою.");
+          showError("Поки немає помилок для повторення. Спершу пройди тест за темою.");
           return;
         }
         const groups = await Promise.all(
@@ -872,7 +938,7 @@ function App() {
       }
 
       if (testQuestions.length === 0) {
-        setErrorMessage(mode === "mistakes" ? "Помилки більше не знайдено. Чудова робота!" : "Сервер не повернув питань для цього іспиту.");
+        showError(mode === "mistakes" ? "Помилки більше не знайдено. Чудова робота!" : "Сервер не повернув питань для цього іспиту.");
         return;
       }
 
@@ -882,7 +948,8 @@ function App() {
         localStorage.setItem("roadwise-random-category", category);
       }
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "Не вдалося завантажити питання.");
+      reportClientError(error instanceof Error ? error : String(error));
+      showError(error instanceof Error ? error.message : "Не вдалося завантажити питання.", () => void startMode(mode, category));
     } finally {
       setLoadingTopic(false);
     }
@@ -894,7 +961,7 @@ function App() {
       ? topics.find((entry) => entry.topic === interruptedTest.topic)
       : null;
     if (interruptedTest.mode === "topic" && !topic) {
-      setErrorMessage("Не вдалося знайти тему для незавершеного тесту. Спробуй почати її заново.");
+      showError("Не вдалося знайти тему для незавершеного тесту. Спробуй почати її заново.");
       return;
     }
     setSelectedTopic(topic ?? null);
@@ -1008,11 +1075,12 @@ function App() {
     setView("tickets");
     if (tickets) return;
     setLoadingTopic(true);
-    setErrorMessage("");
+    clearError();
     try {
       await loadTickets();
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "Не вдалося завантажити білети.");
+      reportClientError(error instanceof Error ? error : String(error));
+      showError(error instanceof Error ? error.message : "Не вдалося завантажити білети.", () => void openTickets());
     } finally {
       setLoadingTopic(false);
     }
@@ -1025,7 +1093,7 @@ function App() {
       return;
     }
     setLoadingTopic(true);
-    setErrorMessage("");
+    clearError();
     try {
       const groups = await Promise.all(
         availableTopics.map(async (topic) => {
@@ -1039,7 +1107,8 @@ function App() {
       const questionsById = new Map(groups.flat().map((question) => [question.id, question]));
       setErrorQuestions(errors.map((id) => questionsById.get(id)).filter((question): question is Question => question !== undefined));
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "Не вдалося завантажити питання для повторення.");
+      reportClientError(error instanceof Error ? error : String(error));
+      showError(error instanceof Error ? error.message : "Не вдалося завантажити питання для повторення.", () => void openErrors());
     } finally {
       setLoadingTopic(false);
     }
@@ -1057,14 +1126,15 @@ function App() {
 
   async function startTicket(ticketNumber: number) {
     setLoadingTopic(true);
-    setErrorMessage("");
+    clearError();
     try {
       const ticketList = await loadTickets();
       const ticketQuestions = ticketList[ticketNumber - 1];
       if (!ticketQuestions?.length) throw new Error("Цей білет не знайдено.");
       beginTest("ticket", ticketQuestions, { ticket: ticketNumber, startedAt: Date.now() });
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "Не вдалося завантажити білет.");
+      reportClientError(error instanceof Error ? error : String(error));
+      showError(error instanceof Error ? error.message : "Не вдалося завантажити білет.", () => void startTicket(ticketNumber));
     } finally {
       setLoadingTopic(false);
     }
@@ -1285,7 +1355,7 @@ function App() {
     setResult(null);
     setQuestions([]);
     setSelectedTopic(null);
-    setErrorMessage("");
+    clearError();
   }
 
   function returnToCurrentList() {
@@ -1293,7 +1363,7 @@ function App() {
     setResult(null);
     setQuestions([]);
     setSelectedTicket(null);
-    setErrorMessage("");
+    clearError();
   }
 
   useEffect(() => {
@@ -1383,9 +1453,23 @@ function App() {
         {errorMessage && (
           <div className="client-alert" role="alert">
             <span>{errorMessage}</span>
-            <button type="button" onClick={() => setErrorMessage("")} aria-label="Закрити повідомлення">
+            {errorRetry && (
+              <button className="client-alert-retry" type="button" onClick={errorRetry} disabled={loading || loadingTopic}>
+                Повторити
+              </button>
+            )}
+            <button type="button" onClick={clearError} aria-label="Закрити повідомлення">
               ×
             </button>
+          </div>
+        )}
+        {visitorThanksVisible && (
+          <div className="client-visitor-thanks" role="status">
+            <span>Дякуємо, що знайшли помилку та повідомили про неї! Для нас це важливо 😌</span>
+            <div>
+              <button type="button" onClick={() => reportVisitorThanksReaction("please")}>Будь ласка</button>
+              <button type="button" aria-label="Закрити" onClick={() => reportVisitorThanksReaction("close")}>Закрити</button>
+            </div>
           </div>
         )}
 
@@ -1546,7 +1630,7 @@ function App() {
                   const completed = progress?.status === "completed";
                   return (
                     <button
-                      className={`client-topic-card${available ? "" : " is-unavailable"}${completed ? " is-completed" : ""}`}
+                      className={`client-topic-card${available ? "" : " is-unavailable"}${completed ? " is-completed" : ""}${progress?.status === "started" ? " is-started" : ""}${lastOpenedTopic === topic.topic ? " is-last-opened" : ""}`}
                       type="button"
                       key={topic.file}
                       disabled={!available || loadingTopic}
@@ -1555,7 +1639,8 @@ function App() {
                       <span className="client-topic-card-title">{topic.topic}</span>
                       <span className="client-topic-card-meta">
                         {available ? `${topic.count} питань` : "У розробці"}
-                        {completed && ` · ${progress.percent}% завершено`}
+                        {completed ? ` · ${progress.percent}% завершено` : progress?.status === "started" ? " · Розпочато" : ""}
+                        {lastOpenedTopic === topic.topic && " · Остання відкрита"}
                       </span>
                       <span className="client-topic-card-arrow" aria-hidden="true">{available ? "↗" : "🔒"}</span>
                     </button>
@@ -2193,6 +2278,18 @@ function App() {
             <div className="client-modal-actions">
               <button className="client-primary" type="button" onClick={clearSavedQuestions}>Очистити</button>
               <button className="client-secondary" type="button" onClick={() => setConfirmClearSaved(false)}>Скасувати</button>
+            </div>
+          </section>
+        </div>
+      )}
+      {bugReportThanksOpen && (
+        <div className="client-modal-backdrop">
+          <section className="client-modal" role="dialog" aria-modal="true" aria-labelledby="bug-report-thanks-title" aria-describedby="bug-report-thanks-description">
+            <p className="client-eyebrow">Дякуємо за уважність</p>
+            <h2 id="bug-report-thanks-title">Дякуємо за твоє повідомлення про помилку!</h2>
+            <p id="bug-report-thanks-description">Ми вже виправили її. Твоя допомога робить Roadwise кращим.</p>
+            <div className="client-modal-actions">
+              <button className="client-primary" type="button" onClick={() => setBugReportThanksOpen(false)}>Зрозуміло</button>
             </div>
           </section>
         </div>
